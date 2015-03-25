@@ -1,4 +1,4 @@
-.pyc
-.bash
-.c
-.db
+*.pyc
+*.bash
+*.c
+*.db
