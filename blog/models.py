@@ -1,8 +1,9 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 # Create your models here.
 class Post(models.Model):
-	created_at = models.DateTimeField(auto_now=True, editable=False)#save the timestamp when the model first creatred and not the field is editable in admin
+	created_at = models.DateTimeField(auto_now_add=True, editable=False)#save the timestamp when the model first creatred and not the field is editable in admin
 	updated_at = models.DateTimeField(auto_now=True, editable=False)
 	title = models.CharField(max_length=255)
 	slug = models.SlugField(max_length=255,blank=True,default='') #blank = True i.e it is not required for validatipn purpose , default = '' for not slug provided

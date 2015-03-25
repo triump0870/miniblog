@@ -16,11 +16,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 database_name = 'miniblog'
 username = 'rohan'
 host = 'localhost'
-password = keyring.get_password(database_name,username)
-while password == None:
-    password=getpass.getpass(database_name+" Password:\n")
-    #Store the password
-    keyring.set_password(database_name,username,password)
+password = 'Amazon@0870'#keyring.get_password(database_name,username)
+# while password == None:
+#     password=getpass.getpass(database_name+" Password:\n")
+#     #Store the password
+#     keyring.set_password(database_name,username,password)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -81,7 +81,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
