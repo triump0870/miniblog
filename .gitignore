@@ -2,3 +2,6 @@
 *.bash
 *.c
 *.db
+settings.py
+settings.pyc
+settings.py.back
