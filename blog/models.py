@@ -10,6 +10,10 @@ class Post(models.Model):
 	content = models.TextField()
 	published = models.BooleanField(default=True)
 	author = models.ForeignKey(User, related_name="posts")
+	
+	class Meta:
+		ordering = ["-created_at", "title"]
+		
 	def __unicode__(self):
 		return self.title
 
