@@ -1,1 +1,8 @@
-Welcome to Rohan's Blog
+{% extends "_layouts/base.html" %}
+{% load url from future %}
+
+{% block page_content %}
+<div class="row-fluid">
+<a href="{% url 'blog:list' %}" class="btn btn-info">Read My Blog</a>
+</div>
+{%endblock%}

@@ -2,9 +2,13 @@
 <html>
 	<head>
 		<title>{% block page_title %}{% endblock%}Miniblog</title>
+		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap-responsive.min.css"> -->
 	</head>
 	<body>
-		<h1>Welcome to my blog!</h1>
-		{% block page_content %}{% endblock %}
+		<div class="container">
+			<h1>Welcome to my blog!</h1>
+			{% block page_content %}{% endblock %}
+		</div>
 	</body>
 </html>

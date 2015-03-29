@@ -61,20 +61,20 @@ USE_TZ = True
 SITE_ID = 1
 
 #Upload files stored here
-MEDIA_ROOT = root("..","uploads")
+MEDIA_ROOT = root("..","..","uploads")
 
 #URL that handles the media served by the MEDIA_ROOT
 MEDIA_URL = ''
 
 #Absolute path to the directory static files should be collected to.
-STATIC_ROOT = root("..","static")
+STATIC_ROOT = root("..","..","static")
 
 #URL prefix for static files.
 STATIC_URL = '/static/'
 
 #Additional locations of static files i.e css, js etc
-STATCIFILES_DIRS = (
-    root("assets")
+STATICFILES_DIRS = (
+    root("..","assets"),
     )
 
 #List of finder classes that know how to find the static files in various locations.
