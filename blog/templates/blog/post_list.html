@@ -1,17 +1,18 @@
 {% extends "_layouts/base.html" %}
-{% load url from future %}
 {% block page_title %}Blog posts | {%endblock%}
 {% block page_content%}
 <h2>Blog Posts</h2>
 <ul>
 	{% for post in post_list %}
 		<li>
-			<a href="{% url 'blog:detail' post.pk %}"> {{ post.title }}</a>
+			
+			<a href="{{post.get_absolute_url}}"> {{ post.title }}</a>
+			
 		</li>
-	{%empty %}
+	{% empty %}
 	<li>
 		Sorry, no posts yet. Check back soon!
 	</li>
-	{%endfor%}
+	{% endfor %}
 </ul>
 {%endblock%}
