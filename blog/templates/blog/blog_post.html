@@ -1,0 +1,44 @@
+{% extends "_layouts/base.html" %}
+{%block page_title %} 
+{{ post.title }}
+{%endblock%}
+{% block page_content %}
+<div class="content">
+    <p>
+        {{ post.title }}
+    </p>
+    <span>
+        Written by {{ post.author }}  on {{ post.created_at }}
+    </span>
+</div>
+
+{% if post.comment_set.all %}
+<h2>Comments</h2>
+<div class="comments">
+    {% for comment in post.comment_set.all %}
+        <span>
+            <a href="{{ comment.website }}">{{ comment.name }}</a> said on {{ comment.created_at }}
+        </span>
+        <p>
+            {{ comment.text }}
+        </p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<br />
+
+<h2>Add Comment</h2>
+
+<form roll='form' action="" method="POST">
+    {% csrf_token %}
+    <div class="table-responsive">
+    <table class="table">
+        {{ form.as_table }}
+    </table>
+    </div>
+    <div style="text-align:center;">
+    <button class="btn btn-primary" type="submit" >Submit</button>
+    </div>
+</form>
+{% endblock %}

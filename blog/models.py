@@ -32,3 +32,13 @@ class Post(models.Model):
 	def get_absolute_url(self):
 		return ("blog:detail",(),{'slug':self.slug
 							})
+class Comments(models.Model):
+	name = models.CharField(max_length=50)
+	website = models.URLField(max_length=200, null=True, blank=True)
+	email = models.EmailField(max_length=75)
+	text = models.TextField()
+	post = models.ForeignKey(Post)
+	created_at = models.DateTimeField(auto_now_add=True, editable=False)
+
+	def __unicode__(self):
+		return self.text
