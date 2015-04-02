@@ -1,5 +1,7 @@
+#All the imports
 from .models import Post
 from django.views.generic import ListView, DetailView
+
 # Create your views here.
 class PublishedPostMixin(object):
 	def get_queryset(self):
