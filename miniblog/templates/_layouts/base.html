@@ -2,13 +2,19 @@
 <html>
 	<head>
 		<title>{% block page_title %}{% endblock%}Miniblog</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css">
 		<!-- <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap-responsive.min.css"> -->
 	</head>
 	<body>
-		<div class="container">
-			<h1>Welcome to my blog!</h1>
-			{% block page_content %}{% endblock %}
-		</div>
+		{% block body_container %}
+			<div class="container">
+				{% block post_title %}
+					<h1>Welcome to my blog!</h1>
+				{% endblock %}
+				{% block page_content %}{% endblock %}
+			</div>
+		{% endblock %}
 	</body>
 </html>

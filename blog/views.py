@@ -1,14 +1,11 @@
 #All the imports
-from .models import Post
+from .models import Post, Comments
 from django.views.generic import ListView, DetailView
-<<<<<<< HEAD
-
-=======
 from django.template import RequestContext
 from django.shortcuts import redirect, render_to_response, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from forms import PostForm, CommentForm
->>>>>>> 9d76e85f60f79987544f8576b566f06f1d65f93d
+from django.http import HttpResponse
 # Create your views here.
 
 @user_passes_test(lambda u:u.is_superuser)
@@ -32,9 +29,9 @@ def view_post(request, slug):
 		request.session['email'] = comment.email
 		request.session['website'] = comment.website
 		return redirect(request.path)
-	form.initial['name'] = request.session.get('name')
-	form.initial['email'] = request.session.get('email')
-	form.initial['website'] = request.session.get('website')
+	# form.initial['name'] = request.session.get('name')
+	# form.initial['email'] = request.session.get('email')
+	# form.initial['website'] = request.session.get('website')
 	return render_to_response('blog/blog_post.html',
 		{
 			'post':post,
@@ -42,7 +39,14 @@ def view_post(request, slug):
 		},
 		context_instance=RequestContext(request))
 
-
+# def like(request, post_id):
+# 	new_like= Like.objects.get(post_id=post_id)
+# 	new_like.like += 1
+# 	new_like.save()
+# 	return 
+def vote(request, post_id):
+	return HttpResponse("You're voting on post %s."%post_id)
+	
 class PublishedPostMixin(object):
 	def get_queryset(self):
 		return self.model.objects.live()
@@ -52,9 +56,7 @@ class PostListView(PublishedPostMixin,ListView):
 
 class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post
-<<<<<<< HEAD
-	
-=======
+
 	# template_name = 'blog_post.html'
 	# form = CommentForm(request.POST or None)
 	# if form.is_valid():
@@ -67,4 +69,4 @@ class PostDetailView(PublishedPostMixin,DetailView):
 	# form.initial['name'] = request.session.get('name')
 	# form.initial['email'] = request.session.get['email']
 	# form.initial['website'] = request.session.get['website']
->>>>>>> 9d76e85f60f79987544f8576b566f06f1d65f93d
+

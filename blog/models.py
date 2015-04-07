@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
+from vote.managers import VotableManager
 # Create your models here.
 
 class PostManager(models.Manager):
@@ -16,7 +17,9 @@ class Post(models.Model):
 	content = models.TextField()
 	published = models.BooleanField(default=True)
 	author = models.ForeignKey(User, related_name="posts")
+	# love = models.PositiveIntegerField(default=0)
 	objects = PostManager()
+	votes = VotableManager()
 	class Meta:
 		ordering = ["-created_at", "title"]
 		
@@ -38,7 +41,21 @@ class Comments(models.Model):
 	email = models.EmailField(max_length=75)
 	text = models.TextField()
 	post = models.ForeignKey(Post)
-	created_at = models.DateTimeField(auto_now_add=True, editable=False)
+	# love = models.PositiveIntegerField(default=0)
+	commented_at = models.DateTimeField(auto_now_add=True, editable=False)
 
+	class Meta:
+		ordering = ["-commented_at","email"]
 	def __unicode__(self):
 		return self.text
+# class Like(models.Model):
+# 	like_post = models.ForeignKey(Post)
+# 	liked_on = models.DateTimeField(auto_now_add=True)
+	
+# class Hit(models.Model):
+# 	date = models.DateTimeField(auto_now=True)
+# 	content_type = models.ForeignKey(ContentType)
+# 	object_id = models.PositiveIntegerField()
+# 	content_object = generic.GenericForeignKey('content_type','object_id')
+# 	ip = models.CharField(max_length=40)
+# 	session = models.CharField(max_length=40)

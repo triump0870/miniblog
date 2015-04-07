@@ -1,44 +1,107 @@
 {% extends "_layouts/base.html" %}
-{%block page_title %} 
-{{ post.title }}
-{%endblock%}
-{% block page_content %}
-<div class="content">
-    <p>
-        {{ post.title }}
-    </p>
-    <span>
-        Written by {{ post.author }}  on {{ post.created_at }}
-    </span>
-</div>
-
-{% if post.comment_set.all %}
-<h2>Comments</h2>
-<div class="comments">
-    {% for comment in post.comment_set.all %}
+{% load blog_extras %}
+{% block post_title %} 
+	<div class="page-header">
+		<h1>{{ post.title }}</h1>
         <span>
-            <a href="{{ comment.website }}">{{ comment.name }}</a> said on {{ comment.created_at }}
-        </span>
-        <p>
-            {{ comment.text }}
-        </p>
-    {% endfor %}
-</div>
-{% endif %}
-
-<br />
-
-<h2>Add Comment</h2>
-
-<form roll='form' action="" method="POST">
-    {% csrf_token %}
-    <div class="table-responsive">
-    <table class="table">
-        {{ form.as_table }}
-    </table>
-    </div>
-    <div style="text-align:center;">
-    <button class="btn btn-primary" type="submit" >Submit</button>
-    </div>
-</form>
+                Posted by <a href="{{ post.author  }}">{{post.author | title}}</a>  on {{ post.created_at }}
+            </span>
+	</div>
 {% endblock %}
+
+{% block page_content %}
+	<div class="container-fluid">
+
+    		<p>
+        		{{ post.content }}
+    		</p>
+    		
+            <br />
+            <!-- <span> <a href="{{post.
+            "></a></span> -->
+	</div>
+	<br />
+    <div class="">
+        <form action="{% url 'blog:vote' post.id%}" method="post">
+
+        {% csrf_token %}
+        <span>
+        <a  name="like" href="">Like</a>
+        &nbsp;
+        <a href="">Share</a>
+        </span>
+        </form>    
+    </div>
+	<br />
+
+    <!-- #Comment Section -->
+	{% if post.comments_set.all %}
+    <div class="container-fluid">
+        <div class="row">
+		  <h2>Comments</h2>
+        </div>
+    	{% for comment in post.comments_set.all %}
+        <div class="row-fluid">
+        	<span>
+            	<a href="{{ comment.website }}">{{ comment.name }}</a> on {{ comment.commented_at }} said:
+       			</span>
+        </div>
+        <div class="row-fluid">
+       		<pre>{{ comment.text }}</pre>
+    			{% endfor %}
+        </div>
+    </div>	
+	{% endif %}	
+
+    <!-- #Add Comment Section -->
+	<br />
+    <div class="container-fluid">
+        <div class="row">
+	       <h2>Add Comment</h2>
+        </div>
+	    <form roll='form' action="" method="POST" class="form-horizontal" >
+    		{% csrf_token %}
+            {% for field in form %}
+            <fieldset class="form-group">
+                <label class="control-label col-sm-2" for="id_{{ field.name }}">{{ field.label }}:</label>
+                <div class="col-sm-10">
+                    
+                        {{ field|addcss:"form-control" }}
+                        <p class="help-text">{{ field.help_text }} </p>
+                   
+                </div>
+            </fieldset>
+            {% endfor %}
+            <!-- <div class="form-group">
+                <label class="control-label col-sm-2" for="name">Name:</label>
+                <div class="col-sm-10">
+                    <input id="name" class="form-control" id="name" placeholder="Enter Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="website">Website:</label>
+                <div class="col-sm-10">
+                    <input type="website" class="form-control" id="website" placeholder="Enter Website">
+                </div>
+            </div>
+    		<div class="form-group">
+    			<label class="control-label col-sm-2" for="email">Email:</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" placeholder="Enter Email">
+                </div>
+    		</div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="text">Comment:</label>
+                <div class="col-sm-10">
+                    <textarea type="text" class="form-control" id="text" placeholder="Enter Your Comment"></textarea>
+                </div>
+            </div> -->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-primary" type="submit" >Submit</button>
+                </div>
+            </div>
+	    </form>
+    </div>
+{% endblock %}
+
