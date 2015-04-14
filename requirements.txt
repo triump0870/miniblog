@@ -1,8 +1,9 @@
 Django==1.7.6
-MySQL-python==1.2.5
-argparse==1.2.1
-distribute==0.6.24
+django-markdown==0.8.4
+django-vote==1.2
 gunicorn==19.3.0
 keyring==5.3
+Markdown==2.6.1
+MySQL-python==1.2.5
 pycrypto==2.6.1
-wsgiref==0.1.2
+six==1.9.0

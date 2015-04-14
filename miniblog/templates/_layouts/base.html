@@ -2,19 +2,26 @@
 <html>
 	<head>
 		<title>{% block page_title %}{% endblock%}Miniblog</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css">
-		<!-- <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap-responsive.min.css"> -->
+		<!-- Meta -->
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="description" content="Personal Blog of Rohan Roy with Resume">
+	    <meta name="author" content="Rohan Roy"> 
+
+	    <!-- Favicon -->
+	    <link rel="shortcut icon" href="{{STATIC_URL}}images/favicon.ico">  
+	    
+		<!-- Global CSS -->
+		<link rel="stylesheet" href="{{STATIC_URL}}plugins/bootstrap/css/bootstrap.min.css">
+		{% block page_style %}{% endblock %}
+		
 	</head>
 	<body>
 		{% block body_container %}
-			<div class="container">
 				{% block post_title %}
-					<h1>Welcome to my blog!</h1>
 				{% endblock %}
 				{% block page_content %}{% endblock %}
-			</div>
 		{% endblock %}
 	</body>
 </html>

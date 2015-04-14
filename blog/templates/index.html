@@ -1,0 +1,376 @@
+{% extends "_layouts/base.html" %}
+<!-- {% load url from future %} -->   
+{% block page_title %} Rohan Roy | {% endblock %}
+{% block page_style %}
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="{{STATIC_URL}}plugins/font-awesome/css/font-awesome.css">
+    <!-- github acitivity css -->
+    <link rel="stylesheet" href="{{STATIC_URL}}plugins/github-activity/dist/github-activity-0.1.0.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}plugins/github-activity/dist/octicons/octicons.min.css">
+    
+    
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="{{STATIC_URL}}css/styles.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+{% endblock %}
+{% block page_content %}
+    <!-- ******HEADER****** --> 
+    <header class="header">
+        <div class="container">                       
+            <img class="profile-image img-responsive pull-left" src="{{STATIC_URL}}images/rohan.png" alt="Rohan Roy" />
+            <div class="profile-content pull-left">
+                <h1 class="name">Rohan Roy</h1>
+                <h2 class="desc">Web App Developer</h2>   
+                <ul class="social list-inline">
+                    <li><a href="https://twiter.com/triump0870"><i class="fa fa-twitter"></i></a></li>                   
+                    <li><a href="https://plus.google.com/+RohanRoy1"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="https://linkedin.com/in/triump0870"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="https://github.com/triump0870"><i class="fa fa-github-alt"></i></a></li>                  
+                    <li class="last-item"><a href="https://news.ycombinator.com/user?id=triump0870"><i class="fa fa-hacker-news"></i></a></li>                 
+                </ul> 
+            </div><!--//profile-->
+            <a class="btn btn-cta-primary pull-right" href="http://rohanroy.com/contact" target="_blank"><i class="fa fa-paper-plane"></i> Contact Me</a>              
+        </div><!--//container-->
+    </header><!--//header-->
+    
+    <div class="container sections-wrapper">
+        <div class="row">
+            <div class="primary col-md-8 col-sm-12 col-xs-12">
+                <section class="about section">
+                    <div class="section-inner">
+                        <h2 class="heading">About Me</h2>
+                        <div class="content">
+                            <p>
+                                I am a Python Programmer, make Django Web Applications and teach courses on Python to make young minds aware of programming, make brave choices, and do crazy things which you rarely do.
+                            </p>
+
+                            <p>
+                                I want to discover what I am truly capable of: physically, mentally and creatively. I want to give more than I thought possible. I want to empty the tank.
+                            </p>
+                                I believe that we get one beautiful shot at life, it's a privilege to be here, and it's never too late to make it count. Today is not over yet.
+                            </p>
+                         
+                        </div><!--//content-->
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+    
+               <section class="latest section">
+                    <div class="section-inner">
+                        <h2 class="heading">Latest Projects</h2>
+                        <div class="content">    
+                                               
+                            <div class="item featured text-center">
+                                <h3 class="title"><a href="http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-for-products-velocity/" target="_blank">KickStarter - Miniblog</a></h3>
+                                <p class="summary">A simple Personal Blog</p>
+                                <div class="featured-image">
+                                    <a href="https://github.com/triump0870/miniblog" target="_blank">
+                                    <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/latest.jpg" alt="KickStarter - Miniblog" />
+                                    </a>
+                                    <div class="ribbon">
+                                        <div class="text">New</div>
+                                        </div>
+                                    </div>
+                                    
+                                <div class="desc text-left">                                    
+                                    <p>This is my Personal Blog Project which is developed in Django1.7. The website is hosted in an AWS Linux instance under Nginx server. I used Virtualenv to make a isolated Django environment. Here I used Gunicorn to wrap the Django environment as Django is single threaded so it is incapable of handling multiple simultaneous requests. But Gunicorn server cant handle the static files thats why I used Nginx to serve the static files. Again the gunicron server is supervised by the Supervisor so that when it gets stopped or killed abruptly, Supervisor will start it automatically so that website is always keep running.</p>
+                                    <p>I am new to Django so if you have any suggestion or interested to contribute then you are always welcome to contribute in this project to make this a better site..</p>
+                                </div><!--//desc-->         
+                                <a class="btn btn-cta-secondary" href="https://github.com/triump0870/miniblog" target="_blank"><i class="fa fa-thumbs-o-up"></i> Fork me on Github</a>                 
+                            </div><!--//item-->
+                            <hr class="divider" />
+                            <div class="item row">
+                                <a class="col-md-4 col-sm-4 col-xs-12" href="https://github.com/triump0870/weather" target="_blank">
+                                <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/project-5.png" alt="Weather- Designed for Android" />
+                                </a>
+                                <div class="desc col-md-8 col-sm-8 col-xs-12">
+                                    <h3 class="title"><a href="https://github.com/triump0870/weather" target="_blank">Weather- Designed for Android</a></h3>
+                                    <p>Its a weather app for Android which fetches hourly weather data from weather.com. I used Android Studio to create this app and used JSON to parse the weather API.</p>
+                                    <p><a class="more-link" href="https://github.com/triump0870/weather" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
+                                </div><!--//desc-->                          
+                            </div><!--//item-->
+                            
+                            <div class="item row">
+                                <a class="col-md-4 col-sm-4 col-xs-12" href="https://github.com/triump0870/gamazone" target="_blank">
+                                <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/gamazone-1.jpg" alt="Gamazone- Developed for Gamers" />
+                                </a>
+                                <div class="desc col-md-8 col-sm-8 col-xs-12">
+                                    <h3 class="title"><a href="https://github.com/triump0870/gamazone" target="_blank">Gamazone- Developed for Gamers</a></h3>
+                                    <p>Its a website for gamers to share there experience on Video games and help others to overcome the problems they faced while they were playing.</p>
+                                    <p><a class="more-link" href="https://github.com/triump0870/gamazone" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
+                                </div><!--//desc-->                          
+                            </div><!--//item-->
+                            
+                            <div class="item row">
+                                <a class="col-md-4 col-sm-4 col-xs-12" href="https://github.com/triump0870/Interactive_Programming_Python" target="_blank">
+                                <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/galaxy.jpg" alt="Interactive Games - Designed on Codeskulptor using Python" />
+                                </a>
+                                <div class="desc col-md-8 col-sm-8 col-xs-12">
+                                    <h3 class="title"><a href="" target="_blank">Interactive Games - Designed on Codeskulptor using Python</a></h3>
+                                    <p>I developed several browser based games on codeskulptor while taking a course in coursera on An Introduction to Interactive Programming in Python under Joe Warren, Scott Rixner, John Greiner & Stephen Wong of Rice University. Amongst my all games the most notable one is <a href="http://www.codeskulptor.org/#user23_fTVPDKIDhRdCfUp.py"> Galaxy Invaders</a>.</p>
+                                    <p><a class="more-link" href="https://github.com/triump0870/Interactive_Programming_Python" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
+                                </div><!--//desc-->                          
+                            </div><!--//item-->                            
+                            <div class="item row">
+                                <a class="col-md-4 col-sm-4 col-xs-12" href="https://github.com/triump0870/bitstarter" target="_blank">
+                                <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/project-2.png" alt="Bitstarter- Startup Engineering" />
+                                </a>
+                                <div class="desc col-md-8 col-sm-8 col-xs-12">
+                                    <h3 class="title"><a href="https://www.coursera.org/course/startup" target="_blank">Bitstarter- Startup Engineering</a></h3>
+                                    <p>I took a course on Coursera on Startup Engineering under Balaji S. Srinivasan & Vijay S. Pande of Standford University. Here I learned a fast-paced introduction to key tools and techniques like command line, dotfiles, text editor, distributed version control, debugging, testing, documentation, reading code, deployments etc. For the project I developed a web server on AWS EC2 and hosted a static website using Heroku.</p>
+                                    <p><a class="more-link" href="https://github.com/triump0870/bitstarter" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
+                                </div><!--//desc-->                          
+                            </div><!--//item-->
+                            
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+                
+               
+                
+                <section class="experience section">
+                    <div class="section-inner">
+                        <h2 class="heading">Work Experience</h2>
+                        <div class="content">
+                            <div class="item">
+                                <h3 class="title">Integration Engineer - <span class="place"><a href="#">Ericsson</a></span> <span class="year">(2015 - Present)</span></h3>
+                                <p>Currently I am working in Ericsson in Business Intelligence(BI). Here I am learning how to interact with database and how to do database warehousing on SQL using Oracle. <!-- building a personal blog using Django1.7. I configured it on a Ubuntu AWS EC2 instance under Nginx web server which uses Gunicorn to interact with Django. I developed API routes and interaction with database using Django-Tastypie and Mysql. -->
+                                </p>
+                            </div><!--//item-->
+                            <div class="item">
+                                <h3 class="title">Software Engineer - <span class="place"><a href="#">Capgemini</a></span> <span class="year">(2014 - 2015)</span></h3>
+                                <p>My first company was Capgemini. There I learned SAP ABAP. Capgemini is a IT consulting firm with offices in more than 53 countries.</p>
+                            </div><!--//item-->
+                            
+                            <div class="item">
+                                <h3 class="title">Internship - <span class="place"><a href="#">Nettech</a></span> <span class="year">(2012 - 2013)</span></h3>
+                                <p>I did my internship at a company named Nettech. There I learned to apply my knowledge of computer networks. Nettech is a computer networking training provider headquartered in Kolkata, India. Its courses focus on computer networking in the Linux environment, network security, information security management systems and counter measures against hacking and other cybercrimes .</p>
+                            </div><!--//item-->
+                            
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+                <section class="github section">
+                    <div class="section-inner">
+                        <h2 class="heading">My GitHub</h2>
+                       <!--  <p>You can embed your GitHub activities using Casey Scarborough's <a href="http://caseyscarborough.com/projects/github-activity/" target="_blank">GitHub Activity Stream</a> widget.         -->
+                        <!--//Usage: http://caseyscarborough.com/projects/github-activity/ -->                       
+                        <div id="ghfeed" class="ghfeed">
+                        </div><!--//ghfeed-->
+                        
+                    </div><!--//secton-inner-->
+                </section><!--//section-->
+            </div><!--//primary-->
+            <div class="secondary col-md-4 col-sm-12 col-xs-12">
+                 <aside class="info aside section">
+                    <div class="section-inner">
+                        <h2 class="heading sr-only">Basic Information</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li><i class="fa fa-map-marker"></i><span class="sr-only">Location:</span> &nbsp;Kolkata, IN</li>
+                                <li><i class="fa fa-envelope-o"></i><span class="sr-only">Email:</span><a href="#">rohan@rohanroy.com</a></li>
+                                <li><i class="fa fa-link"></i><span class="sr-only">Website:</span><a href="#">http://www.rohanroy.com</a></li>
+                            </ul>
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </aside><!--//aside-->
+                
+                <aside class="skills aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Skills</h2>
+                        <div class="content">
+                            
+                            <div class="skillset">
+                               
+                                <div class="item">
+                                    <h3 class="level-title">Python &amp; Linux<span class="level-label" data-toggle="tooltip" data-placement="left" data-animation="true" title="You can use the tooltip to add more info...">Pro</span></h3>
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="85%">
+                                        </div>                                      
+                                    </div><!--//level-bar-->                                 
+                                </div><!--//item-->
+
+                                <div class="item">
+                                    <h3 class="level-title">HTML, CSS &amp; Bootstrap<span class="level-label">Intermediate</span></h3>
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="70%">
+                                        </div>                                      
+                                    </div><!--//level-bar-->                                 
+                                </div><!--//item-->
+
+                                <div class="item">
+                                    <h3 class="level-title">MySQL, Algorithms &amp; Git<span class="level-label">Intermediate</span></h3>
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="65%">
+                                        </div>                                      
+                                    </div><!--//level-bar-->                                 
+                                </div><!--//item-->
+                                
+                                
+                                
+                                <div class="item">
+                                    <h3 class="level-title">Django<span class="level-label">Beginner</span></h3>
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="50%">
+                                        </div>                                      
+                                    </div><!--//level-bar-->                                 
+                                </div><!--//item-->
+                                
+                                <p><a class="more-link" href="https://www.linkedin.com/in/triump0870"><i class="fa fa-external-link"></i> More on LinkedIn</a></p> 
+                            </div>              
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </aside><!--//section-->
+                
+                <aside class="testimonials aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Testimonials</h2>
+                        <div class="content">
+                            <div class="item">
+                                <blockquote class="quote">                                  
+                                    <p><i class="fa fa-quote-left"></i>Rohan is an excellent software engineer and he is passionate about what he does. You can totally count on him to deliver your projects!</p>
+                                </blockquote>                
+                                <p class="source"><span class="name">Tamal Biswas</span><br /><span class="title">Software Engineer</span></p>                                                             
+                            </div><!--//item-->
+                            
+                            <p><a class="more-link" href="#"><i class="fa fa-external-link"></i> More on Linkedin</a></p> 
+                            
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                
+                <aside class="education aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Education</h2>
+                        <div class="content">
+                            <div class="item">                      
+                                <h3 class="title"><i class="fa fa-graduation-cap"></i> B.Tech Computer Science</h3>
+                                <a href="http://kgec.edu.in"><h4 class="university">Kalyani Govt. Engineering College </a><span class="year">(2010-2014)</span></h4>
+                            </div><!--//item-->
+                            <div class="item">
+                                <h3 class="title"><i class="fa fa-graduation-cap"></i> Web Development</h3>
+                                <a href="http://udacity.com"><h4 class="university">Udacity </a><span class="year">(2014-2015)</span></h4>
+                            </div><!--//item-->
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                            
+                <aside class="languages aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Languages</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li class="item">
+                                    <span class="title"><strong>Bengali:</strong></span>
+                                    <span class="level">Native Speaker <br class="visible-xs"/><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                </li><!--//item-->
+                                <li class="item">
+                                    <span class="title"><strong>English:</strong></span>
+                                    <span class="level">Professional Proficiency <br class="visible-sm visible-xs"/><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half"></i></span>
+                                </li><!--//item-->
+                                <li class="item">
+                                    <span class="title"><strong>Hindi:</strong></span>
+                                    <span class="level">Professional Proficiency <br class="visible-sm visible-xs"/><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half"></i></span>
+                                </li><!--//item-->
+                            </ul>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                
+                <aside class="blog aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Latest Blog Posts</h2>
+                        <div class="content">   
+                            <ul class="list-unstyled">
+                                {% for post in post_list %}
+                                <li><i class="fa fa-paragraph"></i> <a href="{{post.get_absolute_url}}">{{ post.title }}</a></li>    
+                                {% empty %}
+                                <li>
+                                    <span class="fa-stack">
+                                        <i class="fa fa-heart fa-stack-1x"></i>
+                                        <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                    Sorry, no post yet. Check back soon!
+                                </li>
+                            </ul>
+                            {% endfor %}
+                        </div>
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                
+                <aside class="list music aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Favourite coding music</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li><i class="fa fa-headphones"></i> <a href="https://www.youtube.com/watch?v=AHGvaQMClEo">End Of Line</a></li>
+                                <li><i class="fa fa-headphones"></i> <a href="https://www.youtube.com/watch?v=KC8lt--rEEo">We Code Hard</a></li>
+                                <li><i class="fa fa-headphones"></i> <a href="https://www.youtube.com/watch?v=gvlNy8CdlIY">Until The Morning</a></li>
+                                <li><i class="fa fa-headphones"></i> <a href="https://www.youtube.com/watch?v=w8KQmps-Sog&list=PL31375A5D170520D8">Muse - Uprising</a></li>
+                            </ul>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                
+                <aside class="list conferences aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Conferences</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li><i class="fa fa-calendar"></i> <a href="https://campuscommune.tcs.com/intro/view_blog/codevita-2014-tcs-global-coding-contest" target="_blank">TCS CodeVita</a> (Kalyani)</li>
+                                <li><i class="fa fa-calendar"></i> <a href="http://dgplug.org/summertraining/">DGPLug Summer Training</a> (Online)</li>
+                            </ul>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                
+                <aside class="credits aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Credits</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li><a href="http://getbootstrap.com/" target="_blank"><i class="fa fa-external-link"></i> Bootstrap 3.2</a></li>
+                                <li><a href="http://fortawesome.github.io/Font-Awesome/" target="_blank"><i class="fa fa-external-link"></i> FontAwsome 4.1</a></li>
+                                <li><a href="http://jquery.com/" target="_blank"><i class="fa fa-external-link"></i> jQuery</a></li>
+                                <li><a href="http://caseyscarborough.com/projects/github-activity/" target="_blank"><i class="fa fa-external-link"></i> GitHub Activity Stream</a></li>
+                                
+                                <li><a href="https://github.com/sdepold/jquery-rss" target="_blank"><i class="fa fa-external-link"></i> jQuery RSS</a></li>
+                                
+                            </ul>
+                            
+                            <hr/>
+                            <a class="btn btn-cta-secondary btn-follow" href="https://twitter.com/triump0870" target="_blank"><i class="fa fa-twitter"></i> Follow me</a>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+              
+            </div><!--//secondary-->    
+        </div><!--//row-->
+    </div><!--//masonry-->
+    
+    <!-- ******FOOTER****** --> 
+    <footer class="footer">
+        <div class="container text-center">
+                <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="http://rohanroy.com" target="_blank">Rohan Roy</a></small>
+        </div><!--//container-->
+    </footer><!--//footer-->
+ 
+    <!-- Javascript -->          
+    <script type="text/javascript" src="{{STATIC_URL}}plugins/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}plugins/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}plugins/bootstrap/js/bootstrap.min.js"></script>    
+   <!--  // <script type="text/javascript" src="{{STATIC_URL}}plugins/jquery-rss/dist/jquery.rss.min.js"></script>  -->
+    <!-- github activity plugin -->
+    <script type="text/javascript" src="{{STATIC_URL}}plugins/github-activity/dist/mustache/mustache.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}plugins/github-activity/dist/github-activity-0.1.0.min.js"></script>
+    <!-- custom js -->
+    <script type="text/javascript" src="{{STATIC_URL}}js/main.js"></script>            
+{%endblock%}
+

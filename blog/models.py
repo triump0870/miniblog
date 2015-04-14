@@ -3,6 +3,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from vote.managers import VotableManager
+from django_markdown.models import MarkdownField
 # Create your models here.
 
 class PostManager(models.Manager):
@@ -14,9 +15,11 @@ class Post(models.Model):
 	updated_at = models.DateTimeField(auto_now=True, editable=False)
 	title = models.CharField(max_length=255)
 	slug = models.SlugField(max_length=255,blank=True,default='') #blank = True i.e it is not required for validatipn purpose , default = '' for not slug provided
-	content = models.TextField()
+	content = MarkdownField()
 	published = models.BooleanField(default=True)
 	author = models.ForeignKey(User, related_name="posts")
+	rank_score = models.FloatField(default=0.0)
+	url = models.URLField('URL',max_length=250, blank=True)
 	# love = models.PositiveIntegerField(default=0)
 	objects = PostManager()
 	votes = VotableManager()
@@ -37,7 +40,6 @@ class Post(models.Model):
 							})
 class Comments(models.Model):
 	name = models.CharField(max_length=50)
-	website = models.URLField(max_length=200, null=True, blank=True)
 	email = models.EmailField(max_length=75)
 	text = models.TextField()
 	post = models.ForeignKey(Post)
@@ -48,6 +50,13 @@ class Comments(models.Model):
 		ordering = ["-commented_at","email"]
 	def __unicode__(self):
 		return self.text
+
+class Vote(models.Model):
+	voter = models.ForeignKey(User)
+	link = models.ForeignKey(Post)
+
+	def __unicode__(self):
+		return "%s upvoted %s"%(self.voter.username, self.link.title)
 # class Like(models.Model):
 # 	like_post = models.ForeignKey(Post)
 # 	liked_on = models.DateTimeField(auto_now_add=True)

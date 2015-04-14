@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post, Vote
+from django_markdown.admin import MarkdownModelAdmin
 # Register your models here.
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(MarkdownModelAdmin):
 	date_hierarchy = "created_at"
 	fields = ('published',"title","slug","content","author")
 	list_display = ["published","title","updated_at"]
@@ -13,3 +14,8 @@ class PostAdmin(admin.ModelAdmin):
 
 	# pass
 admin.site.register(Post, PostAdmin)
+
+class VoteAdmin(admin.ModelAdmin):
+	pass
+
+admin.site.register(Vote, VoteAdmin)
