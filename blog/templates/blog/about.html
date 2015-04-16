@@ -1,5 +1,5 @@
 {% extends "_layouts/base.html" %}
-    {% block page_title %}Blog Posts | {%endblock%}
+    {% block page_title %}Blog Posts|{%endblock%}
     {% block page_style %}
     <!-- Bootstrap Core CSS -->
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
@@ -63,7 +63,7 @@
                     <div class="site-heading">
                         <h1>Rohan's Blog</h1>
                         <hr class="small">
-                        <span class="subheading">I'm Still Trying To Put A Dent In The Universe</span>
+                        <span class="subheading">Trying To Make A Dent On The Earth's Surface</span>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            	{% for post in post_list %}
+                {% for post in post_list %}
                 <div class="post-preview">
                     <a href="{{post.get_absolute_url}}"> 
                         <h2 class="post-title">
@@ -143,5 +143,5 @@
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="{{STATIC_URL}}js/clean-blog.js"></script>
+    <script src="{{STATIC_URL}}js/clean-blog.min.js"></script>
 {% endblock %}

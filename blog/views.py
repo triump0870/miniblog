@@ -1,5 +1,5 @@
 #All the imports
-from .models import Post, Comments
+from .models import Post, Comment, Vote
 from django.views.generic import ListView, DetailView, TemplateView
 from django.template import RequestContext
 from django.shortcuts import redirect, render_to_response, get_object_or_404
@@ -44,15 +44,9 @@ def view_post(request, slug):
 # 	new_like.like += 1
 # 	new_like.save()
 # 	return 
-def blog_post(self, request, *args, **kwargs):
-    post_list = Post.objects.filter(published=True)
-    template_name = "post_list.html"
-
-    context = {
-        "post_list": post_list
-    }
-
-    return render(request, template_name, context)
+def about_page(request):
+    template_name = "blog/about.html"
+    return render_to_response(template_name)
 
 def vote(request, post_id):
 	return HttpResponse("You're voting on post %s."%post_id)
@@ -68,6 +62,13 @@ class PublishedPostMixin(object):
 class PostListView(PublishedPostMixin,ListView):
 	model = Post
 	template_name = "index.html"
+
+class BlogListView(ListView):
+	model = Post
+	queryset = Post.with_votes.all()
+	template_name = "blogindex.html"
+	# paginate_by = 
+
 
 class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post
