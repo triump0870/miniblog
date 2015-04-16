@@ -7,5 +7,5 @@ urlpatterns = patterns('',
 	url(r"^(?P<slug>[\w-]+)/$",view_post, name="detail"),
 	url(r"^(?P<post_id>[0-9]+)/vote/$",vote, name='vote'),
 	url(r"^feed/$",feed.LatestPosts(), name='feed'),
-	url(r"^about/$",about_page, name='about'),
+	
 	)

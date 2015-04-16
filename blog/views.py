@@ -45,8 +45,8 @@ def view_post(request, slug):
 # 	new_like.save()
 # 	return 
 def about_page(request):
-    template_name = "blog/about.html"
-    return render_to_response(template_name)
+    template_name = "about.html"
+    return render_to_response(template_name, context_instance=RequestContext(request))
 
 def vote(request, post_id):
 	return HttpResponse("You're voting on post %s."%post_id)
