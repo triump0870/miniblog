@@ -3,23 +3,43 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from vote.managers import VotableManager
+from django_markdown.models import MarkdownField
+from django_markdown.widgets import AdminMarkdownWidget
+from django.db.models import TextField, Count
 # Create your models here.
 
 class PostManager(models.Manager):
 	def live(self):
 		return self.model.objects.filter(published=True)
 
+class PostVoteCountManager(models.Manager):
+	def get_queryset(self):
+		return super(PostVoteCountManager, self).get_queryset().annotate(
+			votes = Count('vote')
+			).order_by("-votes")
+
+class Tag(models.Model):
+	slug = models.SlugField(max_length=200, unique=True)
+
+	def __unicode__(self):
+		return self.slug
+
 class Post(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True, editable=False)#save the timestamp when the model first creatred and not the field is editable in admin
 	updated_at = models.DateTimeField(auto_now=True, editable=False)
 	title = models.CharField(max_length=255)
-	slug = models.SlugField(max_length=255,blank=True,default='') #blank = True i.e it is not required for validatipn purpose , default = '' for not slug provided
-	content = models.TextField()
+	slug = models.SlugField(max_length=255,unique=True) #blank = True i.e it is not required for validatipn purpose , default = '' for not slug provided
+	content = MarkdownField()
 	published = models.BooleanField(default=True)
 	author = models.ForeignKey(User, related_name="posts")
+	rank_score = models.FloatField(default=0.0)
+	url = models.URLField('URL',max_length=250, blank=True)
+	tags = models.ManyToManyField(Tag)
 	# love = models.PositiveIntegerField(default=0)
+	with_votes = PostVoteCountManager()
 	objects = PostManager()
-	votes = VotableManager()
+	# votes = VotableManager()
+	formfield_overrides = {TextField: {'widget':AdminMarkdownWidget}}
 	class Meta:
 		ordering = ["-created_at", "title"]
 		
@@ -35,9 +55,8 @@ class Post(models.Model):
 	def get_absolute_url(self):
 		return ("blog:detail",(),{'slug':self.slug
 							})
-class Comments(models.Model):
+class Comment(models.Model):
 	name = models.CharField(max_length=50)
-	website = models.URLField(max_length=200, null=True, blank=True)
 	email = models.EmailField(max_length=75)
 	text = models.TextField()
 	post = models.ForeignKey(Post)
@@ -48,6 +67,15 @@ class Comments(models.Model):
 		ordering = ["-commented_at","email"]
 	def __unicode__(self):
 		return self.text
+
+class Vote(models.Model):
+	voter = models.ForeignKey(User)
+	link = models.ForeignKey(Post)
+
+	def __unicode__(self):
+		return "%s upvoted %s"%(self.voter.username, self.link.title)
+
+
 # class Like(models.Model):
 # 	like_post = models.ForeignKey(Post)
 # 	liked_on = models.DateTimeField(auto_now_add=True)

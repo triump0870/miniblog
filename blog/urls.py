@@ -1,9 +1,11 @@
 from django.conf.urls import patterns, url
-from . import views
-from blog.views import view_post
+from blog.views import  PostListView, vote, BlogListView, view_post, about_page
+from . import feed
 urlpatterns = patterns('',
-	url(r"^$",views.PostListView.as_view(), name="list"),
+	url(r"^$",BlogListView.as_view(), name="list"),
 
 	url(r"^(?P<slug>[\w-]+)/$",view_post, name="detail"),
-	url(r"^(?P<post_id>[0-9]+)/vote/$",views.vote, name='vote'),
+	url(r"^(?P<post_id>[0-9]+)/vote/$",vote, name='vote'),
+	url(r"^feed/$",feed.LatestPosts(), name='feed'),
+	url(r"^about/$",about_page, name='about'),
 	)
