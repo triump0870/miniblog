@@ -3,3 +3,4 @@
 *.c
 *.db
 settings.py
+base.py

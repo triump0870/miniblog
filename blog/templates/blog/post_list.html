@@ -42,11 +42,11 @@
                         <a href="http://rohanroy.com">Home</a>
                     </li>
                     <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>
+                    <a href="http://rohanroy.com/about/">About</a>
+	                </li>
+	                <li>
+	                    <a href="http://rohanroy.com/contact/">Contact</a>
+	                </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -81,14 +81,19 @@
                             {{ post.title|title}}
                         </h2>
                     </a>
-                    <p class="post-meta">Posted by <a href="#">{{post.author|title}}</a> on {{post.created_at}}</p>
+                    <p class="post-meta">Posted by <em><a href="#">{{post.author|title}}</a></em> on {{post.created_at|date:"M j"}}</p>
                 </div>
                 {% endfor%}           
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
+                        <!-- <a href="">Older Posts &rarr;</a> -->
+                        {% with post.post_view as prev %}
+						   {% if prev %}
+						       <a class="left btn" href="{{ prev. }}">Older Posts &raar;</a>
+						   {% endif %}
+						{% endwith %}
                     </li>
                 </ul>
             </div>
@@ -104,29 +109,29 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <ul class="list-inline text-center">
                         <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
+                        <a href="https://twitter.com/triump0870">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="https://www.facebook.com/triump0870">
+	                            <span class="fa-stack fa-lg">
+	                                <i class="fa fa-circle fa-stack-2x"></i>
+	                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+	                            </span>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="https://github.com/triump0870">
+	                            <span class="fa-stack fa-lg">
+	                                <i class="fa fa-circle fa-stack-2x"></i>
+	                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+	                            </span>
+	                        </a>
+	                    </li>
                     </ul>
                 </div>
             </div>

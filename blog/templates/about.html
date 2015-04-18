@@ -1,7 +1,5 @@
 {% extends "_layouts/base.html" %}
-{% load blog_extras %}
-{% load django_markdown %}
-{% block page_title %} {{post.title|title}} | {% endblock %}
+{% block page_title %}About | {%endblock%}
 {% block page_style %}
 <!-- Bootstrap Core CSS -->
 <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
@@ -13,14 +11,7 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-<!-- jQuery -->
-<script src="{{STATIC_URL}}js/jquery.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="{{STATIC_URL}}js/clean-blog.js"></script>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>CClealea
@@ -48,7 +39,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="http://rohanroy.com">Home</a>
+                    <a href="http://rohanroy.com/">Home</a>
                 </li>
                 <li>
                     <a href="http://rohanroy.com/about/">About</a>
@@ -70,90 +61,38 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
-                    <h1>{{post.title|title}}</h1>
+                    <h1>About Me</h1>
                     <hr class="small">
-                    <span class="subheading">Posted by <em><b><a href="http://rohanroy.com/about/">{{post.author | title}}</a></b></em> on {{post.created_at|date:"M j"}}</span>
+                    <span class="subheading">I'm Still Trying To Put A Dent In The Universe</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<!-- Post Content -->
 
-<article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                 <p>
-                    {{ post.content|markdown}}
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-preview">
+                <p>I am a Python Programmer, make Django Web Applications and teach courses on Python to make young minds aware of programming, make brave choices, and do crazy things which you rarely do.
                 </p>
-                <ul class="pager">
-                    <li class="previous">
-                        <a href="">&larr; Previous Posts</a>
-                    </li>
-                    <li class="next">
-                        <a href="">Next Posts &rarr;</a>
-                    </li>
-                </ul>
-            </div>
+                <p>
+                I want to discover my true potential in terms of: physicality, mentality and creativity. I want to persist until its perfect. I want to empty the tank.
+                </p>
+                <p>
+                I believe that we get one beautiful shot at life, it's a privilege to be here, and it's never too late to make it count. Today is not over yet.
+                </p>
+            </div>          
+            <hr>
         </div>
     </div>
-</article>
+</div>
 
 <hr>
 
-<article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2>Comments</h2>
-                <hr>
-                {% if post.comment_set.all %}
-                {% for comment in post.comment_set.all %}
-                <span>
-                    <em><a href="#">{{ comment.name | title}}</a></em> on {{ comment.commented_at }} said:
-                </span>
-                <pre>{{comment.text}}</pre>
-                {%endfor%}
-                {%else%}
-                <P>No comments yet.</P>
-                {%endif%}
-            </div>
-        </div>
-    </div>
-</article>
-<hr>
-<article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2>Add Comments</h2>
-                <hr>
-                <form roll='form' action="" method="POST" class="form-horizontal" >
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <fieldset class="form-group">
-                        <label class="control-label col-sm-2" for="id_{{ field.name }}">{{ field.label }}:</label>
-                        <div class="col-sm-10"> 
-                            {{ field|addcss:"form-control" }}
-                            <p class="help-text">{{ field.help_text }} </p>
-                        </div>
-                    </fieldset>
-                    {% endfor %}
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button class="btn btn-primary" type="submit" >Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</article>
-{% endblock %}
-{% block footer %}
 <!-- Footer -->
-<footer class="footer">
+<footer>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -167,7 +106,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://facebook.com/triump0870">
+                        <a href="https://www.facebook.com/triump0870">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
@@ -187,7 +126,16 @@
         </div>
     </div>
     <div class="container text-center">
-            <small class="copyright text-muted">Designed with <i class="fa fa-heart"></i> by <a href="http://rohanroy.com" class="text-muted" target="_blank">Rohan Roy</a></small>
+            <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="http://rohanroy.com" target="_blank">Rohan Roy</a></small>
     </div><!--//container-->
 </footer>
+
+<!-- jQuery -->
+<script src="{{STATIC_URL}}js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="{{STATIC_URL}}js/clean-blog.js"></script>
 {% endblock %}

@@ -45,8 +45,8 @@ def view_post(request, slug):
 # 	new_like.save()
 # 	return 
 def about_page(request):
-    template_name = "blog/about.html"
-    return render_to_response(template_name)
+    template_name = "about.html"
+    return render_to_response(template_name, context_instance=RequestContext(request))
 
 def vote(request, post_id):
 	return HttpResponse("You're voting on post %s."%post_id)
@@ -65,13 +65,14 @@ class PostListView(PublishedPostMixin,ListView):
 
 class BlogListView(ListView):
 	model = Post
-	queryset = Post.with_votes.all()
-	template_name = "blogindex.html"
-	# paginate_by = 
-
+	queryset = Post.objects.all()[:5]
 
 class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post
+
+def post_view(request):
+    post = Post.get_previous_by_creates_at()
+    return direct_to_template(request, 'blog/post_list.html', {'post': post,})
 
 	# template_name = 'blog_post.html'
 	# form = CommentForm(request.POST or None)
