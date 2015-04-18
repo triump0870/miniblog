@@ -83,7 +83,20 @@
                     </a>
                     <p class="post-meta">Posted by <em><a href="#">{{post.author|title}}</a></em> on {{post.created_at|date:"M j"}}</p>
                 </div>
-                {% endfor%}           
+                {% endfor%} 
+                <hr>
+                {% block page_ads %}
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- rohanroy.com_responsive_april19 -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6174669567663845"
+                             data-ad-slot="6012284410"
+                             data-ad-format="auto"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                {% endblock %}         
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
