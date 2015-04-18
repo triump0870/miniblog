@@ -65,13 +65,14 @@ class PostListView(PublishedPostMixin,ListView):
 
 class BlogListView(ListView):
 	model = Post
-	queryset = Post.with_votes.all()
-	template_name = "blogindex.html"
-	# paginate_by = 
-
+	queryset = Post.objects.all()[:5]
 
 class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post
+
+def post_view(request):
+    post = Post.get_previous_by_creates_at()
+    return direct_to_template(request, 'blog/post_list.html', {'post': post,})
 
 	# template_name = 'blog_post.html'
 	# form = CommentForm(request.POST or None)

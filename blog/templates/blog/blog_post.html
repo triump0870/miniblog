@@ -71,8 +71,8 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
                     <h1>{{post.title|title}}</h1>
-                    <!-- <hr class="small">
-                    <span class="subheading">Posted by <a href="{{ post.author  }}" style="color:blue;">{{post.author | title}}</a></span> -->
+                    <hr class="small">
+                    <span class="subheading">Posted by <em><b><a href="http://rohanroy.com/about/">{{post.author | title}}</a></b></em> on {{post.created_at|date:"M j"}}</span>
                 </div>
             </div>
         </div>
@@ -87,6 +87,14 @@
                  <p>
                     {{ post.content|markdown}}
                 </p>
+                <ul class="pager">
+                    <li class="previous">
+                        <a href="">&larr; Previous Posts</a>
+                    </li>
+                    <li class="next">
+                        <a href="">Next Posts &rarr;</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

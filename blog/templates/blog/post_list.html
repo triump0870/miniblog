@@ -81,14 +81,19 @@
                             {{ post.title|title}}
                         </h2>
                     </a>
-                    <p class="post-meta">Posted by <a href="#">{{post.author|title}}</a> on {{post.created_at}}</p>
+                    <p class="post-meta">Posted by <em><a href="#">{{post.author|title}}</a></em> on {{post.created_at|date:"M j"}}</p>
                 </div>
                 {% endfor%}           
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
+                        <!-- <a href="">Older Posts &rarr;</a> -->
+                        {% with post.post_view as prev %}
+						   {% if prev %}
+						       <a class="left btn" href="{{ prev. }}">Older Posts &raar;</a>
+						   {% endif %}
+						{% endwith %}
                     </li>
                 </ul>
             </div>
