@@ -39,7 +39,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="http://rohanroy.com">Home</a>
+                        <a href="http://rohanroy.com/blog">Home</a>
                     </li>
                     <li>
                     <a href="http://rohanroy.com/about/">About</a>
@@ -83,17 +83,25 @@
                     </a>
                     <p class="post-meta">Posted by <em><a href="#">{{post.author|title}}</a></em> on {{post.created_at|date:"M j"}}</p>
                 </div>
-                {% endfor%}           
+                {% endfor%} 
+                <hr>
+                {% block page_ads %}
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- rohanroy.com_responsive_april19 -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6174669567663845"
+                             data-ad-slot="6012284410"
+                             data-ad-format="auto"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                {% endblock %}         
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="next">
-                        <!-- <a href="">Older Posts &rarr;</a> -->
-                        {% with post.post_view as prev %}
-						   {% if prev %}
-						       <a class="left btn" href="{{ prev. }}">Older Posts &raar;</a>
-						   {% endif %}
-						{% endwith %}
+				       <a class="left btn" href="{{ post.get_previous_by_created_at }}">Older Posts &rarr;</a>
                     </li>
                 </ul>
             </div>

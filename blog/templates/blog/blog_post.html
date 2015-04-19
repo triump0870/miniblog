@@ -48,7 +48,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="http://rohanroy.com">Home</a>
+                    <a href="http://rohanroy.com/blog">Home</a>
                 </li>
                 <li>
                     <a href="http://rohanroy.com/about/">About</a>
@@ -72,7 +72,7 @@
                 <div class="site-heading">
                     <h1>{{post.title|title}}</h1>
                     <hr class="small">
-                    <span class="subheading">Posted by <em><b><a href="http://rohanroy.com/about/">{{post.author | title}}</a></b></em> on {{post.created_at|date:"M j"}}</span>
+                    <span class="subheading">Posted by <em><b><a href="http://rohanroy.com/about/" style="color:#70CFEC;">{{post.author | title}}</a></b></em> on {{post.created_at|date:"M j"}}</span>
                 </div>
             </div>
         </div>
@@ -84,9 +84,22 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <hr>
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- rohanroy.com_leaderboard_april19 -->
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:728px;height:90px"
+                     data-ad-client="ca-pub-6174669567663845"
+                     data-ad-slot="4784400011"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <hr>
                  <p>
                     {{ post.content|markdown}}
                 </p>
+                <hr>
+                
                 <ul class="pager">
                     <li class="previous">
                         <a href="">&larr; Previous Posts</a>

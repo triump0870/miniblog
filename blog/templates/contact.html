@@ -1,5 +1,5 @@
 {% extends "_layouts/base.html" %}
-{% block page_title %}About | {%endblock%}
+{% block page_title %}Contact Me | {%endblock%}
 {% block page_style %}
 <!-- Bootstrap Core CSS -->
 <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
@@ -39,7 +39,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="http://rohanroy.com/">Home</a>
+                        <a href="http://rohanroy.com/blog">Home</a>
                     </li>
                     <li>
                         <a href="http://rohanroy.com/about/">About</a>
@@ -115,6 +115,20 @@
                         </div>
                     </div>
                 </form>
+                <hr>
+                {% block page_ads %}
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                        <!-- rohanroy.com_responsive_april19 -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6174669567663845"
+                             data-ad-slot="6012284410"
+                             data-ad-format="auto"></ins>
+                        <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                {% endblock %}
+                <hr>
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 {% extends "_layouts/base.html" %}
-{% block page_title %}About | {%endblock%}
+{% block page_title %}About Me | {%endblock%}
 {% block page_style %}
 <!-- Bootstrap Core CSS -->
 <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
@@ -39,7 +39,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="http://rohanroy.com/">Home</a>
+                    <a href="http://rohanroy.com/blog">Home</a>
                 </li>
                 <li>
                     <a href="http://rohanroy.com/about/">About</a>
@@ -56,7 +56,7 @@
 
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
-<header class="intro-header" style="background-image: url('{{STATIC_URL}}images/home-bg.jpg')">
+<header class="intro-header" style="background-image: url('{{STATIC_URL}}images/about-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -85,12 +85,23 @@
                 </p>
             </div>          
             <hr>
+            {% block page_ads %}
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- rohanroy.com_responsive_april19 -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-6174669567663845"
+                         data-ad-slot="6012284410"
+                         data-ad-format="auto"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            {% endblock %}
+            <hr>
         </div>
     </div>
 </div>
-
 <hr>
-
 <!-- Footer -->
 <footer>
     <div class="container">
