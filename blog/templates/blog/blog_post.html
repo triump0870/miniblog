@@ -48,7 +48,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="http://rohanroy.com">Home</a>
+                    <a href="http://rohanroy.com/blog">Home</a>
                 </li>
                 <li>
                     <a href="http://rohanroy.com/about/">About</a>
@@ -98,6 +98,12 @@
                  <p>
                     {{ post.content|markdown}}
                 </p>
+                <hr>
+                <ul class="pager">
+                    <li class="previous">
+                        <a href="">{{post.tags}}</a>
+                    </li>
+                </ul>
                 <ul class="pager">
                     <li class="previous">
                         <a href="">&larr; Previous Posts</a>

@@ -39,7 +39,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="http://rohanroy.com">Home</a>
+                        <a href="http://rohanroy.com/blog">Home</a>
                     </li>
                     <li>
                     <a href="http://rohanroy.com/about/">About</a>
@@ -101,12 +101,7 @@
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="next">
-                        <!-- <a href="">Older Posts &rarr;</a> -->
-                        {% with post.post_view as prev %}
-						   {% if prev %}
-						       <a class="left btn" href="{{ prev. }}">Older Posts &raar;</a>
-						   {% endif %}
-						{% endwith %}
+				       <a class="left btn" href="{{ post.get_previous_by_created_at }}">Older Posts &rarr;</a>
                     </li>
                 </ul>
             </div>
