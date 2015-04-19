@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render_to_response, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from forms import PostForm, CommentForm
 from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 
@@ -55,17 +56,16 @@ class PublishedPostMixin(object):
 	def get_queryset(self):
 		return self.model.objects.live()
 
-# class HomepageView(PublishedPostMixin,ListView):
-# 	models = Post
-# 	template_name = "index.html"
-
 class PostListView(PublishedPostMixin,ListView):
 	model = Post
 	template_name = "index.html"
 
 class BlogListView(ListView):
 	model = Post
-	queryset = Post.objects.all()[:5]
+	queryset = Post.objects.all().filter(published=True)
+	paginate_by = 2
+
+	
 
 class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post

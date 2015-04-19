@@ -1,6 +1,7 @@
 {% extends "_layouts/base.html" %}
 {% load blog_extras %}
 {% load django_markdown %}
+{% load url from future %}
 {% block page_title %} {{post.title|title}} | {% endblock %}
 {% block page_style %}
 <!-- Bootstrap Core CSS -->
@@ -86,27 +87,32 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <hr>
                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- rohanroy.com_leaderboard_april19 -->
-                <ins class="adsbygoogle"
-                     style="display:inline-block;width:728px;height:90px"
-                     data-ad-client="ca-pub-6174669567663845"
-                     data-ad-slot="4784400011"></ins>
-                <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+                    <!-- rohanroy.com_responsive_april19 -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-6174669567663845"
+                         data-ad-slot="6012284410"
+                         data-ad-format="auto"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>  
                 <hr>
-                 <p>
+                <p>
                     {{ post.content|markdown}}
                 </p>
                 <hr>
                 
                 <ul class="pager">
+                    {% if post.get_next_by_created_at %}
                     <li class="previous">
-                        <a href="">&larr; Previous Posts</a>
+                        <a href="{% url 'blog:detail' post.get_next_by_created_at.slug %}">&larr; Previous Post</a>
                     </li>
+                    {% endif %}
+                    {% if post.get_previous_by_created_at %}
                     <li class="next">
-                        <a href="">Next Posts &rarr;</a>
+                        <a href="{% url 'blog:detail' post.get_previous_by_created_at.slug %}">Next Post &rarr;</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
