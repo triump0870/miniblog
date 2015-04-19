@@ -69,21 +69,3 @@ class BlogListView(ListView):
 
 class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post
-
-def post_view(request):
-    post = Post.get_previous_by_creates_at()
-    return direct_to_template(request, 'blog/post_list.html', {'post': post,})
-
-	# template_name = 'blog_post.html'
-	# form = CommentForm(request.POST or None)
-	# if form.is_valid():
-	# 	comment = form.save(commit=False)
-	# 	comment.post = post
-	# 	comment.save()
-	# 	request.session['name'] = comment.name
-	# 	request.session['email'] = comment.email
-	# 	request.session['website'] = comment.website
-	# form.initial['name'] = request.session.get('name')
-	# form.initial['email'] = request.session.get['email']
-	# form.initial['website'] = request.session.get['website']
-
