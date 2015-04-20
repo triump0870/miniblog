@@ -6,7 +6,13 @@ from vote.managers import VotableManager
 from django_markdown.models import MarkdownField
 from django_markdown.widgets import AdminMarkdownWidget
 from django.db.models import TextField, Count
+from time import time
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 # Create your models here.
+def generate_filename(instance, filename):
+	ext = filename.split('.')[-1]
+	return 'images/'+str(int(time()))+'.'+ext
 
 class PostManager(models.Manager):
 	def live(self):
@@ -35,10 +41,9 @@ class Post(models.Model):
 	rank_score = models.FloatField(default=0.0)
 	url = models.URLField('URL',max_length=250, blank=True)
 	tags = models.ManyToManyField(Tag)
-	# love = models.PositiveIntegerField(default=0)
+	image = models.ImageField(upload_to=generate_filename,null=True, blank=True)
 	with_votes = PostVoteCountManager()
 	objects = PostManager()
-	# votes = VotableManager()
 	formfield_overrides = {TextField: {'widget':AdminMarkdownWidget}}
 	class Meta:
 		ordering = ["-created_at", "title"]
@@ -74,6 +79,31 @@ class Vote(models.Model):
 
 	def __unicode__(self):
 		return "%s upvoted %s"%(self.voter.username, self.link.title)
+
+class Project(models.Model):
+	title = models.CharField(max_length=255)
+	content = MarkdownField()
+	image = models.ImageField(upload_to=generate_filename, blank=True, null=True)
+	date = models.DateField(editable=True)
+	published = models.BooleanField(default=True)
+	slug = models.SlugField(max_length=255, unique=True)
+	url = models.URLField('URL',max_length=255,blank=True)
+	github = models.URLField('GITHUB_URL',max_length=255,blank=True)
+
+	def __unicode__(self):
+		return self.title
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.title)
+		super(Project, self).save(*args, **kwargs)
+
+@receiver(post_delete, sender=Post)
+def image_post_delete_handler(sender, **kwargs):
+	Post = kwargs['instance']
+	storage, path = Post.image.storage, Post.image.path
+	storage.delete(path)
+
 
 
 # class Like(models.Model):

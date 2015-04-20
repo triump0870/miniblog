@@ -73,7 +73,7 @@
                 <div class="site-heading">
                     <h1>{{post.title|title}}</h1>
                     <hr class="small">
-                    <span class="subheading">Posted by <em><b><a href="http://rohanroy.com/about/" style="color:#70CFEC;">{{post.author | title}}</a></b></em> on {{post.created_at|date:"M j"}}</span>
+                    <span class="subheading">Posted by <em><b><a href="http://rohanroy.com/about/" style="color:#70CFEC;">{{post.author | title}}</a></b></em> on {{post.created_at|date:"M j, Y"}}</span>
                 </div>
             </div>
         </div>
@@ -101,7 +101,17 @@
                     {{ post.content|markdown}}
                 </p>
                 <hr>
-                
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- rohanroy.com_responsive_april19 -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-6174669567663845"
+                         data-ad-slot="6012284410"
+                         data-ad-format="auto"></ins>
+                    <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>  
+                <hr>
                 <ul class="pager">
                     {% if post.get_next_by_created_at %}
                     <li class="previous">
@@ -135,7 +145,16 @@
                 <pre>{{comment.text}}</pre>
                 {%endfor%}
                 {%else%}
-                <P>No comments yet.</P>
+                <ul class="list-unstyled">
+                    <li>
+                        <i class="fa fa-comment"></i> Be the first to comment !
+                        <!-- <span class="fa-stack">
+
+                            
+                        </span> -->
+                        
+                    </li>
+                </ul>
                 {%endif%}
             </div>
         </div>
