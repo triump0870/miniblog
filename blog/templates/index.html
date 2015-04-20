@@ -251,7 +251,7 @@
                         <div class="content">   
                             <ul class="list-unstyled">
                                 {% for post in post_list %}
-                                <li><i class="fa fa-chevron-circle-right"></i> <a href="{{post.get_absolute_url}}">{{ post.title }}</a></li>    
+                                <li><i class="fa fa-chevron-circle-right"></i> <a href="{{post.get_absolute_url}}">{{ post.title|title }}</a></li>    
                                 {% empty %}
                                 <li>
                                     <span class="fa-stack">
