@@ -98,22 +98,31 @@ class Project(models.Model):
 			self.slug = slugify(self.title)
 		super(Project, self).save(*args, **kwargs)
 
+class Work(models.Model):
+	company = models.CharField(max_length=255)
+	designation = models.CharField(max_length=30)
+	content = MarkdownField()
+	start_date = models.DateField(editable=True)
+	end_date = models.DateField(editable=True,null=True,blank=True)
+	class Meta:
+		ordering = ["-start_date"]
+	def __unicode__(self):
+		return self.designation
+
+	def span(self):
+		if self.end_date:
+			months = lambda a, b: abs((a.year - b.year) * 12 + a.month - b.month) + int(abs(a.day - b.day) > 15)
+			diff = months(self.end_date,self.start_date)
+			if diff > 1:
+				diff = str(diff)+' Months'
+			else:
+				diff = str(diff)+' Month'
+		else:
+			diff = 'Present'
+		return diff
+
 @receiver(post_delete, sender=Post)
 def image_post_delete_handler(sender, **kwargs):
 	Post = kwargs['instance']
 	storage, path = Post.image.storage, Post.image.path
 	storage.delete(path)
-
-
-
-# class Like(models.Model):
-# 	like_post = models.ForeignKey(Post)
-# 	liked_on = models.DateTimeField(auto_now_add=True)
-	
-# class Hit(models.Model):
-# 	date = models.DateTimeField(auto_now=True)
-# 	content_type = models.ForeignKey(ContentType)
-# 	object_id = models.PositiveIntegerField()
-# 	content_object = generic.GenericForeignKey('content_type','object_id')
-# 	ip = models.CharField(max_length=40)
-# 	session = models.CharField(max_length=40)

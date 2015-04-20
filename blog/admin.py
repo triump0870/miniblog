@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Vote, Tag, Comment, Project
+from .models import Post, Vote, Tag, Comment, Project, Work
 from django_markdown.admin import MarkdownModelAdmin
 # Register your models here.
 class PostAdmin(MarkdownModelAdmin):
@@ -35,3 +35,12 @@ class ProjectAdmin(MarkdownModelAdmin):
 	search_fields = ['^title','^content']
 
 admin.site.register(Project, ProjectAdmin)
+
+class WorkAdmin(MarkdownModelAdmin):
+	date_hierarchy = "start_date"
+	fields = ('start_date','end_date','company','designation','content')
+	list_display = ['company','designation','span']
+	list_filter = ['company','designation']
+	search_fields = ['^company','^designation']
+
+admin.site.register(Work, WorkAdmin)

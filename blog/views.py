@@ -1,5 +1,5 @@
 #All the imports
-from .models import Post, Comment, Vote, Project
+from .models import Post, Comment, Vote, Project, Work
 from django.views.generic import ListView, DetailView, TemplateView
 from django.template import RequestContext
 from django.shortcuts import redirect, render_to_response, get_object_or_404
@@ -9,16 +9,6 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
-
-# @user_passes_test(lambda u:u.is_superuser)
-# def add_post(request):
-# 	form = PostForm(request.POST or None)
-# 	if form.is_valid():
-# 		post = form.save(commit=False)
-# 		post.author = request.user
-# 		post.save()
-# 		return redirect(post)
-# 	return render_to_response('blog/add_post.html',{'form':form},context_instance=RequestContext(request))
 class PublishedPostMixin(object):
 	def get_queryset(self):
 		return self.model.objects.live()
@@ -31,6 +21,7 @@ class PostListView(PublishedPostMixin,ListView):
 		context = super(PostListView, self).get_context_data(**kwargs)
 		# Add in a QuerySet of all the books
 		context['project_list'] = Project.objects.all()
+		context['work_list'] = Work.objects.all()
 		return context
 
 class BlogListView(ListView):
@@ -51,9 +42,6 @@ def view_post(request, slug):
 		request.session['name'] = comment.name
 		request.session['email'] = comment.email
 		return redirect(request.path)
-	# form.initial['name'] = request.session.get('name')
-	# form.initial['email'] = request.session.get('email')
-	# form.initial['website'] = request.session.get('website')
 	return render_to_response('blog/blog_post.html',
 		{
 			'post':post,
