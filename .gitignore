@@ -2,5 +2,4 @@
 *.bash
 *.c
 *.db
-settings.py
-base.py
+
