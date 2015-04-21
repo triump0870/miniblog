@@ -103,7 +103,9 @@ LOCAL_APPS = (
     'blog',
     )
 
-THIRD_PARTY_APPS = ()
+THIRD_PARTY_APPS = (
+    'django_markdown',
+    )
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
