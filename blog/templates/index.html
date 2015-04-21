@@ -1,4 +1,5 @@
 {% extends "_layouts/base.html" %}
+{% load django_markdown %}
 {% block page_title %} Rohan Roy | {% endblock %}
 {% block page_style %}
 
@@ -65,13 +66,13 @@
                     <div class="section-inner">
                         <h2 class="heading">Latest Projects</h2>
                         <div class="content">    
-                                               
+
                             <div class="item featured text-center">
-                                <h3 class="title"><a href="http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-for-products-velocity/" target="_blank">KickStarter - Miniblog</a></h3>
+                                <h3 class="title"><a href="{{project_list.4.url}}" target="_blank">{{project_list.4.title}}</a> </h3>
                                 <p class="summary">A simple Personal Blog</p>
                                 <div class="featured-image">
-                                    <a href="https://github.com/triump0870/miniblog" target="_blank">
-                                    <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/latest.jpg" alt="KickStarter - Miniblog" />
+                                    <a href="{{project_list.0.github}}" target="_blank">
+                                    <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project_list.4.image}}" alt="KickStarter - Miniblog" />
                                     </a>
                                     <div class="ribbon">
                                         <div class="text">New</div>
@@ -79,54 +80,24 @@
                                     </div>
                                     
                                 <div class="desc text-left">                                    
-                                    <p>This is my Personal Blog Project which is developed in Django1.7. The website is hosted in an AWS Linux instance under Nginx server. I used Virtualenv to make a isolated Django environment. Here I used Gunicorn to wrap the Django environment as Django is single threaded so it is incapable of handling multiple simultaneous requests. But Gunicorn server cant handle the static files that's why I used Nginx to serve the static files. Again the Gunicorn server is supervised by the Supervisor so that when it gets stopped or killed abruptly, Supervisor will start it automatically so that website is always keep running.</p>
-                                    <p>I am new to Django so if you have any suggestion or interested to contribute then you are always welcome to contribute in this project to make this a better site..</p>
+                                    {{project_list.4.content|markdown}}
                                 </div><!--//desc-->         
-                                <a class="btn btn-cta-secondary" href="https://github.com/triump0870/miniblog" target="_blank"><i class="fa fa-thumbs-o-up"></i> Fork me on Github</a>                 
+                                <a class="btn btn-cta-secondary" href="{{project_list.4.github}}" target="_blank"><i class="fa fa-thumbs-o-up"></i> Fork me on Github</a>                 
                             </div><!--//item-->
                             <hr class="divider" />
+                            {% for project in project_list|slice:':4'%}
                             <div class="item row">
-                                <a class="col-md-4 col-sm-4 col-xs-12" href="https://github.com/triump0870/weather" target="_blank">
-                                <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/project-5.png" alt="Weather- Designed for Android" />
+                                <a class="col-md-4 col-sm-4 col-xs-12" href="{{project.github}}" target="_blank">
+                                <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project.image}}" alt="Weather- Designed for Android" />
                                 </a>
                                 <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a href="https://www.udacity.com/course/ud853" target="_blank">Weather- Designed for Android</a></h3>
-                                    <p>Its a weather app for Android which fetches hourly weather data from weather.com. I used Android Studio to create this app and used JSON to parse the weather API.</p>
-                                    <p><a class="more-link" href="https://github.com/triump0870/weather" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
+                                    <h3 class="title"><a href="{{project.url}}" target="_blank">{{project.title}} </a><small>{{project.date|date:'M j, Y'}}</small></h3>
+                                    <p>{{project.content|markdown}}</p>
+                                    <p><a class="more-link" href="{{project.github}}" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
                                 </div><!--//desc-->                          
                             </div><!--//item-->
+                            {% endfor %}
                             
-                            <div class="item row">
-                                <a class="col-md-4 col-sm-4 col-xs-12" href="https://github.com/triump0870/gamazone" target="_blank">
-                                <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/gamazone-1.jpg" alt="Gamazone- Developed for Gamers" />
-                                </a>
-                                <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a href="https://github.com/triump0870/gamazone" target="_blank">Gamazone- Developed for Gamers</a></h3>
-                                    <p>Its a website for gamers to share there experience on Video games and help others to overcome the problems they faced while they were playing.</p>
-                                    <p><a class="more-link" href="https://github.com/triump0870/gamazone" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
-                                </div><!--//desc-->                          
-                            </div><!--//item-->
-                            
-                            <div class="item row">
-                                <a class="col-md-4 col-sm-4 col-xs-12" href="https://github.com/triump0870/Interactive_Programming_Python" target="_blank">
-                                <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/galaxy.jpg" alt="Interactive Games - Designed on Codeskulptor using Python" />
-                                </a>
-                                <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a href="https://www.coursera.org/course/interactivepython" target="_blank">Interactive Games - Designed on Codeskulptor using Python</a></h3>
-                                    <p>I developed several browser based games on codeskulptor while taking a course in coursera on An Introduction to Interactive Programming in Python under Joe Warren, Scott Rixner, John Greiner &amp; Stephen Wong of Rice University. Amongst my all games the most notable one is <a href="http://www.codeskulptor.org/#user23_fTVPDKIDhRdCfUp.py"> Galaxy Invaders</a>.</p>
-                                    <p><a class="more-link" href="https://github.com/triump0870/Interactive_Programming_Python" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
-                                </div><!--//desc-->                          
-                            </div><!--//item-->                            
-                            <div class="item row">
-                                <a class="col-md-4 col-sm-4 col-xs-12" href="https://github.com/triump0870/bitstarter" target="_blank">
-                                <img class="img-responsive project-image" src="{{STATIC_URL}}images/projects/project-2.png" alt="Bitstarter- Startup Engineering" />
-                                </a>
-                                <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a href="https://www.coursera.org/course/startup" target="_blank">Bitstarter- Startup Engineering</a></h3>
-                                    <p>I took a course on Coursera on Startup Engineering under Balaji S. Srinivasan &amp; Vijay S. Pande of Standford University. Here I learned a fast-paced introduction to key tools and techniques like command line, dotfiles, text editor, distributed version control, debugging, testing, documentation, reading code, deployments etc. For the project I developed a web server on AWS EC2 and hosted a static website using Heroku.</p>
-                                    <p><a class="more-link" href="https://github.com/triump0870/bitstarter" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
-                                </div><!--//desc-->                          
-                            </div><!--//item-->
                             
                         </div><!--//content-->  
                     </div><!--//section-inner-->                 
@@ -138,21 +109,12 @@
                     <div class="section-inner">
                         <h2 class="heading">Work Experience</h2>
                         <div class="content">
+                            {% for work in work_list %}
                             <div class="item">
-                                <h3 class="title">Integration Engineer - <span class="place"><a href="http://www.ericsson.com/in">Ericsson</a></span> <span class="year">(Mar 2015 - Present)</span></h3>
-                                <p>Currently I am working in Ericsson in Business Intelligence(BI). Here I am learning how to interact with database and how to do database warehousing on SQL using Oracle. <!-- building a personal blog using Django1.7. I configured it on a Ubuntu AWS EC2 instance under Nginx web server which uses Gunicorn to interact with Django. I developed API routes and interaction with database using Django-Tastypie and Mysql. -->
-                                </p>
+                                <h3 class="title">{{work.designation}} - <span class="place"><a href="http://www.ericsson.com/in">{{work.company}}</a></span> <span class="year">( {{work.span}} )</span></h3>
+                                {{work.content|markdown}}
                             </div><!--//item-->
-                            <div class="item">
-                                <h3 class="title">Software Engineer - <span class="place"><a href="https://www.capgemini.com/">Capgemini</a></span> <span class="year">(Nov 2014 - Mar 2015)</span></h3>
-                                <p>My first company was Capgemini. There I learned SAP ABAP. Capgemini is a IT consulting firm with offices in more than 53 countries.</p>
-                            </div><!--//item-->
-                            
-                            <div class="item">
-                                <h3 class="title">Internship - <span class="place"><a href="http://www.nettech.in/">Nettech</a></span> <span class="year">(Dec 2012 - Jan 2013)</span></h3>
-                                <p>I did my internship at a company named Nettech. There I learned to apply my knowledge of computer networks. Nettech is a computer networking training provider headquartered in Kolkata, India. Its courses focus on computer networking in the Linux environment, network security, information security management systems and counter measures against hacking and other cybercrimes .</p>
-                            </div><!--//item-->
-                            
+                            {% endfor %}
                         </div><!--//content-->  
                     </div><!--//section-inner-->                 
                 </section><!--//section-->
@@ -289,7 +251,7 @@
                         <div class="content">   
                             <ul class="list-unstyled">
                                 {% for post in post_list %}
-                                <li><i class="fa fa-chevron-circle-right"></i> <a href="{{post.get_absolute_url}}">{{ post.title }}</a></li>    
+                                <li><i class="fa fa-chevron-circle-right"></i> <a href="{{post.get_absolute_url}}">{{ post.title|title }}</a></li>    
                                 {% empty %}
                                 <li>
                                     <span class="fa-stack">
@@ -348,6 +310,23 @@
                             
                             <hr/>
                             <a class="btn btn-cta-secondary btn-follow" href="https://twitter.com/triump0870" target="_blank"><i class="fa fa-twitter"></i> Follow me</a>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                <aside class="list conferences aside section">
+                    <div class="section-inner">
+                        <h2 class="heading">Advertisements</h2>
+                        <div class="content">
+                            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                            <!-- rohanroy.com_responsive_april19 -->
+                            <ins class="adsbygoogle"
+                                 style="display:block"
+                                 data-ad-client="ca-pub-6174669567663845"
+                                 data-ad-slot="6012284410"
+                                 data-ad-format="auto"></ins>
+                            <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
                         </div><!--//content-->
                     </div><!--//section-inner-->
                 </aside><!--//section-->
