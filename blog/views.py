@@ -1,5 +1,5 @@
 #All the imports
-from .models import Post, Comment, Vote, Project, Work
+from .models import Post, Comment, Vote, Project, Work, Tag
 from django.views.generic import ListView, DetailView, TemplateView
 from django.template import RequestContext
 from django.shortcuts import redirect, render_to_response, get_object_or_404
@@ -29,8 +29,31 @@ class BlogListView(ListView):
 	queryset = Post.objects.all().filter(published=True)
 	paginate_by = 5
 
+class TagListView(ListView):
+	models = Tag
+	paginate_by = 5
+	template_name = 'blog/post_list.html'
+
+	def get_queryset(self):
+		slug = self.kwargs['slug']
+		tag = Tag.objects.get(slug=slug)
+		results = Post.objects.filter(tags=tag)
+		return results
+
 class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post
+
+# def tagged(request,slug):
+# 	tag = get_object_or_404(Tag, slug=slug)
+# 	post_list = Post.objects.all() \
+# 	.filter(tags__contains=r'\b%s\b' % tag) \
+# 	.filter(published=True) \
+# 	.order_by('-created_at')
+# 	return render_to_response('blog/post_list.html',
+# 		{
+# 			'post_list':post_list,
+# 		},
+# 		context_instance=RequestContext(request))
 
 def view_post(request, slug):
 	post = get_object_or_404(Post, slug=slug)

@@ -7,7 +7,7 @@
 <!-- Bootstrap Core CSS -->
 <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
 <!-- Custom CSS -->
-<link href="{{STATIC_URL}}css/clean-blog.min.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/body.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
 <link rel="stylesheet" href="{{STATIC_URL}}plugins/font-awesome/css/font-awesome.css">
@@ -100,6 +100,13 @@
                 <p>
                     {{ post.content|markdown}}
                 </p>
+                <ul class="pager tags">
+                    {% for tag in post.tags.all%}
+                    <li class=" ">
+                        <a href="{% url 'blog:tag' tag %}"> {{tag}} </a>
+                    </li>
+                    {% endfor %}
+                </ul>
                 <hr>
                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                     <!-- rohanroy.com_responsive_april19 -->

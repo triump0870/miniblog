@@ -30,6 +30,11 @@ class Tag(models.Model):
 	def __unicode__(self):
 		return self.slug
 
+	def save(self, *args, **kwargs):
+		if self.slug:
+			self.slug = self.slug.lower()
+		super(Tag, self).save(*args, **kwargs)
+
 class Post(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True, editable=False)#save the timestamp when the model first creatred and not the field is editable in admin
 	updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -70,6 +75,7 @@ class Comment(models.Model):
 
 	class Meta:
 		ordering = ["-commented_at","email"]
+		
 	def __unicode__(self):
 		return self.text
 
@@ -106,6 +112,7 @@ class Work(models.Model):
 	end_date = models.DateField(editable=True,null=True,blank=True)
 	class Meta:
 		ordering = ["-start_date"]
+
 	def __unicode__(self):
 		return self.designation
 

@@ -10,7 +10,7 @@ class PostAdmin(MarkdownModelAdmin):
 	list_editable = ["published"]
 	list_filter = ["published","updated_at","author","tags"]
 	prepopulated_fields = {"slug": ("title",)}
-	search_fields = ["^title","^content","^tags"]
+	search_fields = ["^title","^content"]
 
 	# pass
 admin.site.register(Post, PostAdmin)
