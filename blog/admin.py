@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Vote, Tag, Project, Work, About,Skill
+from .models import Post, Vote, Tag, Project, Work, About,Skill, Education
 from django_markdown.admin import MarkdownModelAdmin
 # Register your models here.
 class PostAdmin(MarkdownModelAdmin):
@@ -45,3 +45,13 @@ class WorkAdmin(MarkdownModelAdmin):
 	search_fields = ['^company','^designation']
 
 admin.site.register(Work, WorkAdmin)
+
+class EducationAdmin(admin.ModelAdmin):
+	date_hierarchy = "start_date"
+	fields = ('published','start_date','end_date','course', 'institution', 'website', 'mode')
+	list_display = ['published','course','is_present']
+	list_display_links = ['course']
+	list_filter = ['course','institution']
+	search_fields = ['^course','^institution','end_date']
+
+admin.site.register(Education,EducationAdmin)

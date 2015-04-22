@@ -126,6 +126,24 @@ class Skill(models.Model):
 	def __unicode__(self):
 		return self.name
 
+class Education(models.Model):
+	course = models.CharField(max_length=30)
+	institution = models.CharField(max_length=50)
+	website = models.URLField('URL',max_length=255,blank=True)
+	start_date = models.DateField(editable=True)
+	end_date = models.DateField(editable=True,blank=True,null=True)
+	mode = models.CharField(max_length=20, blank=True)
+	published = models.BooleanField(default=True)
+
+	def __unicode__(self):
+		return self.course
+
+	def is_present(self):
+		if not self.end_date:
+			return 'Present'
+		else:
+			return self.end_date.year
+	
 @receiver(post_delete, sender=Post)
 def image_post_delete_handler(sender, **kwargs):
 	Post = kwargs['instance']
