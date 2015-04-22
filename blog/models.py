@@ -64,7 +64,6 @@ class Post(models.Model):
 	@models.permalink
 	def get_absolute_url(self):
 		return ("blog:detail",(),{'slug':self.slug
-							})
 
 class Vote(models.Model):
 	voter = models.ForeignKey(User)
@@ -90,6 +89,7 @@ class Project(models.Model):
 		if not self.slug:
 			self.slug = slugify(self.title)
 		super(Project, self).save(*args, **kwargs)
+
 
 class Work(models.Model):
 	company = models.CharField(max_length=255)

@@ -66,13 +66,12 @@
                     <div class="section-inner">
                         <h2 class="heading">Latest Projects</h2>
                         <div class="content">    
-
                             <div class="item featured text-center">
-                                <h3 class="title"><a href="{{project_list.4.url}}" target="_blank">{{project_list.4.title}}</a> </h3>
+                                <h3 class="title"><a href="{{latest.url}}" target="_blank">{{latest.title}}</a> </h3>
                                 <p class="summary">A simple Personal Blog</p>
                                 <div class="featured-image">
-                                    <a href="{{project_list.0.github}}" target="_blank">
-                                    <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project_list.4.image}}" alt="KickStarter - Miniblog" />
+                                    <a href="{{latest.github}}" target="_blank">
+                                    <img class="img-responsive project-image" src="{{MEDIA_URL}}{{latest.image}}" alt="KickStarter - Miniblog" />
                                     </a>
                                     <div class="ribbon">
                                         <div class="text">New</div>
@@ -80,9 +79,9 @@
                                     </div>
                                     
                                 <div class="desc text-left">                                    
-                                    {{project_list.4.content|markdown}}
+                                    {{latest.content|markdown}}
                                 </div><!--//desc-->         
-                                <a class="btn btn-cta-secondary" href="{{project_list.4.github}}" target="_blank"><i class="fa fa-thumbs-o-up"></i> Fork me on Github</a>                 
+                                <a class="btn btn-cta-secondary" href="{{latest.github}}" target="_blank"><i class="fa fa-thumbs-o-up"></i> Fork me on Github</a>                 
                             </div><!--//item-->
                             <hr class="divider" />
                             {% for project in project_list|slice:':4'%}
