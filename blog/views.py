@@ -44,34 +44,6 @@ class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post
 	template_name = "blog/blog_post.html"
 
-# def tagged(request,slug):
-# 	tag = get_object_or_404(Tag, slug=slug)
-# 	post_list = Post.objects.all() \
-# 	.filter(tags__contains=r'\b%s\b' % tag) \
-# 	.filter(published=True) \
-# 	.order_by('-created_at')
-# 	return render_to_response('blog/post_list.html',
-# 		{
-# 			'post_list':post_list,
-# 		},
-# 		context_instance=RequestContext(request))
-
-# def view_post(request, slug):
-# 	post = get_object_or_404(Post, slug=slug)
-# 	# form = CommentForm(request.POST or None)
-# 	# if form.is_valid():
-# 	# 	comment = form.save(commit=False)
-# 	# 	comment.post = post
-# 	# 	comment.save()
-# 	# 	request.session['name'] = comment.name
-# 	# 	request.session['email'] = comment.email
-# 	# 	return redirect(request.path)
-# 	return render_to_response('blog/blog_post.html',
-# 		{
-# 			'post':post
-# 			# 'form':form,
-# 		})
-
 def about_page(request):
     template_name = "about.html"
     return render_to_response(template_name, context_instance=RequestContext(request))
