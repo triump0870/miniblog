@@ -20,10 +20,10 @@ class PostListView(PublishedPostMixin,ListView):
 		# Call the base implementation first to get a context
 		context = super(PostListView, self).get_context_data(**kwargs)
 		# Add in a QuerySet of all the books
-		last = Project.objects.reverse()[0]
-		context['project_list'] = Project.objects.all()[:last.id]
+		last = Project.objects.all().count()
+		context['project_list'] = Project.objects.all()[:last-1]
 		context['work_list'] = Work.objects.all()
-		context['lastest'] = last
+		context['latest'] = Project.objects.all()[last-1]
 		context['about_list'] = About.objects.all()[:3]
 		return context
 
