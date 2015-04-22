@@ -118,6 +118,14 @@ class Work(models.Model):
 class About(models.Model):
 	content = MarkdownField()
 
+class Skill(models.Model):
+	name = models.CharField(max_length=30)
+	stage = models.CharField(max_length=15)
+	rating = models.IntegerField(default=0)
+
+	def __unicode__(self):
+		return self.name
+
 @receiver(post_delete, sender=Post)
 def image_post_delete_handler(sender, **kwargs):
 	Post = kwargs['instance']

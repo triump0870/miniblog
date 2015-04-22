@@ -79,7 +79,7 @@
                                 <a class="btn btn-cta-secondary" href="{{latest.github}}" target="_blank"><i class="fa fa-thumbs-o-up"></i> Fork me on Github</a>                 
                             </div><!--//item-->
                             <hr class="divider" />
-                            {% for project in project_list|slice:':4'%}
+                            {% for project in project_list %}
                             <div class="item row">
                                 <a class="col-md-4 col-sm-4 col-xs-12" href="{{project.github}}" target="_blank">
                                 <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project.image}}" alt="Weather- Designed for Android" />
@@ -143,40 +143,16 @@
                         <div class="content">
                             
                             <div class="skillset">
-                               
+                                {% for skill in skill_list %}
                                 <div class="item">
-                                    <h3 class="level-title">Python &amp; Linux<span class="level-label" data-toggle="tooltip" data-placement="left" data-animation="true" title="You can use the tooltip to add more info...">Pro</span></h3>
+                                    <h3 class="level-title">{{skill.name}}<span class="level-label" data-toggle="tooltip" data-placement="left" data-animation="true" title="You can use the tooltip to add more info...">{{skill.stage}}</span></h3>
                                     <div class="level-bar">
-                                        <div class="level-bar-inner" data-level="85%">
+                                        <div class="level-bar-inner" data-level="{{skill.rating}}%">
                                         </div>                                      
                                     </div><!--//level-bar-->                                 
                                 </div><!--//item-->
 
-                                <div class="item">
-                                    <h3 class="level-title">HTML, CSS &amp; JS<span class="level-label">Intermediate</span></h3>
-                                    <div class="level-bar">
-                                        <div class="level-bar-inner" data-level="70%">
-                                        </div>                                      
-                                    </div><!--//level-bar-->                                 
-                                </div><!--//item-->
-
-                                <div class="item">
-                                    <h3 class="level-title">MySQL, Algorithms &amp; Git<span class="level-label">Intermediate</span></h3>
-                                    <div class="level-bar">
-                                        <div class="level-bar-inner" data-level="65%">
-                                        </div>                                      
-                                    </div><!--//level-bar-->                                 
-                                </div><!--//item-->
-                                
-                                
-                                
-                                <div class="item">
-                                    <h3 class="level-title">Django &amp; Bootstrap<span class="level-label">Beginner</span></h3>
-                                    <div class="level-bar">
-                                        <div class="level-bar-inner" data-level="50%">
-                                        </div>                                      
-                                    </div><!--//level-bar-->                                 
-                                </div><!--//item-->
+                                {% endfor %}
                                 
                                 <p><a class="more-link" href="https://www.linkedin.com/in/triump0870"><i class="fa fa-external-link"></i> More on LinkedIn</a></p> 
                             </div>              
