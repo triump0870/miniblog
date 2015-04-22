@@ -1,5 +1,5 @@
 #All the imports
-from .models import Post,  Vote, Project, Work, Tag
+from .models import Post,  Vote, Project, Work, Tag, About
 from django.views.generic import ListView, DetailView, TemplateView
 from django.template import RequestContext
 from django.shortcuts import redirect, render_to_response, get_object_or_404
@@ -24,6 +24,7 @@ class PostListView(PublishedPostMixin,ListView):
 		context['project_list'] = Project.objects.all()[:last.id]
 		context['work_list'] = Work.objects.all()
 		context['lastest'] = last
+		context['about_list'] = About.objects.all()[:3]
 		return context
 
 class BlogListView(ListView):
@@ -46,9 +47,9 @@ class PostDetailView(PublishedPostMixin,DetailView):
 	model = Post
 	template_name = "blog/blog_post.html"
 
-def about_page(request):
-    template_name = "about.html"
-    return render_to_response(template_name, context_instance=RequestContext(request))
+class AboutView(ListView):
+	model = About
+	template_name = "about.html"
 
 def vote(request, post_id):
 	return HttpResponse("You're voting on post %s."%post_id)

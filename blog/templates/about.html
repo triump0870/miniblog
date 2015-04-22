@@ -74,16 +74,11 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            {% for about in about_list %}
             <div class="post-preview">
-                <p>I am a Python Programmer, make Django Web Applications and teach courses on Python to make young minds aware of programming, make brave choices, and do crazy things which you rarely do.
-                </p>
-                <p>
-                I want to discover my true potential in terms of: physicality, mentality and creativity. I want to persist until its perfect. I want to empty the tank.
-                </p>
-                <p>
-                I believe that we get one beautiful shot at life, it's a privilege to be here, and it's never too late to make it count. Today is not over yet.
-                </p>
-            </div>          
+                <p>{{about.content}}</p>
+            </div>     
+            {% endfor %}     
             <hr>
             {% block page_ads %}
                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
