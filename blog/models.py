@@ -64,20 +64,6 @@ class Post(models.Model):
 	@models.permalink
 	def get_absolute_url(self):
 		return ("blog:detail",(),{'slug':self.slug
-							})
-class Comment(models.Model):
-	name = models.CharField(max_length=50)
-	email = models.EmailField(max_length=75)
-	text = models.TextField()
-	post = models.ForeignKey(Post)
-	# love = models.PositiveIntegerField(default=0)
-	commented_at = models.DateTimeField(auto_now_add=True, editable=False)
-
-	class Meta:
-		ordering = ["-commented_at","email"]
-		
-	def __unicode__(self):
-		return self.text
 
 class Vote(models.Model):
 	voter = models.ForeignKey(User)
@@ -103,6 +89,7 @@ class Project(models.Model):
 		if not self.slug:
 			self.slug = slugify(self.title)
 		super(Project, self).save(*args, **kwargs)
+
 
 class Work(models.Model):
 	company = models.CharField(max_length=255)

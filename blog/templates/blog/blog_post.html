@@ -2,6 +2,7 @@
 {% load blog_extras %}
 {% load django_markdown %}
 {% load url from future %}
+{% load disqus_tags %}
 {% block page_title %} {{post.title|title}} | {% endblock %}
 {% block page_style %}
 <!-- Bootstrap Core CSS -->
@@ -28,6 +29,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 {%endblock%}
 
 {% block page_content %}
@@ -142,59 +145,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2>Comments</h2>
-                <hr>
-                {% if post.comment_set.all %}
-                {% for comment in post.comment_set.all %}
-                <span>
-                    <em><a href="#">{{ comment.name | title}}</a></em> on {{ comment.commented_at }} said:
-                </span>
-                <pre>{{comment.text}}</pre>
-                {%endfor%}
-                {%else%}
-                <ul class="list-unstyled">
-                    <li>
-                        <i class="fa fa-comment"></i> Be the first to comment !
-                        <!-- <span class="fa-stack">
-
-                            
-                        </span> -->
-                        
-                    </li>
-                </ul>
-                {%endif%}
+                {% disqus_show_comments %}
             </div>
         </div>
     </div>
 </article>
 <hr>
-<article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h2>Add Comments</h2>
-                <hr>
-                <form roll='form' action="" method="POST" class="form-horizontal" >
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <fieldset class="form-group">
-                        <label class="control-label col-sm-2" for="id_{{ field.name }}">{{ field.label }}:</label>
-                        <div class="col-sm-10"> 
-                            {{ field|addcss:"form-control" }}
-                            <p class="help-text">{{ field.help_text }} </p>
-                        </div>
-                    </fieldset>
-                    {% endfor %}
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button class="btn btn-primary" type="submit" >Submit</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</article>
+
 {% endblock %}
 {% block footer %}
 <!-- Footer -->

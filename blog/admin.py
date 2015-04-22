@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Vote, Tag, Comment, Project, Work
+from .models import Post, Vote, Tag, Project, Work
 from django_markdown.admin import MarkdownModelAdmin
 # Register your models here.
 class PostAdmin(MarkdownModelAdmin):
@@ -20,9 +20,9 @@ class VoteAdmin(admin.ModelAdmin):
 	pass
 
 admin.site.register(Vote, VoteAdmin)
-class CommentAdmin(admin.ModelAdmin):
-	pass
-admin.site.register(Comment,CommentAdmin)
+# class CommentAdmin(admin.ModelAdmin):
+# 	pass
+# admin.site.register(Comment,CommentAdmin)
 
 class ProjectAdmin(MarkdownModelAdmin):
 	date_hierarchy = "date"
