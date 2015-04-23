@@ -81,9 +81,6 @@ class Project(models.Model):
 	slug = models.SlugField(max_length=255, unique=True)
 	url = models.URLField('URL',max_length=255,blank=True)
 	github = models.URLField('GITHUB_URL',max_length=255,blank=True)
-
-	class Meta:
-		ordering = ['-date']
 		
 	def __unicode__(self):
 		return self.title
