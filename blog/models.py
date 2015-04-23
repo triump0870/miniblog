@@ -82,6 +82,9 @@ class Project(models.Model):
 	url = models.URLField('URL',max_length=255,blank=True)
 	github = models.URLField('GITHUB_URL',max_length=255,blank=True)
 
+	class Meta:
+		ordering = ['-date']
+		
 	def __unicode__(self):
 		return self.title
 
@@ -135,6 +138,8 @@ class Education(models.Model):
 	mode = models.CharField(max_length=20, blank=True)
 	published = models.BooleanField(default=True)
 
+	class Meta:
+		ordering = ['-start_date']
 	def __unicode__(self):
 		return self.course
 
