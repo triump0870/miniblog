@@ -240,12 +240,11 @@
                     <div class="section-inner">
                         <h2 class="heading">Favourite coding music</h2>
                         <div class="content">
+                            {% for music in music_list %}
                             <ul class="list-unstyled">
-                                <li><i class="fa fa-headphones"></i> <a href="https://www.youtube.com/watch?v=AHGvaQMClEo">End Of Line</a></li>
-                                <li><i class="fa fa-headphones"></i> <a href="https://www.youtube.com/watch?v=KC8lt--rEEo">We Code Hard</a></li>
-                                <li><i class="fa fa-headphones"></i> <a href="https://www.youtube.com/watch?v=gvlNy8CdlIY">Until The Morning</a></li>
-                                <li><i class="fa fa-headphones"></i> <a href="https://www.youtube.com/watch?v=w8KQmps-Sog&list=PL31375A5D170520D8">Muse - Uprising</a></li>
+                                <li><i class="fa fa-headphones"></i> <a href="{{music.url}}">{{music.music}}</a></li>
                             </ul>
+                            {% endfor %}
                         </div><!--//content-->
                     </div><!--//section-inner-->
                 </aside><!--//section-->
