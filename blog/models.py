@@ -65,13 +65,6 @@ class Post(models.Model):
 	def get_absolute_url(self):
 		return ("blog:detail",(),{'slug':self.slug})
 
-class Vote(models.Model):
-	voter = models.ForeignKey(User)
-	link = models.ForeignKey(Post)
-
-	def __unicode__(self):
-		return "%s upvoted %s"%(self.voter.username, self.link.title)
-
 class Project(models.Model):
 	title = models.CharField(max_length=255)
 	content = MarkdownField()
@@ -145,7 +138,15 @@ class Education(models.Model):
 			return 'Present'
 		else:
 			return self.end_date.year
-	
+
+class Music(models.Model):
+	music = models.CharField(max_length=255)
+	url = models.URLField('Music_URL',null=False,blank=False)
+	published = models.BooleanField(default=True)
+
+	def __unicode__(self):
+		return self.music
+
 @receiver(post_delete, sender=Post)
 def image_post_delete_handler(sender, **kwargs):
 	Post = kwargs['instance']

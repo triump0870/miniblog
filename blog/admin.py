@@ -1,7 +1,15 @@
 from django.contrib import admin
-from .models import Post, Vote, Tag, Project, Work, About,Skill, Education
+from .models import Post, Tag, Project, Work, About,Skill, Education, Music
 from django_markdown.admin import MarkdownModelAdmin
 # Register your models here.
+
+# Simple Model admin
+admin.site.register(Tag)
+admin.site.register(About)
+admin.site.register(Skill)
+admin.site.register(Music)
+
+# Advanced Model Admin
 class PostAdmin(MarkdownModelAdmin):
 	date_hierarchy = "created_at"
 	fields = ('published',"title","slug","content","image","author","tags")
@@ -12,18 +20,7 @@ class PostAdmin(MarkdownModelAdmin):
 	prepopulated_fields = {"slug": ("title",)}
 	search_fields = ["^title","^content"]
 
-	# pass
 admin.site.register(Post, PostAdmin)
-admin.site.register(Tag)
-admin.site.register(About)
-admin.site.register(Skill)
-class VoteAdmin(admin.ModelAdmin):
-	pass
-
-admin.site.register(Vote, VoteAdmin)
-# class CommentAdmin(admin.ModelAdmin):
-# 	pass
-# admin.site.register(Comment,CommentAdmin)
 
 class ProjectAdmin(MarkdownModelAdmin):
 	date_hierarchy = "date"
