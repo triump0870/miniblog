@@ -12,7 +12,7 @@ admin.site.register(Music)
 # Advanced Model Admin
 class PostAdmin(MarkdownModelAdmin):
 	date_hierarchy = "created_at"
-	fields = ('published',"title","slug","content","image","author","tags")
+	fields = ('published',"title","slug","content","author","tags")
 	list_display = ["published","title","updated_at"]
 	list_display_links = ["title"]
 	list_editable = ["published"]
