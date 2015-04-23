@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Vote, Tag, Project, Work, About
+from .models import Post, Vote, Tag, Project, Work, About,Skill
 from django_markdown.admin import MarkdownModelAdmin
 # Register your models here.
 class PostAdmin(MarkdownModelAdmin):
@@ -16,6 +16,7 @@ class PostAdmin(MarkdownModelAdmin):
 admin.site.register(Post, PostAdmin)
 admin.site.register(Tag)
 admin.site.register(About)
+admin.site.register(Skill)
 class VoteAdmin(admin.ModelAdmin):
 	pass
 
