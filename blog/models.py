@@ -63,7 +63,7 @@ class Post(models.Model):
 	
 	@models.permalink
 	def get_absolute_url(self):
-		return ("blog:detail",(),{'slug':self.slug
+		return ("blog:detail",(),{'slug':self.slug})
 
 class Vote(models.Model):
 	voter = models.ForeignKey(User)
@@ -114,6 +114,9 @@ class Work(models.Model):
 		else:
 			diff = 'Present'
 		return diff
+
+class About(models.Model):
+	content = MarkdownField()
 
 @receiver(post_delete, sender=Post)
 def image_post_delete_handler(sender, **kwargs):
