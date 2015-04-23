@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Tag, Project, Work, About,Skill, Education, Music
+from .models import Post, Tag, Project, Work, About,Skill, Education, Music, UserData, Language, Conference
 from django_markdown.admin import MarkdownModelAdmin
 # Register your models here.
 
@@ -8,6 +8,8 @@ admin.site.register(Tag)
 admin.site.register(About)
 admin.site.register(Skill)
 admin.site.register(Music)
+admin.site.register(UserData)
+admin.site.register(Language)
 
 # Advanced Model Admin
 class PostAdmin(MarkdownModelAdmin):
@@ -52,3 +54,12 @@ class EducationAdmin(admin.ModelAdmin):
 	search_fields = ['^course','^institution','end_date']
 
 admin.site.register(Education,EducationAdmin)
+
+class ConferenceAdmin(admin.ModelAdmin):
+	fields = ('published','date','name', 'place', 'link')
+	list_display = ['published','name','date','link']
+	list_display_links = ['name','link']
+	list_filter = ['name','place']
+	search_fields = ['^name','^place']
+
+admin.site.register(Conference,ConferenceAdmin)
