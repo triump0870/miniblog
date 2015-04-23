@@ -2,9 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
-from vote.managers import VotableManager
 from django_markdown.models import MarkdownField
-from django_markdown.widgets import AdminMarkdownWidget
 from django.db.models import TextField, Count
 from time import time
 from django.db.models.signals import post_delete
@@ -18,12 +16,6 @@ class PostManager(models.Manager):
 	def live(self):
 		return self.model.objects.filter(published=True)
 
-class PostVoteCountManager(models.Manager):
-	def get_queryset(self):
-		return super(PostVoteCountManager, self).get_queryset().annotate(
-			votes = Count('vote')
-			).order_by("-votes")
-
 class Tag(models.Model):
 	slug = models.SlugField(max_length=200, unique=True)
 
@@ -36,20 +28,17 @@ class Tag(models.Model):
 		super(Tag, self).save(*args, **kwargs)
 
 class Post(models.Model):
-	created_at = models.DateTimeField(auto_now_add=True, editable=False)#save the timestamp when the model first creatred and not the field is editable in admin
+	created_at = models.DateTimeField(auto_now_add=True, editable=False)
 	updated_at = models.DateTimeField(auto_now=True, editable=False)
 	title = models.CharField(max_length=255)
-	slug = models.SlugField(max_length=255,unique=True) #blank = True i.e it is not required for validatipn purpose , default = '' for not slug provided
+	slug = models.SlugField(max_length=255,unique=True)
 	content = MarkdownField()
-	published = models.BooleanField(default=True)
 	author = models.ForeignKey(User, related_name="posts")
-	rank_score = models.FloatField(default=0.0)
 	url = models.URLField('URL',max_length=250, blank=True)
 	tags = models.ManyToManyField(Tag)
-	image = models.ImageField(upload_to=generate_filename,null=True, blank=True)
-	with_votes = PostVoteCountManager()
+	published = models.BooleanField(default=True)
 	objects = PostManager()
-	formfield_overrides = {TextField: {'widget':AdminMarkdownWidget}}
+	
 	class Meta:
 		ordering = ["-created_at", "title"]
 		
@@ -58,7 +47,7 @@ class Post(models.Model):
 
 	def save(self, *args, ** kwargs):
 		if not self.slug:
-			self.slug = slugify(self.title) #title become the slug
+			self.slug = slugify(self.title)
 		super(Post, self).save(*args,**kwargs)
 	
 	@models.permalink

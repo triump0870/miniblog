@@ -2,11 +2,9 @@
 from .models import Post, Project, Work, Tag, About, Skill, Education, Music
 from django.views.generic import ListView, DetailView, TemplateView
 from django.template import RequestContext
-from django.shortcuts import redirect, render_to_response, get_object_or_404
-from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import get_object_or_404
 from forms import PostForm
 from django.http import HttpResponse
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 class PublishedPostMixin(object):
