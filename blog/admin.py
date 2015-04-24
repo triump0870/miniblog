@@ -26,7 +26,7 @@ admin.site.register(Post, PostAdmin)
 
 class ProjectAdmin(MarkdownModelAdmin):
 	date_hierarchy = "date"
-	fields = ('published','date','title','slug','content','image','url','github')
+	fields = ('published','date','title','slug','subtitle','content','image','url','github')
 	list_display = ['published','title','date']
 	list_display_links = ['title']
 	list_editable = ['published']
@@ -38,7 +38,7 @@ admin.site.register(Project, ProjectAdmin)
 
 class WorkAdmin(MarkdownModelAdmin):
 	date_hierarchy = "start_date"
-	fields = ('start_date','end_date','company','designation','content')
+	fields = ('start_date','end_date','company','website','designation','content')
 	list_display = ['company','designation','span']
 	list_filter = ['company','designation']
 	search_fields = ['^company','^designation']

@@ -1,6 +1,6 @@
 {% extends "_layouts/base.html" %}
 {% load django_markdown %}
-{% block page_title %} Rohan Roy | {% endblock %}
+{% block page_title %} {{userdata.fullname}} | {% endblock %}
 {% block page_style %}
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
@@ -52,7 +52,7 @@
                         
                             <p>{{about.content}}</p>
                         {% endfor %}
-                            <p><a class="more-link" href="http://rohanroy.com/about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
+                            <p><a class="more-link" href="{{userdata.website}}/about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
                         </div><!--//content-->
                     </div><!--//section-inner-->                 
                 </section><!--//section-->
@@ -62,13 +62,13 @@
                         <h2 class="heading">Latest Projects</h2>
                         <div class="content">    
                             <div class="item featured text-center">
-                                <h3 class="title"><a href="{{latest.url}}" target="_blank">{{latest.title}}</a> </h3>
-                                <p class="summary">A simple Personal Blog</p>
+                                <h3 class="title"><a href="{{latest.url}}" target="_blank">{{latest.title|title}}</a> </h3>
+                                <p class="summary">{{latest.subtitle|title}}</p>
                                 <div class="featured-image">
                                     <a href="{{latest.github}}" target="_blank">
-                                    <img class="img-responsive project-image" src="{{MEDIA_URL}}{{latest.image}}" alt="KickStarter - Miniblog" />
+                                    <img class="img-responsive project-image" src="{{MEDIA_URL}}{{latest.image}}" alt="{{latest.title|title}}" />
                                     </a>
-                                    <div class="ribbon">
+                                    <div class= "ribbon">
                                         <div class="text">New</div>
                                         </div>
                                     </div>
@@ -82,17 +82,15 @@
                             {% for project in project_list %}
                             <div class="item row">
                                 <a class="col-md-4 col-sm-4 col-xs-12" href="{{project.github}}" target="_blank">
-                                <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project.image}}" alt="Weather- Designed for Android" />
+                                <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project.image}}" alt="{{project.title|title}}" />
                                 </a>
                                 <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a href="{{project.url}}" target="_blank">{{project.title}} </a><small>{{project.date|date:'M j, Y'}}</small></h3>
+                                    <h3 class="title"><a href="{{project.url}}" target="_blank">{{project.title|title}} </a><small>{{project.date|date:'M j, Y'}}</small></h3>
                                     <p>{{project.content|markdown}}</p>
                                     <p><a class="more-link" href="{{project.github}}" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
                                 </div><!--//desc-->                          
                             </div><!--//item-->
                             {% endfor %}
-                            
-                            
                         </div><!--//content-->  
                     </div><!--//section-inner-->                 
                 </section><!--//section-->
@@ -105,7 +103,7 @@
                         <div class="content">
                             {% for work in work_list %}
                             <div class="item">
-                                <h3 class="title">{{work.designation}} - <span class="place"><a href="http://www.ericsson.com/in">{{work.company}}</a></span> <span class="year">( {{work.span}} )</span></h3>
+                                <h3 class="title">{{work.designation|title}} - <span class="place"><a href="{{work.website}}">{{work.company|title}}</a></span> <span class="year">( {{work.span}} )</span></h3>
                                 {{work.content|markdown}}
                             </div><!--//item-->
                             {% endfor %}
@@ -114,12 +112,9 @@
                 </section><!--//section-->
                 <section class="github section">
                     <div class="section-inner">
-                        <h2 class="heading">My GitHub</h2>
-                       <!--  <p>You can embed your GitHub activities using Casey Scarborough's <a href="http://caseyscarborough.com/projects/github-activity/" target="_blank">GitHub Activity Stream</a> widget.         -->
-                        <!--//Usage: http://caseyscarborough.com/projects/github-activity/ -->                       
+                        <h2 class="heading">My GitHub</h2>                
                         <div id="ghfeed" class="ghfeed">
-                        </div><!--//ghfeed-->
-                        
+                        </div><!--//ghfeed-->                      
                     </div><!--//secton-inner-->
                 </section><!--//section-->
             </div><!--//primary-->
@@ -153,7 +148,7 @@
 
                                 {% endfor %}
                                 
-                                <p><a class="more-link" href="https://www.linkedin.com/in/triump0870"><i class="fa fa-external-link"></i> More on LinkedIn</a></p> 
+                                <p><a class="more-link" href="{{userdata.linkedin}}"><i class="fa fa-external-link"></i> More on LinkedIn</a></p> 
                             </div>              
                         </div><!--//content-->  
                     </div><!--//section-inner-->                 
@@ -167,7 +162,7 @@
                                 <blockquote class="quote">                                  
                                     <p><i class="fa fa-quote-left"></i>{{userdata.testimonial}}</p>
                                 </blockquote>                
-                                <p class="source"><span class="name">{{userdata.testimonial_name}}</span><br /><span class="title">{{userdata.testimonial_desig}}</span></p>                                                             
+                                <p class="source"><span class="name">{{userdata.testimonial_name|title}}</span><br /><span class="title">{{userdata.testimonial_desig|title}}</span></p>                                                             
                             </div><!--//item-->
                             
                             <p><a class="more-link" href="{{userdata.testimonial_link}}"><i class="fa fa-external-link"></i> More on Linkedin</a></p> 
@@ -199,7 +194,7 @@
                                 
                                 <li class="item">
                                     <span class="title"><strong>{{lang.language|title}}:</strong></span>
-                                    <span class="level">{{lang.get_proficiency_display}}<br class="visible-sm visible-xs"/>{% for i in lang.star %} <i class="fa fa-star"></i>{% endfor %}</span>
+                                    <span class="level">{{lang.get_proficiency_display|title}}<br class="visible-sm visible-xs"/>{% for i in lang.star %} <i class="fa fa-star"></i>{% endfor %}</span>
                                 </li><!--//item-->
                                 {% endfor %}
                             </ul>

@@ -56,6 +56,7 @@ class Post(models.Model):
 
 class Project(models.Model):
 	title = models.CharField(max_length=255)
+	subtitle = models.CharField(max_length=255, blank=True,null=True)
 	content = MarkdownField()
 	image = models.ImageField(upload_to=generate_filename, blank=True, null=True)
 	date = models.DateField(editable=True)
@@ -75,6 +76,7 @@ class Project(models.Model):
 
 class Work(models.Model):
 	company = models.CharField(max_length=255)
+	website = models.URLField(blank=False, null=False)
 	designation = models.CharField(max_length=30)
 	content = MarkdownField()
 	start_date = models.DateField(editable=True)
