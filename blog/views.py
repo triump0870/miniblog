@@ -1,5 +1,5 @@
 #All the imports
-from .models import Post, Project, Work, Tag, About, Skill, Education, Music
+from .models import Post, Project, Work, Tag, About, Skill, Education, Music, UserData, Language, Conference
 from django.views.generic import ListView, DetailView, TemplateView
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
@@ -26,6 +26,9 @@ class PostListView(PublishedPostMixin,ListView):
 		context['skill_list'] = Skill.objects.all()
 		context['education_list'] = Education.objects.all()
 		context['music_list'] = Music.objects.all()
+		context['userdata'] = UserData.objects.get(pk=1)
+		context['language_list'] = Language.objects.all()
+		context['conference_list'] = Conference.objects.all()
 		return context
 
 class BlogListView(ListView):

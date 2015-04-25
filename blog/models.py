@@ -56,6 +56,7 @@ class Post(models.Model):
 
 class Project(models.Model):
 	title = models.CharField(max_length=255)
+	subtitle = models.CharField(max_length=255, blank=True,null=True)
 	content = MarkdownField()
 	image = models.ImageField(upload_to=generate_filename, blank=True, null=True)
 	date = models.DateField(editable=True)
@@ -75,6 +76,7 @@ class Project(models.Model):
 
 class Work(models.Model):
 	company = models.CharField(max_length=255)
+	website = models.URLField(blank=False, null=False)
 	designation = models.CharField(max_length=30)
 	content = MarkdownField()
 	start_date = models.DateField(editable=True)
@@ -135,6 +137,59 @@ class Music(models.Model):
 
 	def __unicode__(self):
 		return self.music
+
+class UserData(models.Model):
+	fullname = models.CharField(max_length=255)
+	user = models.CharField(max_length=70, unique=True, blank=False, null=False)
+	role = models.CharField(max_length=30)
+	location = models.CharField(max_length=100)
+	contact =  models.EmailField(max_length=70, blank=True, null=True)
+	website = models.URLField('Website',blank=True, null=True)
+	linkedin = models.URLField('LinkedIn',blank=True, null=True)
+	facebook = models.URLField('Facebook',blank=True,null=True)
+	twitter = models.URLField('Twitter',blank=True,null=True)
+	googleplus = models.URLField('Google+',blank=True,null=True)
+	github = models.URLField('Github',blank=True,null=True)
+	hackernews = models.URLField('HackerNews',blank=True,null=True)
+	email = models.EmailField(max_length=70,unique=True, blank=False, null=False)
+	testimonial = models.TextField()
+	testimonial_name = models.CharField(max_length=255)
+	testimonial_desig = models.CharField(max_length=70)
+	testimonial_link = models.URLField('LinkedIn',blank=True,null=True)
+
+	def __unicode__(self):
+		return self.user
+
+class Language(models.Model):
+	choice = (
+		(1,'Native Speaker'),
+		(2,'Professional Proficiency'),
+		(3,'Learner'),
+		)
+	star_choice = (
+		('x','1'),
+		('xx','2'),
+		('xxx','3'),
+		('xxxx','4'),
+		('xxxxx','5'),
+		)
+	language = models.CharField(max_length=70)
+	proficiency = models.IntegerField(max_length=1, choices=choice, default=1)
+	star = models.CharField(max_length=5,choices=star_choice, default='xxx')
+
+	def __unicode__(self):
+		return self.language
+
+class Conference(models.Model):
+	name = models.CharField(max_length=255)
+	place = models.CharField(max_length=100)
+	link = models.URLField('Link', blank=True, null=True)
+	date = models.DateField(editable=True, blank=True, null=True)
+	published = models.BooleanField(default=True)
+
+	def __unicode__(self):
+		return self.name
+
 
 @receiver(post_delete, sender=Post)
 def image_post_delete_handler(sender, **kwargs):

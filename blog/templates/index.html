@@ -1,6 +1,6 @@
 {% extends "_layouts/base.html" %}
 {% load django_markdown %}
-{% block page_title %} Rohan Roy | {% endblock %}
+{% block page_title %} {{userdata.fullname}} | {% endblock %}
 {% block page_style %}
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
@@ -10,8 +10,7 @@
     <!-- github acitivity css -->
     <link rel="stylesheet" href="{{STATIC_URL}}plugins/github-activity/dist/github-activity-0.1.0.min.css">
     <link rel="stylesheet" href="{{STATIC_URL}}plugins/github-activity/dist/octicons/octicons.min.css">
-    
-    
+
     <!-- Theme CSS -->  
     <link id="theme-style" rel="stylesheet" href="{{STATIC_URL}}css/styles.css">
 
@@ -27,17 +26,18 @@
         <div class="container">                       
             <img class="profile-image img-responsive pull-left" src="{{STATIC_URL}}images/rohan.png" alt="Rohan Roy" />
             <div class="profile-content pull-left">
-                <h1 class="name">Rohan Roy</h1>
-                <h2 class="desc">Web App Developer</h2>   
+                <h1 class="name">{{userdata.fullname}}</h1>
+                <h2 class="desc">{{userdata.role}}</h2>   
                 <ul class="social list-inline">
-                    <li><a href="https://twitter.com/triump0870"><i class="fa fa-twitter"></i></a></li>                   
-                    <li><a href="https://plus.google.com/+RohanRoy1"><i class="fa fa-google-plus"></i></a></li>
-                    <li><a href="https://linkedin.com/in/triump0870"><i class="fa fa-linkedin"></i></a></li>
-                    <li><a href="https://github.com/triump0870"><i class="fa fa-github-alt"></i></a></li>                  
-                    <li class="last-item"><a href="https://news.ycombinator.com/user?id=triump0870"><i class="fa fa-hacker-news"></i></a></li>                 
+                    <li><a href="{{userdata.linkedin}}"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="{{userdata.facebook}}"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="{{userdata.twitter}}"><i class="fa fa-twitter"></i></a></li>                   
+                    <li><a href="{{userdata.googleplus}}"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="{{userdata.github}}"><i class="fa fa-github-alt"></i></a></li>                  
+                    <li class="last-item"><a href="{{userdata.hackernews}}"><i class="fa fa-hacker-news"></i></a></li>                 
                 </ul> 
             </div><!--//profile-->
-            <a class="btn btn-cta-primary pull-right" href="mailto:b4you0870@gmail.com?Subject=Hello%20rohan" target="_top"><i class="fa fa-paper-plane"></i> Contact Me</a>              
+            <a class="btn btn-cta-primary pull-right" href="mailto:{{userdata.email}}?Subject=Hello%20rohan" target="_top"><i class="fa fa-paper-plane"></i> Contact Me</a>              
         </div><!--//container-->
     </header><!--//header-->
     
@@ -52,7 +52,7 @@
                         
                             <p>{{about.content}}</p>
                         {% endfor %}
-                            <p><a class="more-link" href="http://rohanroy.com/about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
+                            <p><a class="more-link" href="{{userdata.website}}/about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
                         </div><!--//content-->
                     </div><!--//section-inner-->                 
                 </section><!--//section-->
@@ -62,13 +62,13 @@
                         <h2 class="heading">Latest Projects</h2>
                         <div class="content">    
                             <div class="item featured text-center">
-                                <h3 class="title"><a href="{{latest.url}}" target="_blank">{{latest.title}}</a> </h3>
-                                <p class="summary">A simple Personal Blog</p>
+                                <h3 class="title"><a href="{{latest.url}}" target="_blank">{{latest.title|title}}</a> </h3>
+                                <p class="summary">{{latest.subtitle|title}}</p>
                                 <div class="featured-image">
                                     <a href="{{latest.github}}" target="_blank">
-                                    <img class="img-responsive project-image" src="{{MEDIA_URL}}{{latest.image}}" alt="KickStarter - Miniblog" />
+                                    <img class="img-responsive project-image" src="{{MEDIA_URL}}{{latest.image}}" alt="{{latest.title|title}}" />
                                     </a>
-                                    <div class="ribbon">
+                                    <div class= "ribbon">
                                         <div class="text">New</div>
                                         </div>
                                     </div>
@@ -82,17 +82,15 @@
                             {% for project in project_list %}
                             <div class="item row">
                                 <a class="col-md-4 col-sm-4 col-xs-12" href="{{project.github}}" target="_blank">
-                                <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project.image}}" alt="Weather- Designed for Android" />
+                                <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project.image}}" alt="{{project.title|title}}" />
                                 </a>
                                 <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a href="{{project.url}}" target="_blank">{{project.title}} </a><small>{{project.date|date:'M j, Y'}}</small></h3>
+                                    <h3 class="title"><a href="{{project.url}}" target="_blank">{{project.title|title}} </a><small>{{project.date|date:'M j, Y'}}</small></h3>
                                     <p>{{project.content|markdown}}</p>
                                     <p><a class="more-link" href="{{project.github}}" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
                                 </div><!--//desc-->                          
                             </div><!--//item-->
                             {% endfor %}
-                            
-                            
                         </div><!--//content-->  
                     </div><!--//section-inner-->                 
                 </section><!--//section-->
@@ -105,7 +103,7 @@
                         <div class="content">
                             {% for work in work_list %}
                             <div class="item">
-                                <h3 class="title">{{work.designation}} - <span class="place"><a href="http://www.ericsson.com/in">{{work.company}}</a></span> <span class="year">( {{work.span}} )</span></h3>
+                                <h3 class="title">{{work.designation|title}} - <span class="place"><a href="{{work.website}}">{{work.company|title}}</a></span> <span class="year">( {{work.span}} )</span></h3>
                                 {{work.content|markdown}}
                             </div><!--//item-->
                             {% endfor %}
@@ -114,12 +112,9 @@
                 </section><!--//section-->
                 <section class="github section">
                     <div class="section-inner">
-                        <h2 class="heading">My GitHub</h2>
-                       <!--  <p>You can embed your GitHub activities using Casey Scarborough's <a href="http://caseyscarborough.com/projects/github-activity/" target="_blank">GitHub Activity Stream</a> widget.         -->
-                        <!--//Usage: http://caseyscarborough.com/projects/github-activity/ -->                       
+                        <h2 class="heading">My GitHub</h2>                
                         <div id="ghfeed" class="ghfeed">
-                        </div><!--//ghfeed-->
-                        
+                        </div><!--//ghfeed-->                      
                     </div><!--//secton-inner-->
                 </section><!--//section-->
             </div><!--//primary-->
@@ -129,9 +124,9 @@
                         <h2 class="heading sr-only">Basic Information</h2>
                         <div class="content">
                             <ul class="list-unstyled">
-                                <li><i class="fa fa-map-marker"></i><span class="sr-only">Location:</span> &nbsp;Kolkata, IN</li>
-                                <li><i class="fa fa-envelope-o"></i><span class="sr-only">Email:</span><a href="#">rohan@rohanroy.com</a></li>
-                                <li><i class="fa fa-link"></i><span class="sr-only">Website:</span><a href="#">http://www.rohanroy.com</a></li>
+                                <li><i class="fa fa-map-marker"></i><span class="sr-only">Location:</span> &nbsp;{{userdata.location}}</li>
+                                <li><i class="fa fa-envelope-o"></i><span class="sr-only">Email:</span><a href="mailto:{{userdata.contact}}">{{userdata.contact}}</a></li>
+                                <li><i class="fa fa-link"></i><span class="sr-only">Website:</span><a href="{{userdata.website}}">{{userdata.website}}</a></li>
                             </ul>
                         </div><!--//content-->  
                     </div><!--//section-inner-->                 
@@ -147,14 +142,13 @@
                                 <div class="item">
                                     <h3 class="level-title">{{skill.name}}<span class="level-label" data-toggle="tooltip" data-placement="left" data-animation="true" title="You can use the tooltip to add more info...">{{skill.stage}}</span></h3>
                                     <div class="level-bar">
-                                        <div class="level-bar-inner" data-level="{{skill.rating}}%">
-                                        </div>                                      
+                                        <div class="level-bar-inner" data-level="{{skill.rating}}%"></div>
                                     </div><!--//level-bar-->                                 
                                 </div><!--//item-->
 
                                 {% endfor %}
                                 
-                                <p><a class="more-link" href="https://www.linkedin.com/in/triump0870"><i class="fa fa-external-link"></i> More on LinkedIn</a></p> 
+                                <p><a class="more-link" href="{{userdata.linkedin}}"><i class="fa fa-external-link"></i> More on LinkedIn</a></p> 
                             </div>              
                         </div><!--//content-->  
                     </div><!--//section-inner-->                 
@@ -166,12 +160,12 @@
                         <div class="content">
                             <div class="item">
                                 <blockquote class="quote">                                  
-                                    <p><i class="fa fa-quote-left"></i>Rohan is an excellent software engineer and he is passionate about what he does. You can totally count on him to deliver your projects!</p>
+                                    <p><i class="fa fa-quote-left"></i>{{userdata.testimonial}}</p>
                                 </blockquote>                
-                                <p class="source"><span class="name">Tamal Biswas</span><br /><span class="title">Software Engineer</span></p>                                                             
+                                <p class="source"><span class="name">{{userdata.testimonial_name|title}}</span><br /><span class="title">{{userdata.testimonial_desig|title}}</span></p>                                                             
                             </div><!--//item-->
                             
-                            <p><a class="more-link" href="https://www.linkedin.com/profile/view?id=316739437"><i class="fa fa-external-link"></i> More on Linkedin</a></p> 
+                            <p><a class="more-link" href="{{userdata.testimonial_link}}"><i class="fa fa-external-link"></i> More on Linkedin</a></p> 
                             
                         </div><!--//content-->
                     </div><!--//section-inner-->
@@ -183,8 +177,8 @@
                         <div class="content">
                             {% for edu in education_list %}
                             <div class="item">                      
-                                <h3 class="title"><i class="fa fa-graduation-cap"></i> {{edu.mode}} {{edu.course}}</h3>
-                                <a href="{{edu.website}}"><h4 class="university">{{edu.institution}} </a><span class="year">({{edu.start_date|date:'Y'}}-{{edu.is_present}})</span></h4>
+                                <h3 class="title"><i class="fa fa-graduation-cap"></i> {{edu.mode|title}} {{edu.course|title}}</h3>
+                                <a href="{{edu.website}}"><h4 class="university">{{edu.institution|title}} </a><span class="year">({{edu.start_date|date:'Y'}}-{{edu.is_present}})</span></h4>
                             </div><!--//item-->
                             {% endfor %}
                         </div><!--//content-->
@@ -196,18 +190,13 @@
                         <h2 class="heading">Languages</h2>
                         <div class="content">
                             <ul class="list-unstyled">
+                                {% for lang in language_list %}
+                                
                                 <li class="item">
-                                    <span class="title"><strong>Bengali:</strong></span>
-                                    <span class="level">Native Speaker <br class="visible-xs"/><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </span>
+                                    <span class="title"><strong>{{lang.language|title}}:</strong></span>
+                                    <span class="level">{{lang.get_proficiency_display|title}}<br class="visible-sm visible-xs"/>{% for i in lang.star %} <i class="fa fa-star"></i>{% endfor %}</span>
                                 </li><!--//item-->
-                                <li class="item">
-                                    <span class="title"><strong>English:</strong></span>
-                                    <span class="level">Professional Proficiency <br class="visible-sm visible-xs"/><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half"></i></span>
-                                </li><!--//item-->
-                                <li class="item">
-                                    <span class="title"><strong>Hindi:</strong></span>
-                                    <span class="level">Professional Proficiency <br class="visible-sm visible-xs"/><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half"></i></span>
-                                </li><!--//item-->
+                                {% endfor %}
                             </ul>
                         </div><!--//content-->
                     </div><!--//section-inner-->
@@ -242,7 +231,7 @@
                         <div class="content">
                             {% for music in music_list %}
                             <ul class="list-unstyled">
-                                <li><i class="fa fa-headphones"></i> <a href="{{music.url}}">{{music.music}}</a></li>
+                                <li><i class="fa fa-headphones"></i> <a href="{{music.url}}">{{music.music|title}}</a></li>
                             </ul>
                             {% endfor %}
                         </div><!--//content-->
@@ -254,8 +243,9 @@
                         <h2 class="heading">Conferences</h2>
                         <div class="content">
                             <ul class="list-unstyled">
-                                <li><i class="fa fa-calendar"></i> <a href="https://campuscommune.tcs.com/intro/view_blog/codevita-2014-tcs-global-coding-contest" target="_blank">TCS CodeVita</a> (Kalyani)</li>
-                                <li><i class="fa fa-calendar"></i> <a href="http://dgplug.org/summertraining/">DGPLug Summer Training</a> (Online)</li>
+                                {% for conf in conference_list %}
+                                <li><i class="fa fa-calendar"></i> <a href="{{ conf.link }}" target="_blank">{{conf.name}}</a> ({{conf.place|title}})</li>
+                                {% endfor %}
                             </ul>
                         </div><!--//content-->
                     </div><!--//section-inner-->
@@ -276,7 +266,7 @@
                             </ul>
                             
                             <hr/>
-                            <a class="btn btn-cta-secondary btn-follow" href="https://twitter.com/triump0870" target="_blank"><i class="fa fa-twitter"></i> Follow me</a>
+                            <a class="btn btn-cta-secondary btn-follow" href="{{userdata.twitter}}" target="_blank"><i class="fa fa-twitter"></i> Follow me</a>
                         </div><!--//content-->
                     </div><!--//section-inner-->
                 </aside><!--//section-->
@@ -304,7 +294,7 @@
     <!-- ******FOOTER****** --> 
     <footer class="footer">
         <div class="container text-center">
-                <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="http://rohanroy.com" target="_blank">Rohan Roy</a></small>
+                <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="{{userdata.website}}" target="_blank">Rohan Roy</a></small>
         </div><!--//container-->
     </footer><!--//footer-->
  
@@ -319,4 +309,3 @@
     <!-- custom js -->
     <script type="text/javascript" src="{{STATIC_URL}}js/main.js"></script>            
 {%endblock%}
-
