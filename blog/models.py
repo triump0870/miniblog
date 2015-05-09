@@ -4,7 +4,7 @@ from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django_markdown.models import MarkdownField
 from django.db.models import TextField, Count
-from time import time
+# from time import time
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 # Create your models here.

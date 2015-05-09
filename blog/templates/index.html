@@ -1,8 +1,8 @@
 {% extends "_layouts/base.html" %}
 {% load django_markdown %}
-{% block page_title %} {{userdata.fullname}} | {% endblock %}
+{% block page_title %} {{userdata.fullname|title}} | {% endblock %}
 {% block page_style %}
-
+    
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <!-- Plugins CSS -->
