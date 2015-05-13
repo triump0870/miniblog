@@ -7,6 +7,28 @@ from django.db.models import TextField, Count
 # from time import time
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+
+# Choices
+STATUS_CHOICES = (
+    ('d', 'Draft'),
+    ('p', 'Published'),
+    ('w', 'Withdrawn'),
+)
+
+choice = (
+	(1,'Native Speaker'),
+	(2,'Professional Proficiency'),
+	(3,'Learner'),
+)
+
+star_choice = (
+	('x','1'),
+	('xx','2'),
+	('xxx','3'),
+	('xxxx','4'),
+	('xxxxx','5'),
+)
+
 # Create your models here.
 def generate_filename(instance, filename):
 	ext = filename.split('.')[-1]
@@ -14,7 +36,7 @@ def generate_filename(instance, filename):
 
 class PostManager(models.Manager):
 	def live(self):
-		return self.model.objects.filter(published=True)
+		return self.model.objects.filter(status='p')
 
 class Tag(models.Model):
 	slug = models.SlugField(max_length=200, unique=True)
@@ -36,7 +58,7 @@ class Post(models.Model):
 	author = models.ForeignKey(User, related_name="posts")
 	url = models.URLField('URL',max_length=250, blank=True)
 	tags = models.ManyToManyField(Tag)
-	published = models.BooleanField(default=True)
+	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
 	objects = PostManager()
 	
 	class Meta:
@@ -60,7 +82,7 @@ class Project(models.Model):
 	content = MarkdownField()
 	image = models.ImageField(upload_to=generate_filename, blank=True, null=True)
 	date = models.DateField(editable=True)
-	published = models.BooleanField(default=True)
+	status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 	slug = models.SlugField(max_length=255, unique=True)
 	url = models.URLField('URL',max_length=255,blank=True)
 	github = models.URLField('GITHUB_URL',max_length=255,blank=True)
@@ -106,7 +128,7 @@ class Skill(models.Model):
 	name = models.CharField(max_length=30)
 	stage = models.CharField(max_length=15)
 	rating = models.IntegerField(default=0)
-
+	info = models.TextField()
 	def __unicode__(self):
 		return self.name
 
@@ -117,7 +139,7 @@ class Education(models.Model):
 	start_date = models.DateField(editable=True)
 	end_date = models.DateField(editable=True,blank=True,null=True)
 	mode = models.CharField(max_length=20, blank=True)
-	published = models.BooleanField(default=True)
+	status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
 	class Meta:
 		ordering = ['-start_date']
@@ -133,7 +155,7 @@ class Education(models.Model):
 class Music(models.Model):
 	music = models.CharField(max_length=255)
 	url = models.URLField('Music_URL',null=False,blank=False)
-	published = models.BooleanField(default=True)
+	status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
 	def __unicode__(self):
 		return self.music
@@ -161,18 +183,6 @@ class UserData(models.Model):
 		return self.user
 
 class Language(models.Model):
-	choice = (
-		(1,'Native Speaker'),
-		(2,'Professional Proficiency'),
-		(3,'Learner'),
-		)
-	star_choice = (
-		('x','1'),
-		('xx','2'),
-		('xxx','3'),
-		('xxxx','4'),
-		('xxxxx','5'),
-		)
 	language = models.CharField(max_length=70)
 	proficiency = models.IntegerField(max_length=1, choices=choice, default=1)
 	star = models.CharField(max_length=5,choices=star_choice, default='xxx')
@@ -185,7 +195,7 @@ class Conference(models.Model):
 	place = models.CharField(max_length=100)
 	link = models.URLField('Link', blank=True, null=True)
 	date = models.DateField(editable=True, blank=True, null=True)
-	published = models.BooleanField(default=True)
+	status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
 	def __unicode__(self):
 		return self.name

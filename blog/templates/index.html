@@ -140,7 +140,7 @@
                             <div class="skillset">
                                 {% for skill in skill_list %}
                                 <div class="item">
-                                    <h3 class="level-title">{{skill.name}}<span class="level-label" data-toggle="tooltip" data-placement="left" data-animation="true" title="You can use the tooltip to add more info...">{{skill.stage}}</span></h3>
+                                    <h3 class="level-title">{{skill.name}}<span class="level-label" data-toggle="tooltip" data-placement="left" data-animation="true" title="{{skill.info}}">{{skill.stage}}</span></h3>
                                     <div class="level-bar">
                                         <div class="level-bar-inner" data-level="{{skill.rating}}%"></div>
                                     </div><!--//level-bar-->                                 

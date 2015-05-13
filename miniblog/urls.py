@@ -3,6 +3,9 @@ from django.contrib import admin
 from blog.views import PostListView, AboutView
 from django.views.generic import TemplateView
 from .settings import base
+#registering admin
+admin.autodiscover()
+
 urlpatterns = patterns('',
     url(r"^$", PostListView.as_view(),name="home"),
     url(r"^blog/", include("blog.urls", namespace="blog",app_name="blog")),

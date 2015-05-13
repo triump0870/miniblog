@@ -33,7 +33,7 @@ class PostListView(PublishedPostMixin,ListView):
 
 class BlogListView(ListView):
 	model = Post
-	queryset = Post.objects.all().filter(published=True)
+	queryset = Post.objects.all().filter(status='p')
 	paginate_by = 5
 
 class TagListView(ListView):

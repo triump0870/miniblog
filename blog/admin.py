@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Post, Tag, Project, Work, About,Skill, Education, Music, UserData, Language, Conference
 from django_markdown.admin import MarkdownModelAdmin
-# Register your models here.
 
 # Simple Model admin
 admin.site.register(Tag)
@@ -13,12 +12,23 @@ admin.site.register(Language)
 
 # Advanced Model Admin
 class PostAdmin(MarkdownModelAdmin):
+	actions = ['make_published']
+
+	# Actions methods
+	def make_published(self, request, queryset):
+		rows_updated = queryset.update(status='p')
+		if rows_updated == 1:
+		    message_bit = "1 story was"
+		else:
+		    message_bit = "%s stories were" % rows_updated
+		self.message_user(request, "%s successfully marked as published." % message_bit)
+
+	make_published.short_description = "Mark selected stories as published"
 	date_hierarchy = "created_at"
-	fields = ('published',"title","slug","content","author","tags")
-	list_display = ["published","title","updated_at"]
+	fields = ('status',"title","slug","content","author","tags")
+	list_display = ["title","updated_at","status"]
 	list_display_links = ["title"]
-	list_editable = ["published"]
-	list_filter = ["published","updated_at","author","tags"]
+	list_filter = ["status","updated_at","author","tags"]
 	prepopulated_fields = {"slug": ("title",)}
 	search_fields = ["^title","^content"]
 
@@ -26,11 +36,11 @@ admin.site.register(Post, PostAdmin)
 
 class ProjectAdmin(MarkdownModelAdmin):
 	date_hierarchy = "date"
-	fields = ('published','date','title','slug','subtitle','content','image','url','github')
-	list_display = ['published','title','date']
+	fields = ('status','date','title','slug','subtitle','content','image','url','github')
+	list_display = ['status','title','date']
 	list_display_links = ['title']
-	list_editable = ['published']
-	list_filter = ['published', 'date',]
+	list_editable = ['status']
+	list_filter = ['status', 'date',]
 	prepopulated_fields = {'slug':('title',)}
 	search_fields = ['^title','^content']
 
@@ -47,8 +57,8 @@ admin.site.register(Work, WorkAdmin)
 
 class EducationAdmin(admin.ModelAdmin):
 	date_hierarchy = "start_date"
-	fields = ('published','start_date','end_date','course', 'institution', 'website', 'mode')
-	list_display = ['published','course','is_present']
+	fields = ('status','start_date','end_date','course', 'institution', 'website', 'mode')
+	list_display = ['status','course','is_present']
 	list_display_links = ['course']
 	list_filter = ['course','institution']
 	search_fields = ['^course','^institution','end_date']
@@ -56,8 +66,8 @@ class EducationAdmin(admin.ModelAdmin):
 admin.site.register(Education,EducationAdmin)
 
 class ConferenceAdmin(admin.ModelAdmin):
-	fields = ('published','date','name', 'place', 'link')
-	list_display = ['published','name','date','link']
+	fields = ('status','date','name', 'place', 'link')
+	list_display = ['status','name','date','link']
 	list_display_links = ['name','link']
 	list_filter = ['name','place']
 	search_fields = ['^name','^place']
