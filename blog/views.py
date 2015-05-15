@@ -3,7 +3,6 @@ from .models import Post, Project, Work, Tag, About, Skill, Education, Music, Us
 from django.views.generic import ListView, DetailView, TemplateView
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
-from forms import PostForm
 from django.http import HttpResponse
 # Create your views here.
 

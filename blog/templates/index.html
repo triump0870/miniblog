@@ -24,7 +24,7 @@
     <!-- ******HEADER****** --> 
     <header class="header">
         <div class="container">                       
-            <img class="profile-image img-responsive pull-left" src="{{STATIC_URL}}images/rohan.png" alt="Rohan Roy" />
+            <img class="profile-image img-responsive pull-left" src="{{MEDIA_URL}}{{userdata.image}}" alt="Rohan Roy" height="180" width="180" style='border:{{userdata.border_width}}px solid #{{userdata.border_color}}' />
             <div class="profile-content pull-left">
                 <h1 class="name">{{userdata.fullname}}</h1>
                 <h2 class="desc">{{userdata.role}}</h2>   
@@ -52,7 +52,7 @@
                         
                             <p>{{about.content}}</p>
                         {% endfor %}
-                            <p><a class="more-link" href="{{userdata.website}}/about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
+                            <p><a class="more-link" href="{{userdata.website}}about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
                         </div><!--//content-->
                     </div><!--//section-inner-->                 
                 </section><!--//section-->

@@ -8,6 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r"^$", PostListView.as_view(),name="home"),
+    # url(r'^ajax-upload/', include('startproject.cicu.urls')),
     url(r"^blog/", include("blog.urls", namespace="blog",app_name="blog")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^uploads/(?P<path>.*)$', 'django.views.static.serve', {'document_root': base.MEDIA_ROOT, 'show_indexes':True}),

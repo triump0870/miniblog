@@ -4,7 +4,7 @@ from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 from django_markdown.models import MarkdownField
 from django.db.models import TextField, Count
-# from time import time
+from time import time
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
@@ -123,6 +123,9 @@ class Work(models.Model):
 
 class About(models.Model):
 	content = MarkdownField()
+	def __unicode__(self):
+		num = str(self.pk)
+		return num
 
 class Skill(models.Model):
 	name = models.CharField(max_length=30)
@@ -163,6 +166,9 @@ class Music(models.Model):
 class UserData(models.Model):
 	fullname = models.CharField(max_length=255)
 	user = models.CharField(max_length=70, unique=True, blank=False, null=False)
+	image = models.ImageField(upload_to=generate_filename,blank=False, null=False)
+	border_color = models.CharField(max_length=10, blank=True, null=True)
+	border_width = models.IntegerField(max_length=1, blank=True, null=True)
 	role = models.CharField(max_length=30)
 	location = models.CharField(max_length=100)
 	contact =  models.EmailField(max_length=70, blank=True, null=True)

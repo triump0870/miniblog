@@ -7,7 +7,6 @@ admin.site.register(Tag)
 admin.site.register(About)
 admin.site.register(Skill)
 admin.site.register(Music)
-admin.site.register(UserData)
 admin.site.register(Language)
 
 # Advanced Model Admin
@@ -73,3 +72,8 @@ class ConferenceAdmin(admin.ModelAdmin):
 	search_fields = ['^name','^place']
 
 admin.site.register(Conference,ConferenceAdmin)
+
+class UserDataModelAdmin(admin.ModelAdmin):
+	list_display = ['fullname','user', 'role']
+
+admin.site.register(UserData, UserDataModelAdmin)
