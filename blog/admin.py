@@ -34,11 +34,23 @@ class PostAdmin(MarkdownModelAdmin):
 admin.site.register(Post, PostAdmin)
 
 class ProjectAdmin(MarkdownModelAdmin):
+	actions = ['make_published']
+
+	# Actions methods
+	def make_published(self, request, queryset):
+		rows_updated = queryset.update(status='p')
+		if rows_updated == 1:
+		    message_bit = "1 story was"
+		else:
+		    message_bit = "%s stories were" % rows_updated
+		self.message_user(request, "%s successfully marked as published." % message_bit)
+
+	make_published.short_description = "Mark selected stories as published"
 	date_hierarchy = "date"
 	fields = ('status','date','title','slug','subtitle','content','image','url','github')
 	list_display = ['status','title','date']
 	list_display_links = ['title']
-	list_editable = ['status']
+	# list_editable = ['status']
 	list_filter = ['status', 'date',]
 	prepopulated_fields = {'slug':('title',)}
 	search_fields = ['^title','^content']

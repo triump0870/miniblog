@@ -82,7 +82,7 @@ class Project(models.Model):
 	content = MarkdownField()
 	image = models.ImageField(upload_to=generate_filename, blank=True, null=True)
 	date = models.DateField(editable=True)
-	status = models.CharField(max_length=1, choices=STATUS_CHOICES)
+	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
 	slug = models.SlugField(max_length=255, unique=True)
 	url = models.URLField('URL',max_length=255,blank=True)
 	github = models.URLField('GITHUB_URL',max_length=255,blank=True)
