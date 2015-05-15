@@ -24,7 +24,7 @@
     <!-- ******HEADER****** --> 
     <header class="header">
         <div class="container">                       
-            <img class="profile-image img-responsive pull-left" src="{{STATIC_URL}}images/rohan.png" alt="Rohan Roy" />
+            <img class="profile-image img-responsive pull-left" src="{{MEDIA_URL}}{{userdata.image}}" alt="Rohan Roy" height="180" width="180" style='border:{{userdata.border_width}}px solid #{{userdata.border_color}}' />
             <div class="profile-content pull-left">
                 <h1 class="name">{{userdata.fullname}}</h1>
                 <h2 class="desc">{{userdata.role}}</h2>   
@@ -52,7 +52,7 @@
                         
                             <p>{{about.content}}</p>
                         {% endfor %}
-                            <p><a class="more-link" href="{{userdata.website}}/about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
+                            <p><a class="more-link" href="{{userdata.website}}about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
                         </div><!--//content-->
                     </div><!--//section-inner-->                 
                 </section><!--//section-->
@@ -140,7 +140,7 @@
                             <div class="skillset">
                                 {% for skill in skill_list %}
                                 <div class="item">
-                                    <h3 class="level-title">{{skill.name}}<span class="level-label" data-toggle="tooltip" data-placement="left" data-animation="true" title="You can use the tooltip to add more info...">{{skill.stage}}</span></h3>
+                                    <h3 class="level-title">{{skill.name}}<span class="level-label" data-toggle="tooltip" data-placement="left" data-animation="true" title="{{skill.info}}">{{skill.stage}}</span></h3>
                                     <div class="level-bar">
                                         <div class="level-bar-inner" data-level="{{skill.rating}}%"></div>
                                     </div><!--//level-bar-->                                 
