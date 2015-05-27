@@ -7,6 +7,8 @@ from django.db.models import TextField, Count
 from time import time
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+import uuid
+from django.utils.deconstruct import deconstructible
 
 # Choices
 STATUS_CHOICES = (
@@ -29,11 +31,24 @@ star_choice = (
 	('xxxxx','5'),
 )
 
-# Create your models here.
-def generate_filename(instance, filename, path='images/'):
+@deconstructible
+def generatefilename(object):
 	''' Generates filename based on the time of upload'''
-	ext = filename.split('.')[-1]
-	return 'path'+str(int(time()))+'.'+ext
+	def __init__(self, sub_path):
+		self.path = sub_path
+
+	def __call__(self, instance, filename):
+		ext = filename.split('.')[-1]
+		prefix = '-%s.%s'%(uuid.uuid4(),ext)
+		return path+str(int(time()))+prefix
+
+# Generated Filenames
+about_filename = generatefilename("images/")
+blog_filename = generatefilename("blog/")
+contact_filename = generatefilename("contact/")
+post_filename = generatefilename("post/")
+project_filename = generatefilename("project/")
+user_filename = generatefilename("avater/")
 
 # def about_filename()
 class PostManager(models.Manager):
@@ -100,9 +115,9 @@ class Education(models.Model):
 			return self.end_date.year
 
 class Image(models.Model):
-	about_image = models.ImageField(upload_to='about/', blank=False, null=False)
-	blog_image = models.ImageField(upload_to='blog/', blank=False, null=False)
-	contact_image = models.ImageField(upload_to='contact/', blank=False, null=False)
+	about_image = models.ImageField(upload_to=about_filename, blank=True, null=True)
+	blog_image = models.ImageField(upload_to=blog_filename, blank=True, null=True)
+	contact_image = models.ImageField(upload_to=contact_filename, blank=True, null=True)
 
 	def __unicode__(self):
 		return str(self.pk)
@@ -129,7 +144,7 @@ class Post(models.Model):
 	title = models.CharField(max_length=255)
 	slug = models.SlugField(max_length=255,unique=True)
 	content = MarkdownField()
-	image = models.ImageField('Cover Image',upload_to=generate_filename, blank=True, null=True)
+	image = models.ImageField('Cover Image',upload_to=post_filename, blank=True, null=True)
 	author = models.ForeignKey(User, related_name="posts")
 	tags = models.ManyToManyField(Tag)
 	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
@@ -154,13 +169,16 @@ class Project(models.Model):
 	title = models.CharField(max_length=255)
 	subtitle = models.CharField(max_length=255, blank=True,null=True)
 	content = MarkdownField()
-	image = models.ImageField(upload_to=generate_filename, blank=True, null=True)
+	image = models.ImageField(upload_to=project_filename, blank=True, null=True)
 	date = models.DateField(editable=True)
 	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
 	slug = models.SlugField(max_length=255, unique=True)
 	url = models.URLField('URL',max_length=255,blank=True)
 	github = models.URLField('GITHUB_URL',max_length=255,blank=True)
-		
+	
+	# class Meta:
+	# 	ordering = ["date"]
+
 	def __unicode__(self):
 		return self.title
 
@@ -180,7 +198,7 @@ class Skill(models.Model):
 class UserData(models.Model):
 	fullname = models.CharField(max_length=255)
 	user = models.CharField(max_length=70, unique=True, blank=False, null=False)
-	image = models.ImageField(upload_to=generate_filename,blank=False, null=False)
+	image = models.ImageField(upload_to=user_filename,blank=True, null=True)
 	border_color = models.CharField(max_length=10, blank=True, null=True)
 	border_width = models.IntegerField(max_length=1, blank=True, null=True)
 	role = models.CharField(max_length=30)
