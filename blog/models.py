@@ -44,7 +44,7 @@ class generatefilename(object):
 about_filename = generatefilename("images/")
 blog_filename = generatefilename("blog/")
 contact_filename = generatefilename("contact/")
-post_filename = generatefilename("post/")
+post_filename = generatefilename("posts/")
 project_filename = generatefilename("projects/")
 side_filename = generatefilename("projects/side/")
 user_filename = generatefilename("avater/")

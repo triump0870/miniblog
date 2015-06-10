@@ -17,7 +17,10 @@ class AboutView(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(AboutView, self).get_context_data(**kwargs)
-		context['about'] = Image.objects.values('about_image')[0].values()[0]
+		try:
+			context['about'] = Image.objects.values('about_image')[0].values()[0]
+		except IndexError:
+			pass
 		return context
 
 class BlogListView(ListView):
@@ -27,7 +30,10 @@ class BlogListView(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(BlogListView, self).get_context_data(**kwargs)
-		context['blog'] = Image.objects.values('blog_image')[0].values()[0]
+		try:
+			context['blog'] = Image.objects.values('blog_image')[0].values()[0]
+		except IndexError:
+			pass
 		return context
 
 class ContactView(ListView):
@@ -36,7 +42,10 @@ class ContactView(ListView):
 	
 	def get_context_data(self, **kwargs):
 		context = super(ContactView, self).get_context_data(**kwargs)
-		context['contact'] = Image.objects.values('contact_image')[0].values()[0]
+		try:
+			context['contact'] = Image.objects.values('contact_image')[0].values()[0]
+		except IndexError:
+			pass
 		return context
 
 class IndexView(PublishedPostMixin,ListView):
