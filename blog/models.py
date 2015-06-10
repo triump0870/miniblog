@@ -30,14 +30,16 @@ star_choice = (
 	('xxxxx','5'),
 )
 
-# @deconstructible	
-def generatefilename(path):
+@deconstructible	
+class generatefilename(object):
 	''' Generates filename based on the time of upload'''
-	def wrapper(instance, filename):
+	def __init__(self, sub_path):
+		self.path = sub_path
+
+	def __call__(self, instance, filename):
 		ext = filename.split('.')[-1]
 		prefix = '-%s.%s'%(uuid.uuid4(),ext)
-		return path+str(int(time()))+prefix
-	return wrapper 
+		return self.path+str(int(time()))+prefix
 
 about_filename = generatefilename("images/")
 blog_filename = generatefilename("blog/")
