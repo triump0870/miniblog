@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from blog.views import  PostListView, BlogListView, TagListView, PostDetailView
+from blog.views import BlogListView, TagListView, PostDetailView
 from . import feed
 urlpatterns = patterns('',
 	url(r"^$",BlogListView.as_view(), name="list"),

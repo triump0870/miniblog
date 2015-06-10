@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Tag, Project, Work, About,Skill, Education, Music, UserData, Language, Conference
+from .models import Post, Tag, Project, Work, About,Skill, Education, Music, UserData, Language, Conference, Contact, Image
 from django_markdown.admin import MarkdownModelAdmin
 
 # Simple Model admin
@@ -8,6 +8,7 @@ admin.site.register(About)
 admin.site.register(Skill)
 admin.site.register(Music)
 admin.site.register(Language)
+admin.site.register(Contact)
 
 # Advanced Model Admin
 class PostAdmin(MarkdownModelAdmin):
@@ -24,7 +25,7 @@ class PostAdmin(MarkdownModelAdmin):
 
 	make_published.short_description = "Mark selected stories as published"
 	date_hierarchy = "created_at"
-	fields = ('status',"title","slug","content","author","tags")
+	# fields = ('status',"title","slug","content","author","tags")
 	list_display = ["title","updated_at","status"]
 	list_display_links = ["title"]
 	list_filter = ["status","updated_at","author","tags"]
@@ -47,7 +48,7 @@ class ProjectAdmin(MarkdownModelAdmin):
 
 	make_published.short_description = "Mark selected stories as published"
 	date_hierarchy = "date"
-	fields = ('status','date','title','slug','subtitle','content','image','url','github')
+	fields = ('status','date','title','slug','subtitle','content','image','side_image','url','github')
 	list_display = ['status','title','date']
 	list_display_links = ['title']
 	# list_editable = ['status']
@@ -89,3 +90,9 @@ class UserDataModelAdmin(admin.ModelAdmin):
 	list_display = ['fullname','user', 'role']
 
 admin.site.register(UserData, UserDataModelAdmin)
+
+class ImageModelAdmin(admin.ModelAdmin):
+	list_display = ['about_image','blog_image','contact_image']
+	list_display_links = ['about_image','blog_image','contact_image']
+
+admin.site.register(Image,ImageModelAdmin)

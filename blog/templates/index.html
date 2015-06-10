@@ -61,7 +61,7 @@
                         <h2 class="heading">Latest Projects</h2>
                         <div class="content">    
                             <div class="item featured text-center">
-                                <h3 class="title"><a href="{{latest.url}}" target="_blank">{{latest.title|title}}</a> </h3>
+                                <h3 class="title"><a href="{{latest.url}}" target="_blank">{{latest.title}}</a> </h3>
                                 <p class="summary">{{latest.subtitle|title}}</p>
                                 <div class="featured-image">
                                     <a href="{{latest.github}}" target="_blank">
@@ -81,7 +81,7 @@
                             {% for project in project_list %}
                             <div class="item row">
                                 <a class="col-md-4 col-sm-4 col-xs-12" href="{{project.github}}" target="_blank">
-                                <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project.image}}" alt="{{project.title|title}}" style="border:5px solid #f3f3f3" />
+                                <img class="img-responsive project-image" src="{{MEDIA_URL}}{{project.side_image}}" alt="{{project.title|title}}" style="border:5px solid #f3f3f3;"  />
                                 </a>
                                 <div class="desc col-md-8 col-sm-8 col-xs-12">
                                     <h3 class="title"><a href="{{project.url}}" target="_blank">{{project.title|title}} </a><small>{{project.date|date:'M j, Y'}}</small></h3>
