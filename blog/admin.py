@@ -48,7 +48,7 @@ class ProjectAdmin(MarkdownModelAdmin):
 
 	make_published.short_description = "Mark selected stories as published"
 	date_hierarchy = "date"
-	fields = ('status','date','title','slug','subtitle','content','image','url','github')
+	fields = ('status','date','title','slug','subtitle','content','image','side_image','url','github')
 	list_display = ['status','title','date']
 	list_display_links = ['title']
 	# list_editable = ['status']

@@ -26,28 +26,25 @@ choice = (
 star_choice = (
 	('x','1'),
 	('xx','2'),
-	('xxx','3'),
 	('xxxx','4'),
 	('xxxxx','5'),
 )
 
-@deconstructible
-def generatefilename(object):
+# @deconstructible	
+def generatefilename(path):
 	''' Generates filename based on the time of upload'''
-	def __init__(self, sub_path):
-		self.path = sub_path
-
-	def __call__(self, instance, filename):
+	def wrapper(instance, filename):
 		ext = filename.split('.')[-1]
 		prefix = '-%s.%s'%(uuid.uuid4(),ext)
 		return path+str(int(time()))+prefix
+	return wrapper 
 
-# Generated Filenames
 about_filename = generatefilename("images/")
 blog_filename = generatefilename("blog/")
 contact_filename = generatefilename("contact/")
 post_filename = generatefilename("post/")
-project_filename = generatefilename("project/")
+project_filename = generatefilename("projects/")
+side_filename = generatefilename("projects/side/")
 user_filename = generatefilename("avater/")
 
 # def about_filename()
@@ -170,6 +167,7 @@ class Project(models.Model):
 	subtitle = models.CharField(max_length=255, blank=True,null=True)
 	content = MarkdownField()
 	image = models.ImageField(upload_to=project_filename, blank=True, null=True)
+	side_image = models.ImageField(upload_to=side_filename, blank=True, null=True)
 	date = models.DateField(editable=True)
 	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
 	slug = models.SlugField(max_length=255, unique=True)
@@ -249,4 +247,10 @@ class Work(models.Model):
 def image_post_delete_handler(sender, **kwargs):
 	Post = kwargs['instance']
 	storage, path = Post.image.storage, Post.image.path
+	storage.delete(path)
+
+@receiver(post_delete, sender=Project)
+def image_post_delete_handler(sender, **kwargs):
+	Project = kwargs['instance']
+	storage, path = Project.image.storage, Project.image.path
 	storage.delete(path)
