@@ -1,14 +1,16 @@
 #All the imports
-from .models import Post, Project, Work, Tag, About, Skill, Education, Music, UserData, Language, Conference, Contact, Image
+from .models import Post, Project, Work, Tag, About, Skill,\
+ Education, Music, UserData, Language, Conference, Contact,\
+ Image
 from django.views.generic import ListView, DetailView, TemplateView
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
 # Custom Mixin
-class PublishedPostMixin(object):
+class PublishedMixin(object):
 	def get_queryset(self):
-		return self.model.objects.live()
+		return self.model.objects.get_queryset()
 
 # All the views are defined lexicographically
 class AboutView(ListView):
@@ -17,17 +19,10 @@ class AboutView(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(AboutView, self).get_context_data(**kwargs)
-		context['about'] = Image.objects.values('about_image')[0].values()[0]
-		return context
-
-class BlogListView(ListView):
-	model = Post
-	queryset = Post.objects.all().filter(status='p')
-	paginate_by = 5
-
-	def get_context_data(self, **kwargs):
-		context = super(BlogListView, self).get_context_data(**kwargs)
-		context['blog'] = Image.objects.values('blog_image')[0].values()[0]
+		try:
+			context['about'] = Image.objects.values('about_image')[0].values()[0]
+		except IndexError:
+			pass
 		return context
 
 class ContactView(ListView):
@@ -36,10 +31,13 @@ class ContactView(ListView):
 	
 	def get_context_data(self, **kwargs):
 		context = super(ContactView, self).get_context_data(**kwargs)
-		context['contact'] = Image.objects.values('contact_image')[0].values()[0]
+		try:
+			context['contact'] = Image.objects.values('contact_image')[0].values()[0]
+		except IndexError:
+			pass
 		return context
 
-class IndexView(PublishedPostMixin,ListView):
+class IndexView(PublishedMixin,ListView):
 	model = Post
 	template_name = "index.html"
 	def get_context_data(self, **kwargs):
@@ -59,9 +57,37 @@ class IndexView(PublishedPostMixin,ListView):
 		context['conference_list'] = Conference.objects.all()
 		return context
 
-class PostDetailView(PublishedPostMixin,DetailView):
+class PostDetailView(PublishedMixin,DetailView):
 	model = Post
 	template_name = "blog/blog_post.html"
+
+class PostListView(PublishedMixin, ListView):
+	model = Post
+	paginate_by = 5
+
+	def get_context_data(self, **kwargs):
+		context = super(PostListView, self).get_context_data(**kwargs)
+		try:
+			context['postlist'] = Image.objects.values('postlist_image')[0].values()[0]
+		except IndexError:
+			pass
+		return context
+
+class ProjectDetailView(PublishedMixin,DetailView):
+	model = Project
+	template_name = "blog/project_detail.html"
+
+class ProjectListView(PublishedMixin, ListView):
+	model = Project
+	paginate_by = 5
+
+	def get_context_data(self, **kwargs):
+		context = super(ProjectListView, self).get_context_data(**kwargs)
+		try:
+			context['projectlist'] = Image.objects.values('projectlist_image')[0].values()[0]
+		except IndexError:
+			pass
+		return context
 
 class TagListView(ListView):
 	models = Tag

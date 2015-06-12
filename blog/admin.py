@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import Post, Tag, Project, Work, About,Skill, Education, Music, UserData, Language, Conference, Contact, Image
+import blog.models as m
 from django_markdown.admin import MarkdownModelAdmin
 
 # Simple Model admin
-admin.site.register(Tag)
-admin.site.register(About)
-admin.site.register(Skill)
-admin.site.register(Music)
-admin.site.register(Language)
-admin.site.register(Contact)
+admin.site.register(m.Tag)
+admin.site.register(m.About)
+admin.site.register(m.Skill)
+admin.site.register(m.Music)
+admin.site.register(m.Language)
+admin.site.register(m.Contact)
 
 # Advanced Model Admin
 class PostAdmin(MarkdownModelAdmin):
@@ -32,7 +32,7 @@ class PostAdmin(MarkdownModelAdmin):
 	prepopulated_fields = {"slug": ("title",)}
 	search_fields = ["^title","^content"]
 
-admin.site.register(Post, PostAdmin)
+admin.site.register(m.Post, PostAdmin)
 
 class ProjectAdmin(MarkdownModelAdmin):
 	actions = ['make_published']
@@ -56,7 +56,7 @@ class ProjectAdmin(MarkdownModelAdmin):
 	prepopulated_fields = {'slug':('title',)}
 	search_fields = ['^title','^content']
 
-admin.site.register(Project, ProjectAdmin)
+admin.site.register(m.Project, ProjectAdmin)
 
 class WorkAdmin(MarkdownModelAdmin):
 	date_hierarchy = "start_date"
@@ -65,7 +65,7 @@ class WorkAdmin(MarkdownModelAdmin):
 	list_filter = ['company','designation']
 	search_fields = ['^company','^designation']
 
-admin.site.register(Work, WorkAdmin)
+admin.site.register(m.Work, WorkAdmin)
 
 class EducationAdmin(admin.ModelAdmin):
 	date_hierarchy = "start_date"
@@ -75,7 +75,7 @@ class EducationAdmin(admin.ModelAdmin):
 	list_filter = ['course','institution']
 	search_fields = ['^course','^institution','end_date']
 
-admin.site.register(Education,EducationAdmin)
+admin.site.register(m.Education,EducationAdmin)
 
 class ConferenceAdmin(admin.ModelAdmin):
 	fields = ('status','date','name', 'place', 'link')
@@ -84,15 +84,15 @@ class ConferenceAdmin(admin.ModelAdmin):
 	list_filter = ['name','place']
 	search_fields = ['^name','^place']
 
-admin.site.register(Conference,ConferenceAdmin)
+admin.site.register(m.Conference,ConferenceAdmin)
 
 class UserDataModelAdmin(admin.ModelAdmin):
 	list_display = ['fullname','user', 'role']
 
-admin.site.register(UserData, UserDataModelAdmin)
+admin.site.register(m.UserData, UserDataModelAdmin)
 
 class ImageModelAdmin(admin.ModelAdmin):
-	list_display = ['about_image','blog_image','contact_image']
-	list_display_links = ['about_image','blog_image','contact_image']
+	list_display = ['about_image','postlist_image','contact_image']
+	list_display_links = ['about_image','postlist_image','contact_image']
 
-admin.site.register(Image,ImageModelAdmin)
+admin.site.register(m.Image,ImageModelAdmin)

@@ -1,5 +1,7 @@
 {% extends "_layouts/base.html" %}
     {% block page_title %}Blog Posts | {%endblock%}
+    {% block meta %}Rohan's blog post{%endblock%}
+    {% block keys %}Blog, Post{% endblock %}
     {% block page_style %}
     <!-- Bootstrap Core CSS -->
     <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
@@ -56,8 +58,10 @@
 
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    {% if blog %}
-    <header class="intro-header" style="background-image: url('{{MEDIA_URL}}{{blog}}'); height: 500px;">
+    {% if postlist %}
+    <header class="intro-header" style="background-image: url('{{MEDIA_URL}}{{postlist}}'); height: 500px;">
+    {% else %}
+    <header class="intro-header" style="background-image: url('{{STATIC_URL}}images/home-bg.jpg')">
     {% endif %}
         <div class="container">
             <div class="row">

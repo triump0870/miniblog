@@ -86,7 +86,7 @@
                                 <div class="desc col-md-8 col-sm-8 col-xs-12">
                                     <h3 class="title"><a href="{{project.url}}" target="_blank">{{project.title|title}} </a><small>{{project.date|date:'M j, Y'}}</small></h3>
                                     <p>{{project.content|markdown}}</p>
-                                    <p><a class="more-link" href="{{project.github}}" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
+                                    <p><a class="more-link" href="{{project.get_absolute_url}}" target="_blank"><i class="fa fa-external-link"></i> Find out more</a></p>
                                 </div><!--//desc-->                          
                             </div><!--//item-->
                             {% endfor %}
