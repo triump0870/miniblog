@@ -1,38 +1,25 @@
 {% extends "_layouts/base.html" %}
-{% load blog_extras %}
-{% load django_markdown %}
-{% load url from future %}
-{% load disqus_tags %}
 {% block page_title %} Projects | {% endblock %}
 {% block meta %}Rohan's Projects{%endblock%}
 {% block keys %}Projects{% endblock %}
 {% block page_style %}
-<!-- Bootstrap Core CSS -->
-<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
-<!-- Custom CSS -->
-<link href="{{STATIC_URL}}css/body-blog.min.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- Custom CSS -->
+    <link href="{{STATIC_URL}}css/body-blog.min.css" rel="stylesheet">
 
-<!-- Custom Fonts -->
-<link rel="stylesheet" href="{{STATIC_URL}}plugins/font-awesome/css/font-awesome.css">
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-<!-- jQuery -->
-<script src="{{STATIC_URL}}js/jquery.js"></script>
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="{{STATIC_URL}}plugins/font-awesome/css/font-awesome.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="{{STATIC_URL}}js/clean-blog.js"></script>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>CClealea
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-
-
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>CClealea
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 {%endblock%}
 
 {% block page_content %}

@@ -129,14 +129,14 @@
                 </script>  
                 <hr>
                 <ul class="pager">
-                    {% if post.get_next_by_created_at %}
+                    {% if post.get_previous_by_created_at %}
                     <li class="previous">
-                        <a href="{% url 'blog:detail' post.get_next_by_created_at.slug %}">&larr; Previous Post</a>
+                        <a href="{% url 'blog:detail' post.get_previous_by_created_at.slug %}">&larr; Previous Post</a>
                     </li>
                     {% endif %}
-                    {% if post.get_previous_by_created_at %}
+                    {% if post.get_next_by_created_at %}
                     <li class="next">
-                        <a href="{% url 'blog:detail' post.get_previous_by_created_at.slug %}">Next Post &rarr;</a>
+                        <a href="{% url 'blog:detail' post.get_next_by_created_at.slug %}">Next Post &rarr;</a>
                     </li>
                     {% endif %}
                 </ul>

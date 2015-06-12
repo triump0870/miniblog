@@ -137,23 +137,31 @@
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
-                    {% if project.get_next_by_date %}
-                    <li class="previous">
-                        <a href="{% url 'projectdetail' project.get_next_by_date.slug %}">&larr; Previous Project</a>
-                    </li>
-                    {% endif %}
                     {% if project.get_previous_by_date %}
-                    <li class="next">
-                        <a href="{% url 'projectdetail' project.get_previous_by_date.slug %}">Next Project &rarr;</a>
+                    <li class="previous">
+                        <a href="{% url 'projectdetail' project.get_previous_by_date.slug %}">&larr; Previous Project</a>
                     </li>
                     {% endif %}
-                </ul>     
+                    {% if project.get_next_by_date %}
+                    <li class="next">
+                        <a href="{% url 'projectdetail' project.get_next_by_date.slug %}">Next Project &rarr;</a>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </div>
-
     <hr>
-
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {% disqus_show_comments %}
+                </div>
+            </div>
+        </div>
+    </article>
+    <hr>
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -193,12 +201,4 @@
         </div><!--//container-->
     </footer>
 
-    <!-- jQuery -->
-    <script src="{{STATIC_URL}}js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="{{STATIC_URL}}js/clean-blog.js"></script>
 {% endblock %}

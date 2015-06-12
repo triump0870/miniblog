@@ -10,7 +10,7 @@ from django.http import HttpResponse
 # Custom Mixin
 class PublishedMixin(object):
 	def get_queryset(self):
-		return self.model.objects.live()
+		return self.model.objects.get_queryset()
 
 # All the views are defined lexicographically
 class AboutView(ListView):

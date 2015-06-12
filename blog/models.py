@@ -52,8 +52,8 @@ user_filename = generatefilename("avater/")
 
 # def about_filename()
 class CustomManager(models.Manager):
-	def live(self):
-		return self.model.objects.filter(status='p')
+	def get_queryset(self):
+		return super(CustomManager, self).get_queryset().filter(status='p')
 
 class Tag(models.Model):
 	slug = models.SlugField(max_length=200, unique=True)
@@ -179,7 +179,7 @@ class Project(models.Model):
 	github = models.URLField('GITHUB_URL',max_length=255,blank=True)
 	objects = CustomManager()
 	class Meta:
-		ordering = ["date"]
+		ordering = ["-date"]
 
 	def __unicode__(self):
 		return self.title
