@@ -42,15 +42,16 @@ class generatefilename(object):
 		return self.path+str(int(time()))+prefix
 
 about_filename = generatefilename("images/")
-blog_filename = generatefilename("blog/")
+postlist_filename = generatefilename("postlist/")
 contact_filename = generatefilename("contact/")
 post_filename = generatefilename("posts/")
-project_filename = generatefilename("projects/")
+projectlist_filename = generatefilename("projectlist/")
+project_filename = generatefilename("projectlist/projects/")
 side_filename = generatefilename("projects/side/")
 user_filename = generatefilename("avater/")
 
 # def about_filename()
-class PostManager(models.Manager):
+class CustomManager(models.Manager):
 	def live(self):
 		return self.model.objects.filter(status='p')
 
@@ -115,8 +116,9 @@ class Education(models.Model):
 
 class Image(models.Model):
 	about_image = models.ImageField(upload_to=about_filename, blank=True, null=True)
-	blog_image = models.ImageField(upload_to=blog_filename, blank=True, null=True)
+	postlist_image = models.ImageField(upload_to=postlist_filename, blank=True, null=True)
 	contact_image = models.ImageField(upload_to=contact_filename, blank=True, null=True)
+	projectlist_image = models.ImageField(upload_to=projectlist_filename, blank=True, null=True)
 
 	def __unicode__(self):
 		return str(self.pk)
@@ -147,7 +149,7 @@ class Post(models.Model):
 	author = models.ForeignKey(User, related_name="posts")
 	tags = models.ManyToManyField(Tag)
 	status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
-	objects = PostManager()
+	objects = CustomManager()
 	
 	class Meta:
 		ordering = ["-created_at", "title"]
@@ -175,9 +177,9 @@ class Project(models.Model):
 	slug = models.SlugField(max_length=255, unique=True)
 	url = models.URLField('URL',max_length=255,blank=True)
 	github = models.URLField('GITHUB_URL',max_length=255,blank=True)
-	
-	# class Meta:
-	# 	ordering = ["date"]
+	objects = CustomManager()
+	class Meta:
+		ordering = ["date"]
 
 	def __unicode__(self):
 		return self.title
@@ -186,6 +188,10 @@ class Project(models.Model):
 		if not self.slug:
 			self.slug = slugify(self.title)
 		super(Project, self).save(*args, **kwargs)
+
+	@models.permalink
+	def get_absolute_url(self):
+		return ("projectdetail",(),{'slug':self.slug})
 
 class Skill(models.Model):
 	name = models.CharField(max_length=30)

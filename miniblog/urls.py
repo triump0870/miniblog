@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from blog.views import IndexView, AboutView, ContactView
+from blog.views import IndexView, AboutView, ContactView, ProjectListView, ProjectDetailView
 from django.views.generic import TemplateView
 from .settings import base
 #registering admin
@@ -15,4 +15,6 @@ urlpatterns = patterns('',
     url(r"^about/$",AboutView.as_view(), name="about"),
     url(r"^contact/$",ContactView.as_view(), name="contact"),
     url(r"^markdown/",include("django_markdown.urls")),
+    url(r"^projects/$",ProjectListView.as_view(), name="project"),
+    url(r"^projects/(?P<slug>[\w-]+)/$",ProjectDetailView.as_view(), name="projectdetail"),
 )
