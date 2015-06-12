@@ -4,3 +4,4 @@
 *.db
 settings.py
 base.py
+*.back
