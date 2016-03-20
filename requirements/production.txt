@@ -1,0 +1,5 @@
+-r development.txt
+
+# Extra stuff required for production like Prod Database interfacing packages
+# psycopg2
+
