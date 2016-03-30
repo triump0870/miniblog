@@ -74,9 +74,13 @@ INSTALLED_APPS = (
     'authtools',
     'crispy_forms',
     'easy_thumbnails',
+    'markdownx',
+    'rest_framework',
+    'rest_framework_swagger',
 
     'profiles',
     'accounts',
+    'blog',
 
 )
 
