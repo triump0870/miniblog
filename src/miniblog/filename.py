@@ -1,6 +1,10 @@
-from time import time
+from __future__ import absolute_import
+
 import uuid
+from time import time
+
 from django.utils.deconstruct import deconstructible
+
 
 @deconstructible
 class generatefilename(object):

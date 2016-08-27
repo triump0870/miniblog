@@ -1,5 +1,5 @@
 # In production set the environment variable like this:
-#    DJANGO_SETTINGS_MODULE=myblog.settings.production
+#    DJANGO_SETTINGS_MODULE=miniblog.settings.production
 from .base import *             # NOQA
 import logging.config
 
@@ -8,7 +8,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 # Must mention ALLOWED_HOSTS in production!
-# ALLOWED_HOSTS = ["myblog.com"]
+# ALLOWED_HOSTS = ["miniblog.com"]
 
 # Cache the templates in memory for speed-up
 loaders = [

@@ -1,2 +1,2 @@
-Welcome to myblog!
+Welcome to miniblog!
 ==============================

@@ -1,8 +1,8 @@
 
 
-# myblog
+# miniblog
 
-myblog is a _short description_. It is built with [Python][0] using the [Django Web Framework][1].
+miniblog is a _short description_. It is built with [Python][0] using the [Django Web Framework][1].
 
 This project has the following basic apps:
 
@@ -17,8 +17,8 @@ This project has the following basic apps:
 To set up a development environment quickly, first install Python 3. It
 comes with virtualenv built-in. So create a virtual env by:
 
-    1. `$ python3 -m venv myblog`
-    2. `$ . myblog/bin/activate`
+    1. `$ python3 -m venv miniblog`
+    2. `$ . miniblog/bin/activate`
 
 Install all dependencies:
 

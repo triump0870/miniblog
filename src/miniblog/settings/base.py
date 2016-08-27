@@ -1,5 +1,5 @@
 """
-Django settings for myblog project.
+Django settings for miniblog project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/
@@ -94,9 +94,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'myblog.urls'
+ROOT_URLCONF = 'miniblog.urls'
 
-WSGI_APPLICATION = 'myblog.wsgi.application'
+WSGI_APPLICATION = 'miniblog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases

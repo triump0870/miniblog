@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import markdownx.models
-import myblog.filename
+import miniblog.filename
 from django.conf import settings
 
 
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=255)),
                 ('slug', models.SlugField(unique=True, max_length=255)),
                 ('content', markdownx.models.MarkdownxField()),
-                ('image', models.ImageField(upload_to=myblog.filename.generatefilename(b'posts/'), null=True, verbose_name=b'Cover Image', blank=True)),
+                ('image', models.ImageField(upload_to=miniblog.filename.generatefilename(b'posts/'), null=True, verbose_name=b'Cover Image', blank=True)),
                 ('status', models.CharField(default=b'p', max_length=1, choices=[(b'd', b'Draft'), (b'p', b'Published'), (b'w', b'Withdrawn')])),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),

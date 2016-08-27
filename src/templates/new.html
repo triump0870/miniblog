@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ block.super }}Handsontable{% endblock %}
+
+
+
+
+{% block container %}
+<!-- Benefits of the Django application -->
+  <div class="jumbotron">
+
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-sm-8">
+<div class="col-md-4 col-sm-4">
+    <div id="example5"></div>
+</div>
+</div>
+</div>
+</div>
+{% endblock container %}
+
+{% block scripts %}
+<script src="{% static 'site/js/site.js' %}"></script>
+<script src="//handsontable.com/dist/handsontable.full.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+
+    var
+      container = document.getElementById('example5'),
+      hot5;
+    
+    hot5 = new Handsontable(container, {
+      data: [],
+      dataSchema: {id: null, name: {branch: null, short: null, bank:null}, ifsc:null, city: null},
+      startRows: 5,
+      startCols: 6,
+      colHeaders: ['Branch Name', 'Branch Short Name', 'Bank Name', 'IFSC Code', 'City'],
+      columns: [  
+        {data: 'name.branch'},
+        {data: 'name.short'},
+        {data: 'name.bank'},
+        {data: 'ifsc'},
+        {data: 'city'}
+      ],
+      minSpareRows: 1
+    });
+    
+    function bindDumpButton() {
+        if (typeof Handsontable === "undefined") {
+          return;
+        }
+    
+        Handsontable.Dom.addEvent(document.body, 'click', function (e) {
+    
+          var element = e.target || e.srcElement;
+    
+          if (element.nodeName == "BUTTON" && element.name == 'dump') {
+            var name = element.getAttribute('data-dump');
+            var instance = element.getAttribute('data-instance');
+            var hot = window[instance];
+            console.log('data of ' + name, hot.getData());
+          }
+        });
+      }
+    bindDumpButton();
+
+  });
+  </script>
+{% endblock scripts %}
+
