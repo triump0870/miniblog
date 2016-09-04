@@ -10,8 +10,10 @@ def manage(command):
 	local('python %s %s'%(manage_command,command))
 	
 
-def push(files='.',comment="Updated", branch='master'):
+def push(files='.', branch='master'):
+	local('git status')
 	local('git add %s'%files)
+	comment = raw_input("Enter the commit message:")
 	local('git commit -m %s'%comment)
 	local('git push origin %s'%branch)
 
