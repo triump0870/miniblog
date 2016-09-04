@@ -16,7 +16,7 @@ User = get_user_model()
 @api_view()
 @renderer_classes([OpenAPIRenderer, SwaggerUIRenderer])
 def schema_view(request):
-    generator = schemas.SchemaGenerator(title='Bookings API')
+    generator = schemas.SchemaGenerator(title='Miniblog APIs')
     return response.Response(generator.get_schema(request=request))
 
 
@@ -28,7 +28,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
 	queryset = Tag.objects.all()
 	serializer_class = TagSerializer
-	
+
 
 class UserViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()

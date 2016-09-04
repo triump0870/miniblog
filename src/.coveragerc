@@ -1,0 +1,20 @@
+[run]
+include = ../src/*.py
+
+[report]
+exclude_lines =
+	pragma: no cover
+
+omit = 
+	*/*migrations*
+	miniblog/settings/*
+	*/__init__.py
+	*/*.jpg
+	*/*.js
+	*/*.css
+	*/*.png
+	*/*.html
+	*/*.json
+
+show_missing = True
+
