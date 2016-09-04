@@ -57,3 +57,7 @@ Desktop.ini
 
 # Project settings
 ./site/
+src/htmlcov/
+src/.coverage
+
+
