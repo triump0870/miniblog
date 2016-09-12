@@ -15,6 +15,7 @@ BASE_DIR = dirname(dirname(dirname(__file__)))
 STATICFILES_DIRS = [join(BASE_DIR, 'static')]
 MEDIA_ROOT = join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
+FIXTURE_DIRS = join(BASE_DIR,'fixtures')
 
 # Use Django templates using the new Django 1.8 TEMPLATES settings
 TEMPLATES = [
@@ -81,6 +82,7 @@ INSTALLED_APPS = (
     'profiles',
     'accounts',
     'blog',
+    'api'
 
 )
 

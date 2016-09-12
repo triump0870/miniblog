@@ -27,3 +27,6 @@ if settings.DEBUG:
         application = DebuggedApplication(application, evalex=True)
     except ImportError:
         pass
+else:
+    from dj_static import Cling
+    application = Cling(get_wsgi_application())

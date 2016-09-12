@@ -8,3 +8,4 @@ easy-thumbnails==2.3
 django-markdownx
 django-rest-swagger
 djangorestframework
+dj_database_url
