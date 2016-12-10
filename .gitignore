@@ -4,3 +4,6 @@
 *.db
 settings.py
 base.py
+db.sqlite3
+.idea/
+*.log
