@@ -1,13 +1,10 @@
 -r base.txt
-django-debug-toolbar==1.4
-ecdsa==0.13
-Fabric==1.10.2
-mysql==0.0.1
-MySQL-python==1.2.5
-paramiko==1.16.0
-Pillow==3.1.1
-pycrypto==2.6.1
-six==1.10.0
-sqlparse==0.1.19
-Werkzeug==0.11.4
-Fabric==1.10.2
+django-debug-toolbar
+ecdsa
+paramiko
+Pillow
+pycrypto
+six
+sqlparse
+Werkzeug
+Fabric

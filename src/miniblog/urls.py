@@ -9,16 +9,17 @@ from . import views
 urlpatterns = [
     url(r'^$', views.HomePage.as_view(), name='home'),
     url(r'^about/$', views.AboutPage.as_view(), name='about'),
-    url(r'^new/$', views.HandOnTable.as_view(), name='hot'),
     url(r'^users/', include(profiles.urls, namespace='profiles')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(accounts.urls, namespace='accounts')),
     url(r'^markdownx/', include('markdownx.urls')),
     url(r'apis/', include('api.urls', namespace='api')),
+    url(r'blogs/', include('blog.urls', namespace='blog')),
+
 ]
 
 # User-uploaded files like profile pics need to be served in development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+url('^markdown/', include( 'django_markdown.urls')),
 # # Rest framework urls
 # urlpatterns += [url(r'apis/', include('rest_framework.urls', namespace='api'))]

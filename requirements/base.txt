@@ -1,10 +1,10 @@
-Django==1.8
-django-admin-bootstrapped==2.5.7
-django-authtools==1.4.0
-django-braces==1.8.1
-django-crispy-forms==1.6.0
-django-environ==0.4.0
-easy-thumbnails==2.3
+Django==1.8.2
+django-admin-bootstrapped
+django-authtools
+django-braces
+django-crispy-forms
+django-environ
+easy-thumbnails
 django-markdownx
 django-rest-swagger
 djangorestframework

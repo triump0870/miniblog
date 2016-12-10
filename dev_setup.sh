@@ -13,8 +13,6 @@ wget --quiet -O - https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | su
 sudo apt-get update
 sudo apt-get install -y libpq-dev postgresql-9.4 rabbitmq-server --force-yes
 
-# Installing phantomjs
-sudo npm install -g phantomjs
 
 # Allow rabbitmq-management to access from host browser
 sudo bash -c "echo '[{rabbit, [{loopback_users, []}]}].' >> /etc/rabbitmq/rabbitmq.config"
@@ -25,7 +23,7 @@ sudo rabbitmq-plugins enable rabbitmq_management
 # creating user with createdb permission
 sudo -u postgres psql -c "CREATE USER vagrant WITH PASSWORD 'root'; ALTER USER vagrant CREATEDB"
 # creating db, executing seperately as db creation cannot be cascaded or done in a transaction
-sudo -u postgres psql -c "CREATE DATABASE in_accounts_dev OWNER vagrant"
+sudo -u postgres psql -c "CREATE DATABASE miniblog OWNER vagrant"
 
 # Setting up virtual environment
 sudo pip install virtualenvwrapper
@@ -34,14 +32,8 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 # Setting up application
 mkvirtualenv -p /usr/bin/python3.4 in_accounts
-export DJANGO_SETTINGS_MODULE=in_accounts.settings.development
+export DJANGO_SETTINGS_MODULE=miniblog.settings.development
 cd /vagrant
-
-#Remove .example extension
-cp in_accounts/settings/development.py.example in_accounts/settings/development.py
-cp requirements/development.txt.example requirements/development.txt
-cp env_var.py.example env_var.py
-cp reports/settings.py.example reports/settings.py
 
 pip install -r requirements/development.txt
 python manage.py migrate

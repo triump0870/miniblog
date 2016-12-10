@@ -78,12 +78,12 @@ INSTALLED_APPS = (
     'markdownx',
     'rest_framework',
     'rest_framework_swagger',
+    'django_markdown',
 
     'profiles',
     'accounts',
     'blog',
-    'api'
-
+    'api',
 )
 
 MIDDLEWARE_CLASSES = (

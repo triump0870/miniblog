@@ -59,5 +59,4 @@ Desktop.ini
 ./site/
 src/htmlcov/
 src/.coverage
-
-
+.idea/
