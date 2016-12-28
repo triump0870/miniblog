@@ -10,11 +10,10 @@ from fabric.colors import green
 def build_images():
     django_secret_key = generate_key()
     django_settings_module = get_env_value('DJANGO_SETTINGS_MODULE')
-    postgres_pass = get_env_value('POSTGRES_PASS')
+    mysql_pass = get_env_value('DATABASE_PASSWORD')
     print("\nDJANGO_SETTINGS_MODULE: ", django_settings_module)
-    print("\nPOSTGRES_PASS: ", postgres_pass)
     print("\n==============Building images==============\n")
-    build_postgres_image(postgres_pass)
+    build_mysql_image(mysql_pass)
     build_uwsgi_image(django_secret_key, django_settings_module)
     build_nginx_image()
 
@@ -57,18 +56,24 @@ def down():
 @task()
 def restart():
     down()
+    up()
     try:
         clean()
     except:
         pass
-    up()
     status()
 
 
 @task()
 def clean():
-    local('docker rmi -f $(docker images -q -f dangling=true)')
-    local('docker volume rm $(docker volume ls -qf dangling=true)')
+    try:
+        local('docker rmi -f $(docker images -q -f dangling=true)')
+    except:
+        pass
+    try:
+        local('docker volume rm $(docker volume ls -qf dangling=true)')
+    except:
+        pass
 
 
 def build_uwsgi_image(django_secret_key, django_settings_module):
@@ -122,10 +127,24 @@ def build_nginx_image():
     local('docker build -f dockerify/nginx/Dockerfile -t miniblog-nginx .')
 
 
-def build_postgres_image(postgres_pass):
-    if postgres_pass is None:
-        abort('Please provide the POSTGRES_PASS')
+def build_mysql_image(mysql_pass):
+    # if mysql_pass is None or mysql_root_pass is None:
+    #     abort('Please provide the MYSQL_PASSWORD and MYSQL_ROOT_PASSWORD')
 
-    print("\n==============Building miniblog-postgres image==============\n")
-    local("docker build --build-arg POSTGRES_PASS={key} "
-          "-f dockerify/postgres/Dockerfile -t miniblog-postgres .".format(key=postgres_pass))
+    print("\n==============Building miniblog-mysql image==============\n")
+    local("docker build --build-arg MYSQL_PASSWORD={} -f dockerify/mysql/Dockerfile -t miniblog-mysql .".format(
+        mysql_pass))
+
+
+@task()
+def build_system():
+    local('sudo apt-get update')
+    local('sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual')
+    local('sudo apt-get install apt-transport-https ca-certificates')
+    local('sudo apt-key adv \
+               --keyserver hkp://ha.pool.sks-keyservers.net:80 \
+               --recv-keys 58118E89F3A912897C070ADBF76221572C52609D')
+    local('echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" \
+     | sudo tee /etc/apt/sources.list.d/docker.list')
+    local('sudo apt-get update')
+    local('apt-cache policy docker-engine')
