@@ -17,3 +17,5 @@ Werkzeug
 uwsgi
 pep8
 coverage
+psycopg2
+mysqlclient
