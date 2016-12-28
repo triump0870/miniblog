@@ -5,10 +5,13 @@ FROM python:3.4
 RUN apt-get update && apt-get install -y \
         gcc \
         mysql-client libmysqlclient-dev\
+        postgresql-client libpq-dev \
+		sqlite3 \
         python3-dev \
         build-essential \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
+RUN pip install --upgrade pip
 
 RUN mkdir app-requirements/
 
@@ -18,7 +21,6 @@ RUN mkdir -p /var/log/app_logs
 
 WORKDIR /app/
 # install all the django dependencies
-RUN pip install --upgrade pip
 RUN pip install -r /app-requirements/requirements.txt
 
 COPY . /app/
@@ -41,12 +43,12 @@ RUN chmod +x /app/dockerify/uwsgi/entrypoint.sh
 ARG DJANGO_SECRET_KEY
 ENV DJANGO_SECRET_KEY ${DJANGO_SECRET_KEY:-'^141&epfu9xc1)ou_^qnx$uo4-z*n3a#s=d2lqutulog2o%!yu'}
 
-RUN echo "export DJANGO_SECRET_KEY=DJANGO_SECRET_KEY" >> ~/.bashrc
+RUN echo "export DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY" >> ~/.bashrc
 
 ARG DJANGO_SETTINGS_MODULE
 ENV DJANGO_SETTINGS_MODULE ${DJANGO_SETTINGS_MODULE:-'miniblog.settings.development'}
 
-RUN echo "export DJANGO_SETTINGS_MODULE=DJANGO_SETTINGS_MODULE" >> ~/.bashrc
+RUN echo "export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE" >> ~/.bashrc
 
 RUN echo "alias ll='ls -la'" >> ~/.bashrc
 
