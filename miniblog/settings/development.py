@@ -3,7 +3,24 @@ import sys
 import logging.config
 from os import makedirs
 
-STATIC_ROOT = join(dirname(BASE_DIR), 'static')
+DATABASES = {
+    'default': {
+        'ENGINE': env('ENGINE'),
+        'NAME': "miniblog",
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST')
+    }
+}
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/dev/howto/static-files/
+STATICFILES_DIRS = [join(BASE_DIR, 'assets')]
+STATIC_URL = '/static/'
+MEDIA_ROOT = join(BASE_DIR, 'media/')
+MEDIA_URL = "/media/"
+STATIC_ROOT = join(BASE_DIR, 'static/')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 TEMPLATES[0]['OPTIONS'].update({'debug': True})
