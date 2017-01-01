@@ -76,6 +76,11 @@ def clean():
         pass
 
 
+@task()
+def reboot(container="miniblog-uwsgi"):
+    local('docker restart %s' % container)
+
+
 def build_uwsgi_image(django_secret_key, django_settings_module):
     if django_secret_key is None:
         abort("Please provide the django_secret_key; Usage: fab build_uwsgi_image:"
