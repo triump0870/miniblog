@@ -24,6 +24,10 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 RUN echo "alias ll='ls -la'" >> ~/.bashrc
 
+ENV TZ=Asia/Kolkata
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
+
 ENTRYPOINT ["/app-nginx/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
 

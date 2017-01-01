@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
 		sqlite3 \
         python3-dev \
         build-essential \
+        vim \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip
@@ -30,7 +31,7 @@ RUN mkdir /var/log/uwsgi /shared
 
 # Forward uwsgi logs to the docker log collector
 RUN ln -sf /dev/stdout /var/log/uwsgi/djangoapp.log \
-	&& ln -sf /dev/stdout /var/log/uwsgi/emperor.log && ln -sf /tmp/node_modules/ node_modules
+	&& ln -sf /dev/stdout /var/log/uwsgi/emperor.log
 
 
 VOLUME /shared
@@ -51,5 +52,9 @@ ENV DJANGO_SETTINGS_MODULE ${DJANGO_SETTINGS_MODULE:-'miniblog.settings.developm
 RUN echo "export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE" >> ~/.bashrc
 
 RUN echo "alias ll='ls -la'" >> ~/.bashrc
+
+ENV TZ=Asia/Kolkata
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
 
 ENTRYPOINT ["/app/dockerify/uwsgi/entrypoint.sh"]

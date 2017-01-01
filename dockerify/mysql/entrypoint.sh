@@ -7,4 +7,6 @@ else
 	exit 1
 fi
 
+echo default-time-zone = 'Asia/Kolkata' >> /etc/mysql/my.cnf
+
 exec "$@"

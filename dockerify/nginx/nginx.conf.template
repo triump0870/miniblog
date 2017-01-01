@@ -51,6 +51,10 @@ http {
             alias /app/media;
         }
 
+        location ~* \.(eot|ttf|woff|woff2)$ {
+            add_header Access-Control-Allow-Origin '*';
+        }
+
         # Proxying connections to application servers
         location / {
             include uwsgi_params;
