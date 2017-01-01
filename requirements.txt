@@ -19,3 +19,8 @@ pep8
 coverage
 psycopg2
 mysqlclient
+fabric3
+django-storages-redux
+boto
+django-compressor
+pytz
