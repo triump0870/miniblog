@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from django.utils.deconstruct import deconstructible
 from django_markdown.models import MarkdownField
+from django.core.validators import RegexValidator
 
 User = settings.AUTH_USER_MODEL
 
@@ -64,7 +65,7 @@ class CustomManager(models.Manager):
 class Tag(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.slug
 
     def save(self, *args, **kwargs):
@@ -78,7 +79,7 @@ class Tag(models.Model):
 class About(models.Model):
     content = MarkdownField()
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.pk)
 
 
@@ -89,17 +90,19 @@ class Conference(models.Model):
     date = models.DateField(editable=True, blank=True, null=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
 class Contact(models.Model):
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message="Phone number must be entered in the format: '+919999999990'. Up to 15 digits allowed.")
     name = models.CharField(max_length=255, blank=False, null=False)
     email = models.EmailField(max_length=70, blank=False, null=False, unique=True)
-    phone = models.CharField(max_length=10)
+    phone = models.CharField(max_length=10, validators=[phone_regex])
     message = models.TextField()
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.pk)
 
 
@@ -115,7 +118,7 @@ class Education(models.Model):
     class Meta:
         ordering = ['-start_date']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.course
 
     def is_present(self):
@@ -131,7 +134,7 @@ class Image(models.Model):
     contact_image = models.ImageField(upload_to=contact_filename, blank=True, null=True)
     projectlist_image = models.ImageField(upload_to=projectlist_filename, blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.pk)
 
 
@@ -140,7 +143,7 @@ class Language(models.Model):
     proficiency = models.IntegerField(choices=choice, default=1)
     star = models.CharField(max_length=5, choices=star_choice, default='xxx')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.language
 
 
@@ -149,7 +152,7 @@ class Music(models.Model):
     url = models.URLField('Music_URL', null=False, blank=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.music
 
 
@@ -168,7 +171,7 @@ class Post(models.Model):
     class Meta:
         ordering = ["-created_at", "title"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
@@ -197,7 +200,7 @@ class Project(models.Model):
     class Meta:
         ordering = ["-date"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
@@ -216,7 +219,7 @@ class Skill(models.Model):
     rating = models.IntegerField(default=0)
     info = models.TextField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -242,7 +245,7 @@ class UserData(models.Model):
     testimonial_desig = models.CharField(max_length=70)
     testimonial_link = models.URLField('LinkedIn', blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.user
 
 
@@ -257,7 +260,7 @@ class Work(models.Model):
     class Meta:
         ordering = ["-start_date"]
 
-    def __unicode__(self):
+    def __str__(self):
         return self.designation
 
     def span(self):
