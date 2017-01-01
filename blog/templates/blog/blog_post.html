@@ -14,9 +14,11 @@
 
 <!-- Custom Fonts -->
 <link rel="stylesheet" href="{{STATIC_URL}}plugins/font-awesome/css/font-awesome.css">
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"
+      type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+      rel='stylesheet' type='text/css'>
 <!-- jQuery -->
 <script src="{{STATIC_URL}}js/jquery.js"></script>
 
@@ -28,8 +30,8 @@
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>CClealea
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
 
@@ -41,7 +43,8 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -71,18 +74,20 @@
 
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background-image:
     {% if post.image %}
-    <header class="intro-header" style="background-image: url('{{MEDIA_URL}}{{post.image}}'); height: 500px;">
+        url('{{MEDIA_URL}}{{post.image}}')
     {% else %}
-    <header class="intro-header" style="background-image: url('{{STATIC_URL}}images/home-bg.jpg'); height:500px;">
-    {% endif %}    
+        url('{{STATIC_URL}}images/home-bg.jpg')
+    {% endif %}; height:500px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
                     <h1>{{post.title|title}}</h1>
                     <hr class="small">
-                    <span class="subheading">Posted by <em><b><a href="http://rohanroy.com/about/" style="color:#70CFEC;">{{post.author | title}}</a></b></em> on {{post.created_at|date:"M j, Y"}}</span>
+                    <span class="subheading">Posted by <em><b><a href="http://rohanroy.com/about/"
+                                                                 style="color:#70CFEC;">{{post.author | title}}</a></b></em> on {{post.created_at|date:"M j, Y"}}</span>
                 </div>
             </div>
         </div>
@@ -96,15 +101,16 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <hr>
                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <!-- rohanroy.com_responsive_april19 -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-6174669567663845"
-                         data-ad-slot="6012284410"
-                         data-ad-format="auto"></ins>
-                    <script>
+                <!-- rohanroy.com_responsive_april19 -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6174669567663845"
+                     data-ad-slot="6012284410"
+                     data-ad-format="auto"></ins>
+                <script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>  
+
+                </script>
                 <hr>
                 <p>
                     {{ post.content|markdown}}
@@ -112,21 +118,22 @@
                 <ul class="pager tags">
                     {% for tag in post.tags.all%}
                     <li class=" ">
-                        <a href="{% url 'blog:tag' tag %}"> {{tag}} </a>
+                        <a href="{% url 'blog:tag' tag.slug %}"> {{tag.slug}} </a>
                     </li>
                     {% endfor %}
                 </ul>
                 <hr>
                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <!-- rohanroy.com_responsive_april19 -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-6174669567663845"
-                         data-ad-slot="6012284410"
-                         data-ad-format="auto"></ins>
-                    <script>
+                <!-- rohanroy.com_responsive_april19 -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-6174669567663845"
+                     data-ad-slot="6012284410"
+                     data-ad-format="auto"></ins>
+                <script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>  
+
+                </script>
                 <hr>
                 <ul class="pager">
                     {% if post.get_previous_by_created_at %}
@@ -195,7 +202,10 @@
         </div>
     </div>
     <div class="container text-center">
-            <small class="copyright text-muted">Designed with <i class="fa fa-heart"></i> by <a href="http://rohanroy.com" class="text-muted" target="_blank">Rohan Roy</a></small>
+        <small class="copyright text-muted">Designed with <i class="fa fa-heart"></i> by <a href="http://rohanroy.com"
+                                                                                            class="text-muted"
+                                                                                            target="_blank">Rohan
+            Roy</a></small>
     </div><!--//container-->
 </footer>
 {% endblock %}
