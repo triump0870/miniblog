@@ -13,12 +13,11 @@ if [ "$DEBUG" == "True" ]; then
 fi
 
 yes | python manage.py migrate
-yes | python manage.py collectstatic --noinput
-#python manage.py loaddata fixture miniblog.json
-
-# start uwsgi
-exec uwsgi --emperor dockerify/uwsgi/ --gid www-data
+python manage.py collectstatic --noinput
 
 # Forward app logs to docker log collector
 tail -n0 -F /var/log/app_logs/*.log &
+
+# start uwsgi
+exec uwsgi --emperor dockerify/uwsgi/ --gid www-data
 
