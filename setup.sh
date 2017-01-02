@@ -32,5 +32,6 @@ if ( "$res" == "yes" ); then
     sudo reboot
 else
     echo "Aborted, but remember to restart your system to use the upgraded packages"
+    sudo service docker start
     exit 1
 fi
