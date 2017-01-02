@@ -19,4 +19,4 @@ sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose
 sudo chmod +x /usr/local/bin/docker-compose
 sudo apt-get install -y python3-pip
 sudo -H pip install fabric3 django-environ
-sudo service docker start
+sudo reboot
