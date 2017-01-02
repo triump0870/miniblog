@@ -7,3 +7,7 @@ base.py
 db.sqlite3
 .idea/
 *.log
+local.env
+__pycache__
+static
+media

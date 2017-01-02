@@ -1,0 +1,66 @@
+version: '2'
+services:
+  miniblog-uwsgi:
+    image: miniblog-uwsgi
+    container_name: miniblog-uwsgi
+    depends_on:
+      - miniblog-mysql
+    links:
+      - "miniblog-mysql:miniblog-mysql"
+    volumes:
+      - .:/app/
+    env_file: ./miniblog/settings/local.env
+    environment:
+      - MYSQL_PASSWORD=Rohan!12345
+
+  miniblog-nginx:
+    image: miniblog-nginx
+    container_name: miniblog-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - miniblog-uwsgi
+    links:
+      - "miniblog-uwsgi:miniblog-uwsgi"
+    volumes:
+      - ./static:/app/static
+      - ./media:/app/media
+    environment:
+      - UWSGI_URI=miniblog-uwsgi:30000
+      - SERVER_NAME=dev.rohanroy.com
+
+  miniblog-mysql:
+    image: miniblog-mysql
+    container_name: miniblog-mysql
+    ports:
+      - "3306:3306"
+    volumes_from:
+      - miniblog-mysql-data
+    depends_on:
+      - miniblog-mysql-data
+    environment:
+      - MYSQL_ROOT_PASSWORD=Rohan!12345
+
+  miniblog-mysql-data:
+    image: mysql:latest
+    container_name: miniblog-mysql-data
+    volumes:
+      - mysql-data:/var/lib/mysql/data
+    entrypoint: /bin/bash
+    privileged: true
+
+  miniblog-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: miniblog-phpmyadmin
+    ports:
+      - "8080:80"
+    links:
+      - "miniblog-mysql:mysql"
+    environment:
+      - MYSQL_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=Rohan!12345
+      - PMA_HOST=mysql
+
+volumes:
+  mysql-data:
+    external: true
