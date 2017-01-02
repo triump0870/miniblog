@@ -17,6 +17,6 @@ sudo apt-get install -y docker-engine
 sudo apt-get autoremove -y
 sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 sudo chmod +x /usr/local/bin/docker-compose
-sudo apt-get install -y pip3
-sudo -H pip3 install fabric3 django-environ
+sudo apt-get install -y python3-pip
+sudo -H pip install fabric3 django-environ
 sudo service docker start
