@@ -27,11 +27,17 @@ sudo -H pip3 install fabric3 django-environ
 echo "You need to reboot the system"
 echo -n "Type 'yes' to continue, or 'no' to abort:"
 read res
-if ( "$res" == "yes" ); then
+if (( "$res" == "yes" )); then
+    echo "$res"
     ehco "System is going for restart"
     sudo reboot
 else
+    echo "$res"
     echo "Aborted, but remember to restart your system to use the upgraded packages"
     sudo service docker start
     exit 1
 fi
+sudo mkdir /app
+sudo copy -R . /app/
+sudo su -
+cd /app
