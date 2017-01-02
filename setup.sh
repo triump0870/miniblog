@@ -24,19 +24,18 @@ export LC_ALL=C
 locale
 sudo pip3 install --upgrade pip
 sudo -H pip3 install fabric3 django-environ
+sudo service docker start
+
 echo "You need to reboot the system"
-echo -n "Type 'yes' to continue, or 'no' to abort:"
-read res
-if (( "$res" == "yes" )); then
-    echo "$res"
-    ehco "System is going for restart"
-    sudo reboot
-else
-    echo "$res"
-    echo "Aborted, but remember to restart your system to use the upgraded packages"
-    sudo service docker start
-    exit 1
-fi
+echo "Type 'yes' to continue, or 'no' to abort:"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) ehco "System is going for restart";
+              echo "reboot"; break;;
+        No ) exit;;
+    esac
+done
+
 sudo mkdir /app
 sudo copy -R . /app/
 sudo su -
