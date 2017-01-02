@@ -22,5 +22,6 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo apt-get install -y python3-pip
 export LC_ALL=C >> ~/.bashrc
 source ~/.bashrc
+sudo pip3 install --upgrade pip
 sudo -H pip3 install fabric3 django-environ
 sudo reboot
