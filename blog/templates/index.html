@@ -49,7 +49,7 @@
                         {% for about in about_list %}
                         <div class="content">
                         
-                            <p>{{about.content}}</p>
+                            <p>{{about.content|markdown}}</p>
                         {% endfor %}
                             <p><a class="more-link" href="{{userdata.website}}about/"><i class="fa fa-external-link"></i> More About Me</a></p> 
                         </div><!--//content-->
