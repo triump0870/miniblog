@@ -12,5 +12,6 @@ echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" \
 sudo apt-get update
 apt-cache policy docker-engine
 sudo apt-get update
-sudo apt-get install docker-engine
+sudo apt-get install -y docker-engine
+sudo apt-get autoremove -y
 sudo service docker start
