@@ -153,3 +153,6 @@ def build_system():
      | sudo tee /etc/apt/sources.list.d/docker.list')
     local('sudo apt-get update')
     local('apt-cache policy docker-engine')
+    local('sudo apt-get update')
+    local('sudo apt-get install docker-engine')
+    local('sudo service docker start')
