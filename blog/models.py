@@ -1,7 +1,7 @@
 import uuid
 from logging import getLogger
 from time import time
-
+from datetime import datetime
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
@@ -271,15 +271,17 @@ class Work(models.Model):
         return self.designation
 
     def span(self):
+        months = lambda a, b: abs((a.year - b.year) * 12 + a.month - b.month) + int(abs(a.day - b.day) > 15)
         if self.end_date:
-            months = lambda a, b: abs((a.year - b.year) * 12 + a.month - b.month) + int(abs(a.day - b.day) > 15)
             diff = months(self.end_date, self.start_date)
             if diff > 1:
                 diff = str(diff) + ' Months'
             else:
                 diff = str(diff) + ' Month'
         else:
-            diff = 'Present'
+            diff = months(datetime.now(), self.start_date)
+            diff = str(diff) + " Months - Present"
+        logger.info("Diff is: [{}]".format(diff))
         return diff
 
 
