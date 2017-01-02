@@ -30,9 +30,9 @@ echo "You need to reboot the system"
 echo "Type 'yes' to continue, or 'no' to abort:"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) ehco "System is going for restart";
-              echo "reboot"; break;;
-        No ) exit;;
+        Yes ) echo "System is going for restart";
+              sudo reboot; break;;
+        No ) echo "Don't forget to restart the system"; exit;;
     esac
 done
 
