@@ -13,3 +13,4 @@ static
 media
 miniblog.sql
 *.sql
+*.pem
