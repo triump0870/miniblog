@@ -1,7 +1,10 @@
+from logging import getLogger
+
 from django.conf import settings
-from storages.backends.s3boto import S3BotoStorage
 from django.core.files.storage import get_storage_class
-from os.path import splitext
+from storages.backends.s3boto import S3BotoStorage
+
+logger = getLogger("blog")
 
 
 class StaticStorage(S3BotoStorage):
