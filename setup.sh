@@ -1,6 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update
+sudo apt-get upgrade
 sudo apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 sudo apt-get install -y gcc mysql-client libmysqlclient-dev build-essential
 sudo apt-get install -y apt-transport-https ca-certificates
@@ -17,5 +18,5 @@ sudo apt-get autoremove -y
 sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 sudo chmod +x /usr/local/bin/docker-compose
 sudo apt-get install -y pip3
-sudo pip3 install fabric3 django-environ
+sudo -H pip3 install fabric3 django-environ
 sudo service docker start
