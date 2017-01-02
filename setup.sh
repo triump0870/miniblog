@@ -25,11 +25,12 @@ locale
 sudo pip3 install --upgrade pip
 sudo -H pip3 install fabric3 django-environ
 echo "You need to reboot the system"
-echo "Type 'yes' to continue, or 'no' to abort:"
+echo -n "Type 'yes' to continue, or 'no' to abort:"
 read res
 if ( "$res" == "yes" ); then
     ehco "System is going for restart"
     sudo reboot
 else
     echo "Aborted, but remember to restart your system to use the upgraded packages"
+    exit 1
 fi
