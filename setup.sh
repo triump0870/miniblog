@@ -27,8 +27,6 @@ sudo -H pip3 install fabric3 django-environ
 sudo service docker start
 sudo mkdir -p /app
 sudo cp -R . /app/
-sudo su -
-cd /app
 
 echo "You need to reboot the system"
 echo "Type 'yes' to continue, or 'no' to abort:"
@@ -36,7 +34,7 @@ select yn in "Yes" "No"; do
     case $yn in
         Yes ) echo "System is going for restart";
               sudo reboot; break;;
-        No ) echo "Don't forget to restart the system"; exit;;
+        No ) echo "Don't forget to restart the system";
+             sudo su - ; cd /app ; fab build_images; exit;;
     esac
 done
-
