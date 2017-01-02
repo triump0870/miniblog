@@ -14,6 +14,7 @@ apt-cache policy docker-engine
 sudo apt-get update
 sudo apt-get install -y docker-engine
 sudo apt-get autoremove -y
-sudo curl -L https://github.com/docker/compose/releases/download/1.9.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)"
 sudo chmod +x /usr/local/bin/docker-compose
+echo docker-compose -v
 sudo service docker start
