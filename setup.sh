@@ -26,7 +26,7 @@ sudo pip3 install --upgrade pip
 sudo -H pip3 install fabric3 django-environ
 sudo service docker start
 sudo mkdir /app
-sudo copy -R . /app/
+sudo cp -R . /app/
 sudo su -
 cd /app
 
