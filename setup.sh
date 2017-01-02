@@ -21,7 +21,7 @@ sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose
 sudo chmod +x /usr/local/bin/docker-compose
 sudo apt-get install -y python3-pip
 export LC_ALL=C
-source ~/.bashrc
+locale
 sudo pip3 install --upgrade pip
 sudo -H pip3 install fabric3 django-environ
 echo "You need to reboot the system"
