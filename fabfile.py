@@ -139,20 +139,3 @@ def build_mysql_image(mysql_pass):
     print("\n==============Building miniblog-mysql image==============\n")
     local("docker build --build-arg MYSQL_PASSWORD={} -f dockerify/mysql/Dockerfile -t miniblog-mysql .".format(
         mysql_pass))
-
-
-@task()
-def build_system():
-    local('sudo apt-get update')
-    local('sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual')
-    local('sudo apt-get install apt-transport-https ca-certificates')
-    local('sudo apt-key adv \
-               --keyserver hkp://ha.pool.sks-keyservers.net:80 \
-               --recv-keys 58118E89F3A912897C070ADBF76221572C52609D')
-    local('echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" \
-     | sudo tee /etc/apt/sources.list.d/docker.list')
-    local('sudo apt-get update')
-    local('apt-cache policy docker-engine')
-    local('sudo apt-get update')
-    local('sudo apt-get install docker-engine')
-    local('sudo service docker start')
