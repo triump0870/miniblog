@@ -31,5 +31,5 @@ if ( "$res" == "yes" ); then
     ehco "System is going for restart"
     sudo reboot
 else
-    echo "Aborted, but remember to restart your system to use the upgraded packaged"
+    echo "Aborted, but remember to restart your system to use the upgraded packages"
 fi
