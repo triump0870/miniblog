@@ -1,16 +1,19 @@
 import uuid
+from logging import getLogger
 from time import time
 
 from django.conf import settings
+from django.core.validators import RegexValidator
 from django.db import models
-from django.db.models.signals import post_delete
-from django.dispatch import receiver
+from django.db.models import FileField
+from django.db.models.signals import post_delete, post_save, pre_save
+from django.dispatch.dispatcher import receiver
 from django.template.defaultfilters import slugify
 from django.utils.deconstruct import deconstructible
 from django_markdown.models import MarkdownField
-from django.core.validators import RegexValidator
 
 User = settings.AUTH_USER_MODEL
+logger = getLogger("blog")
 
 # Choices
 STATUS_CHOICES = (
@@ -31,6 +34,10 @@ star_choice = (
     ('xxxx', '4'),
     ('xxxxx', '5'),
 )
+
+LOCAL_APPS = [
+    'blog',
+]
 
 
 @deconstructible
@@ -276,15 +283,49 @@ class Work(models.Model):
         return diff
 
 
-@receiver(post_delete, sender=Post)
-def image_post_delete_handler(sender, **kwargs):
-    Post = kwargs['instance']
-    storage, path = Post.image.storage, Post.image.path
-    storage.delete(path)
+def delete_files(files_list):
+    for file_ in files_list:
+        if file_ and hasattr(file_, 'storage') and hasattr(file_, 'name'):
+            # this accounts for different file storages (e.g. when using django-storages)
+            storage_, name_ = file_.storage, file_.name
+            storage_.delete(name_)
 
 
-@receiver(post_delete, sender=Project)
-def image_post_delete_handler(sender, **kwargs):
-    Project = kwargs['instance']
-    storage, path = Project.image.storage, Project.image.path
-    storage.delete(path)
+@receiver(post_delete)
+def handle_files_on_delete(sender, instance, **kwargs):
+    # presumably you want this behavior only for your apps, in which case you will have to specify them
+    is_valid_app = sender._meta.app_label in LOCAL_APPS
+    if is_valid_app:
+        delete_files(
+            [getattr(instance, field_.name, None) for field_ in sender._meta.fields if isinstance(field_, FileField)])
+
+
+@receiver(pre_save)
+def set_instance_cache(sender, instance, **kwargs):
+    # prevent errors when loading files from fixtures
+    from_fixture = 'raw' in kwargs and kwargs['raw']
+    is_valid_app = sender._meta.app_label in LOCAL_APPS
+    if is_valid_app and not from_fixture:
+        # retrieve the old instance from the database to get old file values
+        # for Django 1.8+, you can use the *refresh_from_db* method
+        old_instance = sender.objects.filter(pk=instance.id).first()
+        if old_instance is not None:
+            # for each FileField, we will keep the original value inside an ephemeral `cache`
+            instance.files_cache = {
+                field_.name: getattr(old_instance, field_.name, None) for field_ in sender._meta.fields if
+                isinstance(field_, FileField)
+                }
+
+
+@receiver(post_save)
+def handle_files_on_update(sender, instance, **kwargs):
+    if hasattr(instance, 'files_cache') and instance.files_cache:
+        deletables = []
+        for field_name in instance.files_cache:
+            old_file_value = instance.files_cache[field_name]
+            new_file_value = getattr(instance, field_name, None)
+            # only delete the files that have changed
+            if old_file_value and old_file_value != new_file_value:
+                deletables.append(old_file_value)
+        delete_files(deletables)
+        instance.files_cache = {field_name: getattr(instance, field_name, None) for field_name in instance.files_cache}
