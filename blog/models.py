@@ -248,10 +248,6 @@ class UserData(models.Model):
     github = models.URLField('Github', blank=True, null=True)
     hackernews = models.URLField('HackerNews', blank=True, null=True)
     email = models.EmailField(max_length=70, unique=True, blank=False, null=False)
-    testimonial = models.TextField()
-    testimonial_name = models.CharField(max_length=255)
-    testimonial_desig = models.CharField(max_length=70)
-    testimonial_link = models.URLField('LinkedIn', blank=True, null=True)
     resume = models.FileField(upload_to=resume_filename, blank=True, null=True)
 
     def __str__(self):
