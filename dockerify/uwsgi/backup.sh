@@ -11,4 +11,4 @@ else
     echo "Error: Provide the MYSQL_PASSWORD"
 fi
 
-python backup.py
+python /app/dockerify/uwsgi/backup.py
