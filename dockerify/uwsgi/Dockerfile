@@ -39,9 +39,7 @@ VOLUME /shared
 # The port number on which the application will run
 EXPOSE 30000
 
-RUN chmod +x /app/dockerify/uwsgi/entrypoint.sh
-RUN chmod +x /app/dockerify/uwsgi/backup.sh
-RUN chmod +x /app/dockerify/uwsgi/backup.py
+RUN chmod +x /app/dockerify/uwsgi/entrypoint.sh /app/dockerify/uwsgi/backup.sh /app/dockerify/uwsgi/backup.py
 
 ARG DJANGO_SECRET_KEY
 ENV DJANGO_SECRET_KEY ${DJANGO_SECRET_KEY:-'^141&epfu9xc1)ou_^qnx$uo4-z*n3a#s=d2lqutulog2o%!yu'}
