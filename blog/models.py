@@ -252,7 +252,7 @@ class UserData(models.Model):
     testimonial_name = models.CharField(max_length=255)
     testimonial_desig = models.CharField(max_length=70)
     testimonial_link = models.URLField('LinkedIn', blank=True, null=True)
-    resume = models.ImageField(upload_to=resume_filename, blank=True, null=True)
+    resume = models.FileField(upload_to=resume_filename, blank=True, null=True)
 
     def __str__(self):
         return self.user
