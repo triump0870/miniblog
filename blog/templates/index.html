@@ -200,7 +200,7 @@
                         {% for edu in education_list %}
                         <div class="item">
                             <h3 class="title"><i class="fa fa-graduation-cap"></i> {{edu.mode|title}}
-                                {{edu.course|title}}</h3>
+                                {{edu.course}}</h3>
                             <a href="{{edu.website}}"><h4 class="university">{{edu.institution|title}}</a><span
                                 class="year">({{edu.start_date|date:'Y'}}-{{edu.is_present}})</span></h4>
                         </div><!--//item-->
@@ -218,9 +218,13 @@
 
                             <li class="item">
                                 <span class="title"><strong>{{lang.language|title}}:</strong></span>
-                                <span class="level">{{lang.get_proficiency_display|title}}<br
-                                        class="visible-sm visible-xs"/>{% for i in lang.star %} <i
-                                        class="fa fa-star"></i>{% endfor %}</span>
+                                <span class="level">
+                                    {{lang.get_proficiency_display|title}}
+                                    <br class="visible-sm visible-xs"/>
+                                        {% for i in lang.star %}
+                                        <i class="fa fa-star"></i>
+                                    {% endfor %}
+                                </span>
                             </li><!--//item-->
                             {% endfor %}
                         </ul>
@@ -234,8 +238,8 @@
                     <div class="content">
                         <ul class="list-unstyled">
                             {% for post in post_list %}
-                            <li><i class="fa fa-chevron-circle-right"></i> <a href="{{post.get_absolute_url}}">{{
-                                post.title|title }}</a></li>
+                            <li><i class="fa fa-chevron-circle-right"></i> <a href="{{post.get_absolute_url}}">
+                                {{post.title|title }}</a></li>
                             {% empty %}
                             <li>
                                     <span class="fa-stack">
@@ -320,6 +324,7 @@
                              data-ad-format="auto"></ins>
                         <script>
                             (adsbygoogle = window.adsbygoogle || []).push({});
+
 
 
                         </script>
