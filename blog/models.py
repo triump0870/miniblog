@@ -60,7 +60,7 @@ post_filename = generatefilename("posts/")
 projectlist_filename = generatefilename("projectlist/")
 project_filename = generatefilename("projectlist/projects/")
 side_filename = generatefilename("projects/side/")
-user_filename = generatefilename("avater/")
+user_filename = generatefilename("avatar/")
 resume_filename = generatefilename("resume/")
 
 
@@ -234,7 +234,7 @@ class Skill(models.Model):
 class UserData(models.Model):
     fullname = models.CharField(max_length=255)
     user = models.CharField(max_length=70, unique=True, blank=False, null=False)
-    image = models.ImageField(upload_to=user_filename, blank=True, null=True)
+    avatar = models.ImageField(upload_to=user_filename, blank=True, null=True)
     border_color = models.CharField(max_length=10, blank=True, null=True)
     border_width = models.IntegerField(blank=True, null=True)
     role = models.CharField(max_length=30)
@@ -252,7 +252,7 @@ class UserData(models.Model):
     testimonial_name = models.CharField(max_length=255)
     testimonial_desig = models.CharField(max_length=70)
     testimonial_link = models.URLField('LinkedIn', blank=True, null=True)
-    resume = models.FileField(upload_to=resume_filename, blank=True, null=True)
+    resume = models.ImageField(upload_to=resume_filename, blank=True, null=True)
 
     def __str__(self):
         return self.user
