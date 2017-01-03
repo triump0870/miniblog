@@ -8,8 +8,4 @@ mysql -uroot -p$MYSQL_ROOT_PASSWORD <<-EOSQL
     CREATE USER apps IDENTIFIED BY '{{MYSQL_PASSWORD}}';
     GRANT ALL PRIVILEGES ON miniblog.* TO apps@'%';
     FLUSH PRIVILEGES;
-    USE miniblog;
-    SET autocommit=0 ;
-    SOURCE /app-mysql/miniblog.sql ;
-    COMMIT ;
 EOSQL
