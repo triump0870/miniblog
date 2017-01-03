@@ -61,6 +61,7 @@ projectlist_filename = generatefilename("projectlist/")
 project_filename = generatefilename("projectlist/projects/")
 side_filename = generatefilename("projects/side/")
 user_filename = generatefilename("avater/")
+resume_filename = generatefilename("resume/")
 
 
 # def about_filename()
@@ -251,6 +252,7 @@ class UserData(models.Model):
     testimonial_name = models.CharField(max_length=255)
     testimonial_desig = models.CharField(max_length=70)
     testimonial_link = models.URLField('LinkedIn', blank=True, null=True)
+    resume = models.FileField(upload_to=resume_filename, blank=True, null=True)
 
     def __str__(self):
         return self.user
