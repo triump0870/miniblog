@@ -55,17 +55,29 @@ def down():
 
 @task()
 def restart():
+    print("\n===============Rebooting the containers==============\n")
+    try:
+        backup_mysql()
+    except Exception as e:
+        print("Error occured: %s" % e)
+        exit(1)
+
+    print("\n===============Shutting down the container===============\n")
     down()
+
+    print("\n===============Containers are starting===============\n")
     up()
     try:
         clean()
     except:
         pass
+    print("\n===============The status of the containers===============\n\n   ")
     status()
 
 
 @task()
 def clean():
+    print("\n===============cleaning the unused containers===============\n")
     try:
         local('docker rmi -f $(docker images -q -f dangling=true)')
     except:
@@ -79,6 +91,11 @@ def clean():
 @task()
 def reboot(container="miniblog-uwsgi"):
     local('docker restart %s' % container)
+
+
+@task()
+def backup_mysql():
+    local('docker exec -it miniblog-uwsgi bash ./dockerify/uwsgi/backup.sh')
 
 
 def build_uwsgi_image(django_secret_key, django_settings_module):
