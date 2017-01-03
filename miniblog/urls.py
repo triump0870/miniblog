@@ -21,4 +21,6 @@ urlpatterns = [
     url(r"^projects/$", ProjectListView.as_view(), name="project"),
     url(r"^projects/(?P<slug>[\w-]+)/$", ProjectDetailView.as_view(), name="projectdetail"),
     url(r'contact/thanks/$', TemplateView.as_view(template_name='thanks.html'))
+    url(r'resume/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
 ]
