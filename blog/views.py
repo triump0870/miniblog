@@ -61,7 +61,7 @@ class IndexView(PublishedMixin, ListView):
         try:
             # Add in a QuerySet of all the books
             last = Project.objects.all().count()
-            context['project_list'] = Project.objects.exclude(id=(Project.objects.latest('date').id), ).order_by(
+            context['project_list'] = Project.objects.exclude(id=Project.objects.latest('date').id, ).order_by(
                 '-date')
             context['work_list'] = Work.objects.all()
             context['latest'] = Project.objects.latest('date')
