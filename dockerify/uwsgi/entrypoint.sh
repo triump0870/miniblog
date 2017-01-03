@@ -13,7 +13,6 @@ if [ "$DEBUG" == "True" ]; then
 fi
 
 yes | python manage.py migrate
-python manage.py collectstatic --noinput
 
 # Forward app logs to docker log collector
 tail -n0 -F /var/log/app_logs/*.log &
