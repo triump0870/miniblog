@@ -1,6 +1,7 @@
 from django.contrib.syndication.views import Feed
 from blog.models import Post
 
+
 class LatestPosts(Feed):
     title = "Q Blog"
     link = "/feed/"
