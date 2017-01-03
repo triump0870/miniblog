@@ -8,6 +8,11 @@ from fabric.colors import green
 
 @task()
 def build_images():
+    try:
+        backup_mysql()
+    except Exception as e:
+        print("Error occured: %s" % e)
+        exit(1)
     django_secret_key = generate_key()
     django_settings_module = get_env_value('DJANGO_SETTINGS_MODULE')
     mysql_pass = get_env_value('DATABASE_PASSWORD')
@@ -65,7 +70,7 @@ def restart():
     print("\n===============Shutting down the container===============\n")
     down()
 
-    print("\n===============Containers are starting===============\n")
+    print("\n===============Containers are starting up===============\n")
     up()
     try:
         clean()
@@ -73,6 +78,17 @@ def restart():
         pass
     print("\n===============The status of the containers===============\n\n   ")
     status()
+    try:
+        restore_mysql()
+    except Exception as e:
+        print("Error occured: %s" % e)
+        exit(1)
+
+
+@task()
+def restore_mysql():
+    print("\n===============Restoring MySQL server===============\n")
+    local('docker exec -it miniblog-uwsgi bash -c "python ./dockerify/uwsgi/restore.py"')
 
 
 @task()
@@ -95,6 +111,7 @@ def reboot(container="miniblog-uwsgi"):
 
 @task()
 def backup_mysql():
+    print("\n===============Backing up MySQL server to S3===============\n")
     local('docker exec -it miniblog-uwsgi bash ./dockerify/uwsgi/backup.sh')
 
 
