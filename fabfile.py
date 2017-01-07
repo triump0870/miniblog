@@ -11,7 +11,7 @@ def build_images():
     try:
         backup_mysql()
     except Exception as e:
-        print("Error occured: %s" % e)
+        print("Error occurred: %s" % e)
         exit(1)
     django_secret_key = generate_key()
     django_settings_module = get_env_value('DJANGO_SETTINGS_MODULE')
