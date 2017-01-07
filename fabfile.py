@@ -64,7 +64,7 @@ def restart():
     try:
         backup_mysql()
     except Exception as e:
-        print("Error occured: %s" % e)
+        print("Error occurred: %s" % e)
         exit(1)
 
     print("\n===============Shutting down the container===============\n")
@@ -81,7 +81,7 @@ def restart():
     try:
         restore_mysql()
     except Exception as e:
-        print("Error occured: %s" % e)
+        print("Error occurred: %s" % e)
         exit(1)
 
 
