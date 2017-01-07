@@ -106,7 +106,7 @@ admin.site.register(m.UserData, UserDataModelAdmin)
 
 
 class ImageModelAdmin(admin.ModelAdmin):
-    list_display = ['about_image', 'postlist_image', 'contact_image']
+    list_display = ['id', 'about_image', 'postlist_image', 'contact_image']
     list_display_links = ['about_image', 'postlist_image', 'contact_image']
 
 
