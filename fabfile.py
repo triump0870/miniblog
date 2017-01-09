@@ -63,11 +63,7 @@ def down():
 def restart():
     print("\n===============Rebooting the containers==============\n")
     if not get_debug_value():
-        try:
-            backup_mysql()
-        except Exception as e:
-            print("Error occurred: %s" % e)
-            exit(1)
+        backup_mysql()
 
     print("\n===============Shutting down the container===============\n")
     down()
@@ -79,17 +75,17 @@ def restart():
     status()
 
     if not get_debug_value():
-        try:
-            restore_mysql()
-        except Exception as e:
-            print("Error occurred: %s" % e)
-            exit(1)
+        restore_mysql()
 
 
 @task()
 def restore_mysql():
     print("\n===============Restoring MySQL server===============\n")
-    local('docker exec -it miniblog-uwsgi bash -c "python ./dockerify/uwsgi/restore.py"')
+    try:
+        local('docker exec -it miniblog-uwsgi bash -c "python ./dockerify/uwsgi/restore.py"')
+    except Exception as e:
+        print("Error occurred: %s" % e)
+        pass
 
 
 @task()
@@ -113,7 +109,11 @@ def reboot(container="miniblog-uwsgi"):
 @task()
 def backup_mysql():
     print("\n===============Backing up MySQL server to S3===============\n")
-    local('docker exec -it miniblog-uwsgi bash ./dockerify/uwsgi/backup.sh')
+    try:
+        local('docker exec -it miniblog-uwsgi bash ./dockerify/uwsgi/backup.sh')
+    except Exception as e:
+        print("Error occurred: %s" % e)
+        pass
 
 
 def build_uwsgi_image(django_secret_key):
