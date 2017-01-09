@@ -1,5 +1,5 @@
 import logging
-from os import environ, rename
+from os import environ, rename, remove
 from subprocess import call
 
 from boto.s3.connection import S3Connection
@@ -19,11 +19,11 @@ def restore():
         rename(i.name, "miniblog.sql")
         call("sh ./dockerify/uwsgi/restore.sh", shell=True)
         print("\nDatabase restoration was successful\n")
-        call("rm *.sql, shell=True")
+        remove("*.sql")
     except Exception as e:
         logging.error(i.name + ":" + "FAILED")
         print("Error occurred: %s" % e)
-        call("rm *.sql, shell=True")
+        remove("*.sql")
         exit(1)
 
 
