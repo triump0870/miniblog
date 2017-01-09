@@ -21,7 +21,6 @@ TEMPLATES = [
             join(BASE_DIR, 'templates'),
             # insert more TEMPLATE_DIRS here
         ],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
