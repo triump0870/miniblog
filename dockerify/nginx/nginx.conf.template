@@ -55,6 +55,19 @@ http {
             add_header Access-Control-Allow-Origin '*';
         }
 
+        # custom error files
+        error_page 404 /404.html;
+        location = /404.html {
+                alias /templates/404.html;
+                internal;
+        }
+
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+                alias /templates/50x.html;
+                internal;
+        }
+
         # Proxying connections to application servers
         location / {
             include uwsgi_params;

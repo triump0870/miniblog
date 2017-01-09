@@ -48,11 +48,6 @@ ENV DJANGO_SECRET_KEY ${DJANGO_SECRET_KEY:-'^141&epfu9xc1)ou_^qnx$uo4-z*n3a#s=d2
 
 RUN echo "export DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY" >> ~/.bashrc
 
-ARG DJANGO_SETTINGS_MODULE
-ENV DJANGO_SETTINGS_MODULE ${DJANGO_SETTINGS_MODULE:-'miniblog.settings.development'}
-
-RUN echo "export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE" >> ~/.bashrc
-
 RUN echo "alias ll='ls -la'" >> ~/.bashrc
 
 ENV TZ=Asia/Kolkata

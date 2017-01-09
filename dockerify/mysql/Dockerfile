@@ -9,7 +9,6 @@ ENV MYSQL_PASSWORD ${MYSQL_PASSWORD}
 
 COPY ./dockerify/mysql/entrypoint.sh /app-mysql/entrypoint.sh
 COPY ./dockerify/mysql/createdb.conf.template /app-mysql/createdb.conf.template
-COPY ./dockerify/mysql/miniblog.sql /app-mysql/miniblog.sql
 
 WORKDIR /app-mysql/
 

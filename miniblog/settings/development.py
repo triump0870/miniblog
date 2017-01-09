@@ -17,7 +17,8 @@ DATABASES = {
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TEMPLATES[0]['OPTIONS'].update({'debug': False})
+TEMPLATES[0]['OPTIONS'].update({'debug': DEBUG})
+TEMPLATES[0].update({"APP_DIRS": DEBUG})
 
 # Turn off debug while imported by Celery with a workaround
 # See http://stackoverflow.com/a/4806384
@@ -36,7 +37,7 @@ MIDDLEWARE_CLASSES += (
 # to console in DEBUG mode
 
 # Show thumbnail generation errors
-THUMBNAIL_DEBUG = True
+THUMBNAIL_DEBUG = DEBUG
 
 # Log everything to the logs directory at the top
 logfile_path = env('LOG_FILE_PATH')

@@ -15,7 +15,7 @@ fi
 yes | python manage.py migrate
 
 # Forward app logs to docker log collector
-tail -n0 -F /var/log/app_logs/*.log &
+tail -n0 -F /var/logs/app_logs/*.log &
 
 # start uwsgi
 exec uwsgi --emperor dockerify/uwsgi/ --gid www-data

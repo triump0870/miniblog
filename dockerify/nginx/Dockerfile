@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
 COPY ./dockerify/nginx/entrypoint.sh /app-nginx/entrypoint.sh
 COPY ./dockerify/nginx/nginx.conf.template /app-nginx/nginx.conf.template
 RUN mkdir -p /app/static/
+RUN mkdir /templates/
+COPY ./templates/*.html /templates/
 
 EXPOSE 80
 
