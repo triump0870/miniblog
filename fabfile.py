@@ -26,7 +26,7 @@ def build_images():
 
 def get_env_value(key):
     env = environ.Env()
-    env_file = join(dirname(__file__), "miniblog/settings/local.env")
+    env_file = join(dirname(__file__), "src/miniblog/settings/local.env")
     if exists(env_file):
         environ.Env.read_env(str(env_file))
 
