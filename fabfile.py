@@ -83,8 +83,8 @@ def restore_mysql():
     print("\n===============Restoring MySQL server===============\n")
     try:
         local('docker exec -it miniblog-uwsgi bash -c "python ./dockerify/uwsgi/restore.py"')
-    except Exception as e:
-        print("Error occurred: %s" % e)
+    except:
+        print("Error occurred: while restoring up mysql")
         pass
 
 
@@ -111,8 +111,8 @@ def backup_mysql():
     print("\n===============Backing up MySQL server to S3===============\n")
     try:
         local('docker exec -it miniblog-uwsgi bash ./dockerify/uwsgi/backup.sh')
-    except Exception as e:
-        print("Error occurred: %s" % e)
+    except:
+        print("Error occurred: while backing up mysql")
         pass
 
 
