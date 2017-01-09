@@ -12,7 +12,7 @@ if [ "$DEBUG" == "True" ]; then
     >&2 echo "Mysql is up - executing command"
 fi
 
-yes | python manage.py migrate
+yes | python ./src/manage.py migrate
 
 # Forward app logs to docker log collector
 tail -n0 -F /var/logs/app_logs/*.log &

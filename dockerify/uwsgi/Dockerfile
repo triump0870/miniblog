@@ -17,6 +17,7 @@ RUN pip install --upgrade pip
 RUN mkdir app-requirements/
 
 COPY ./requirements.txt app-requirements/
+COPY ./requirements app-requirements/requirements
 
 RUN mkdir -p /var/log/app_logs
 
