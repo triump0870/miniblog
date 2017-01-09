@@ -10,7 +10,7 @@ COPY ./dockerify/nginx/entrypoint.sh /app-nginx/entrypoint.sh
 COPY ./dockerify/nginx/nginx.conf.template /app-nginx/nginx.conf.template
 RUN mkdir -p /app/static/
 RUN mkdir /templates/
-COPY ./templates/*.html /templates/
+COPY ./templates/404.html ./templates/50x.html /templates/
 
 EXPOSE 80
 
