@@ -8,18 +8,19 @@ from fabric.colors import green
 
 @task()
 def build_images():
-    try:
-        backup_mysql()
-    except Exception as e:
-        print("Error occurred: %s" % e)
-        exit(1)
+    if not get_debug_value():
+        try:
+            backup_mysql()
+        except Exception as e:
+            print("Error occurred: %s" % e)
+            exit(1)
     django_secret_key = generate_key()
     django_settings_module = get_env_value('DJANGO_SETTINGS_MODULE')
     mysql_pass = get_env_value('DATABASE_PASSWORD')
     print("\nDJANGO_SETTINGS_MODULE: ", django_settings_module)
     print("\n==============Building images==============\n")
     build_mysql_image(mysql_pass)
-    build_uwsgi_image(django_secret_key, django_settings_module)
+    build_uwsgi_image(django_secret_key)
     build_nginx_image()
 
 
@@ -61,28 +62,28 @@ def down():
 @task()
 def restart():
     print("\n===============Rebooting the containers==============\n")
-    try:
-        backup_mysql()
-    except Exception as e:
-        print("Error occurred: %s" % e)
-        exit(1)
+    if not get_debug_value():
+        try:
+            backup_mysql()
+        except Exception as e:
+            print("Error occurred: %s" % e)
+            exit(1)
 
     print("\n===============Shutting down the container===============\n")
     down()
 
     print("\n===============Containers are starting up===============\n")
     up()
-    try:
-        clean()
-    except:
-        pass
+    clean()
     print("\n===============The status of the containers===============\n\n   ")
     status()
-    try:
-        restore_mysql()
-    except Exception as e:
-        print("Error occurred: %s" % e)
-        exit(1)
+
+    if not get_debug_value():
+        try:
+            restore_mysql()
+        except Exception as e:
+            print("Error occurred: %s" % e)
+            exit(1)
 
 
 @task()
@@ -115,22 +116,17 @@ def backup_mysql():
     local('docker exec -it miniblog-uwsgi bash ./dockerify/uwsgi/backup.sh')
 
 
-def build_uwsgi_image(django_secret_key, django_settings_module):
+def build_uwsgi_image(django_secret_key):
     if django_secret_key is None:
         abort("Please provide the django_secret_key; Usage: fab build_uwsgi_image:"
               "django_secret_key='^141&epfu9xc1)ou_^qnx$uo4-z*n3a#s=d2lqutulog2o%!yu'"
               "django_settings_module='miniblog.settings.development")
 
-    if django_settings_module is None:
-        abort("Please provide the django_settings_module; Usage: fab build_uwsgi_image:"
-              "django_secret_key='^141&epfu9xc1)ou_^qnx$uo4-z*n3a#s=d2lqutulog2o%!yu'"
-              "django_settings_module='miniblog.settings.development")
-
     print("\n==============Building miniblog-uwsgi image==============\n")
 
-    local("docker build --build-arg DJANGO_SECRET_KEY={key} --build-arg DJANGO_SETTINGS_MODULE={settings}"
-          " -f dockerify/uwsgi/Dockerfile "
-          "-t miniblog-uwsgi .".format(key=django_secret_key, settings=django_settings_module))
+    local("docker build --build-arg DJANGO_SECRET_KEY={key} "
+          "-f dockerify/uwsgi/Dockerfile "
+          "-t miniblog-uwsgi .".format(key=django_secret_key))
 
 
 def generate_key():
@@ -173,3 +169,11 @@ def build_mysql_image(mysql_pass):
     print("\n==============Building miniblog-mysql image==============\n")
     local("docker build --build-arg MYSQL_PASSWORD={} -f dockerify/mysql/Dockerfile -t miniblog-mysql .".format(
         mysql_pass))
+
+
+def get_debug_value():
+    debug = get_env_value('DEBUG')
+    if debug == 'True':
+        return True
+    else:
+        return False
