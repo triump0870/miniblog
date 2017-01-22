@@ -49,7 +49,6 @@ class generatefilename(object):
 
     def __call__(self, instance, filename):
         if self.path == "resume/":
-            filename = "RohanRoy.pdf"
             return self.path + filename
         ext = filename.split('.')[-1]
         prefix = '-%s.%s' % (uuid.uuid4(), ext)
