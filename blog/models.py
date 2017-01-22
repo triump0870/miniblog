@@ -251,7 +251,7 @@ class UserData(models.Model):
     github = models.URLField('Github', blank=True, null=True)
     hackernews = models.URLField('HackerNews', blank=True, null=True)
     email = models.EmailField(max_length=70, unique=True, blank=False, null=False)
-    resume = models.FileField(upload_to="resume/rohanroy.pdf", blank=True, null=True)
+    resume = models.FileField(upload_to="resume/", blank=True, null=True)
 
     def __str__(self):
         return self.user
