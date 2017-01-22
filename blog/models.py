@@ -48,6 +48,9 @@ class generatefilename(object):
         self.path = sub_path
 
     def __call__(self, instance, filename):
+        if self.path == "resume/":
+            filename = "RohanRoy.pdf"
+            return self.path + filename
         ext = filename.split('.')[-1]
         prefix = '-%s.%s' % (uuid.uuid4(), ext)
         return self.path + str(int(time())) + prefix
@@ -248,7 +251,7 @@ class UserData(models.Model):
     github = models.URLField('Github', blank=True, null=True)
     hackernews = models.URLField('HackerNews', blank=True, null=True)
     email = models.EmailField(max_length=70, unique=True, blank=False, null=False)
-    resume = models.FileField(upload_to=resume_filename, blank=True, null=True)
+    resume = models.FileField(upload_to="resume/rohanroy.pdf", blank=True, null=True)
 
     def __str__(self):
         return self.user
