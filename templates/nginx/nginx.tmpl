@@ -45,7 +45,7 @@ upstream {{ $host }} {
 server {
 	gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
-	server_name {{ $host }};
+	server_name {{ $host }} www.{{ $host }};
 	proxy_buffering off;
 	error_log /proc/self/fd/2;
 	access_log /proc/self/fd/1;
