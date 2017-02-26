@@ -248,6 +248,7 @@ class UserData(models.Model):
     twitter = models.URLField('Twitter', blank=True, null=True)
     googleplus = models.URLField('Google+', blank=True, null=True)
     github = models.URLField('Github', blank=True, null=True)
+    stack_overflow = models.URLField('Stack Overflow', blank=True, null=True)
     hackernews = models.URLField('HackerNews', blank=True, null=True)
     email = models.EmailField(max_length=70, unique=True, blank=False, null=False)
     resume = models.FileField(upload_to="resume/", blank=True, null=True)
@@ -259,6 +260,7 @@ class UserData(models.Model):
 class Work(models.Model):
     company = models.CharField(max_length=255)
     website = models.URLField(blank=False, null=False)
+    icon = models.ImageField(blank=True, null=True)
     designation = models.CharField(max_length=30)
     content = MarkdownField()
     start_date = models.DateField(editable=True)
