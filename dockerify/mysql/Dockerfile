@@ -4,8 +4,14 @@ RUN apt-get update && apt-get -y install \
     vim \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-ARG MYSQL_PASSWORD
-ENV MYSQL_PASSWORD ${MYSQL_PASSWORD}
+ARG DATABASE_USER
+ENV DATABASE_USER ${DATABASE_USER}
+
+ARG DATABASE_PASSWORD
+ENV DATABASE_PASSWORD ${DATABASE_PASSWORD}
+
+ARG DATABASE
+ENV DATABASE ${DATABASE}
 
 COPY ./dockerify/mysql/entrypoint.sh /app-mysql/entrypoint.sh
 COPY ./dockerify/mysql/createdb.conf.template /app-mysql/createdb.conf.template
@@ -17,7 +23,7 @@ RUN ./entrypoint.sh
 
 RUN chmod +x /docker-entrypoint-initdb.d/entrypoint.sh
 
-RUN echo "export MYSQL_PASSWORD='$MYSQL_PASSWORD'" >> ~/.bashrc
+RUN echo "export DATABASE_PASSWORD='$DATABASE_PASSWORD'" >> ~/.bashrc
 
 RUN echo "alias ll='ls -la'" >> ~/.bashrc
 

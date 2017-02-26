@@ -4,7 +4,7 @@ set -e
 
 if [ "$DEBUG" == "True" ]; then
 	# check if the postgres service is up before starting django migration
-    until export MYSQL_PASSWORD=$MYSQL_PASSWORD; mysql -h "miniblog-mysql" -u "apps" -p"$MYSQL_PASSWORD" -e '\s; show databases'; do
+    until export MYSQL_PASSWORD=$DATABASE_PASSWORD; mysql -h "miniblog-mysql" -u"$DATABASE_USER" -p"$DATABASE_PASSWORD" -e '\s; show databases'; do
       >&2 echo "Mysql is unavailable - sleeping"
       sleep 5
     done

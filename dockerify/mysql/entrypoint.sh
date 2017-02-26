@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ -n "$MYSQL_PASSWORD" ]; then
-	sed -e "s/{{MYSQL_PASSWORD}}/$MYSQL_PASSWORD/" createdb.conf.template > /docker-entrypoint-initdb.d/entrypoint.sh
+if [ -n "$DATABASE_USER" ] && [ -n "$DATABASE_PASSWORD" ] && [ -n "$DATABASE" ]; then
+	sed -e "s/{{DATABASE_USER}}/$DATABASE_USER/g" -e "s/{{DATABASE_PASSWORD}}/$DATABASE_PASSWORD/" -e "s/{{DATABASE}}/$DATABASE/g" createdb.conf.template > /docker-entrypoint-initdb.d/entrypoint.sh
 else
-	echo "ERROR - Must specify: -e MYSQL_PASSWORD"
+	echo "ERROR - Must specify: -e DATABASE_USER and DATABASE_PASSWORD and DATABASE"
 	exit 1
 fi
 
