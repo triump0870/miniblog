@@ -24,6 +24,8 @@ RUN ./entrypoint.sh
 RUN chmod +x /docker-entrypoint-initdb.d/entrypoint.sh
 
 RUN echo "export DATABASE_PASSWORD='$DATABASE_PASSWORD'" >> ~/.bashrc
+RUN echo "export DATABASE_USER='$DATABASE_USER'" >> ~/.bashrc
+RUN echo "export DATABASE='$DATABASE'" >> ~/.bashrc
 
 RUN echo "alias ll='ls -la'" >> ~/.bashrc
 
