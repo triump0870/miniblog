@@ -16,10 +16,12 @@ def build_images():
             exit(1)
     django_secret_key = generate_key()
     django_settings_module = get_env_value('DJANGO_SETTINGS_MODULE')
-    mysql_pass = get_env_value('DATABASE_PASSWORD')
+    database_user = get_env_value('DATABASE_USER')
+    database_pass = get_env_value('DATABASE_PASSWORD')
+    database = get_env_value('DATABASE')
     print("\nDJANGO_SETTINGS_MODULE: ", django_settings_module)
     print("\n==============Building images==============\n")
-    build_mysql_image(mysql_pass)
+    build_mysql_image(database_user, database_pass, database)
     build_uwsgi_image(django_secret_key)
     build_nginx_image()
 
@@ -50,7 +52,7 @@ def logs(container='miniblog-uwsgi'):
 
 
 @task()
-def bash(container='miniblog-uwsgi', command=None):
+def bash(container='miniblog-uwsgi', command=""):
     local('docker exec -it %s bash %s' % (container, command))
 
 
@@ -162,13 +164,11 @@ def build_nginx_image():
     local('docker build -f dockerify/nginx/Dockerfile -t miniblog-nginx .')
 
 
-def build_mysql_image(mysql_pass):
-    # if mysql_pass is None or mysql_root_pass is None:
-    #     abort('Please provide the MYSQL_PASSWORD and MYSQL_ROOT_PASSWORD')
-
+def build_mysql_image(user, password, database):
     print("\n==============Building miniblog-mysql image==============\n")
-    local("docker build --build-arg MYSQL_PASSWORD={} -f dockerify/mysql/Dockerfile -t miniblog-mysql .".format(
-        mysql_pass))
+    local("docker build --build-arg DATABASE_USER={} --build-arg DATABASE_PASSWORD={} "
+          "--build-arg DATABASE={} -f dockerify/mysql/Dockerfile -t miniblog-mysql ."
+          .format(user, password, database))
 
 
 def get_debug_value():
