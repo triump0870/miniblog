@@ -26,7 +26,7 @@ services:
       - ./media:/app/media
     environment:
       - UWSGI_URI=miniblog-uwsgi:30000
-      - "SERVER_NAME=${WEB_HOST} www.${WEB_HOST}"
+      - "SERVER_NAME=${WEB_HOST}"
       - "VIRTUAL_HOST=${WEB_HOST}"
 
   miniblog-mysql:
@@ -54,6 +54,8 @@ services:
     container_name: miniblog-phpmyadmin
     links:
       - "miniblog-mysql:mysql"
+    expose:
+      - "80"
     environment:
       - "MYSQL_USERNAME=${MYSQL_USERNAME}"
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
@@ -73,7 +75,21 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - ./templates/nginx:/etc/docker-gen/templates
-    command: "docker-gen -notify-sighup miniblog-nginx -watch -only-exposed /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf"
+
+  miniblog-nginx-www:
+    image: miniblog-nginx
+    container_name: miniblog-nginx2
+    depends_on:
+      - miniblog-uwsgi
+    links:
+      - "miniblog-uwsgi:miniblog-uwsgi"
+    volumes:
+      - ./static:/app/static
+      - ./media:/app/media
+    environment:
+      - UWSGI_URI=miniblog-uwsgi:30000
+      - "SERVER_NAME=www.${WEB_HOST}"
+      - "VIRTUAL_HOST=www.${WEB_HOST}"
 
 volumes:
   mysql-data:
