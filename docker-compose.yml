@@ -11,7 +11,7 @@ services:
       - .:/app/
     env_file: ./miniblog/settings/local.env
     environment:
-      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      - "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
       - "DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}"
 
   miniblog-nginx:
@@ -26,7 +26,7 @@ services:
       - ./media:/app/media
     environment:
       - UWSGI_URI=miniblog-uwsgi:30000
-      - "SERVER_NAME=${WEB_HOST}"
+      - "SERVER_NAME=${WEB_HOST} www.${WEB_HOST}"
       - "VIRTUAL_HOST=${WEB_HOST}"
 
   miniblog-mysql:
@@ -61,9 +61,9 @@ services:
       - "PMA_ABSOLUTE_URI=http://${DB_HOST}"
       - "VIRTUAL_HOST=${DB_HOST}"
 
-  miniblog-reverse-proxy:
+  nginx-proxy:
     image: jwilder/nginx-proxy
-    container_name: miniblog-reverse-proxy
+    container_name: nginx-proxy
     ports:
       - "80:80"
     volumes_from:
