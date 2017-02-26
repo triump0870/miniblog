@@ -8,7 +8,7 @@ from .base import *  # NOQA
 DATABASES = {
     'default': {
         'ENGINE': env('ENGINE'),
-        'NAME': "miniblog",
+        'NAME': env('DATABASE'),
         'USER': env('DATABASE_USER'),
         'PASSWORD': env('DATABASE_PASSWORD'),
         'HOST': env('DATABASE_HOST')
