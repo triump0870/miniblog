@@ -8,4 +8,6 @@ else
     exit 1
 fi
 
+tail -n0 -F /var/log/nginx/*.log &
+
 exec "$@"

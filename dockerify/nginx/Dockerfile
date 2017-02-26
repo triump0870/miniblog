@@ -22,7 +22,7 @@ RUN chmod +x /app-nginx/entrypoint.sh
 ENV UWSGI_URI miniblog-uwsgi:30000
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+    && ln -sf /dev/stdout /var/log/nginx/error.log
 
 RUN echo "alias ll='ls -la'" >> ~/.bashrc
 
