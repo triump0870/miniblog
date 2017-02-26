@@ -24,3 +24,5 @@ django-storages-redux
 boto
 django-compressor
 pytz
+redis
+Faker
