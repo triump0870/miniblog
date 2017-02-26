@@ -34,6 +34,7 @@
                 <li><a href="{{userdata.twitter}}"><i class="fa fa-twitter"></i></a></li>
                 <li><a href="{{userdata.googleplus}}"><i class="fa fa-google-plus"></i></a></li>
                 <li><a href="{{userdata.github}}"><i class="fa fa-github-alt"></i></a></li>
+                <li><a href="{{userdata.stack_overflow}}"><i class="fa fa-stack-overflow"></i></a></li>
                 <li class="last-item"><a href="{{userdata.hackernews}}"><i class="fa fa-hacker-news"></i></a></li>
             </ul>
         </div><!--//profile-->
@@ -97,7 +98,7 @@
                                 <h3 class="title"><a href="{{project.url}}" target="">{{project.title|title}} </a>
                                     <small>{{project.date|date:'M j, Y'}}</small>
                                 </h3>
-                                <p>{{project.content|markdown}}</p>
+                                <p>{{project.content|markdown|truncatewords_html:50}}</p>
                                 <p><a class="more-link" href="{{project.get_absolute_url}}" target=""><i
                                         class="fa fa-external-link"></i> Find out more</a></p>
                             </div><!--//desc-->
@@ -116,7 +117,11 @@
                         <div class="item">
                             <h3 class="title">{{work.designation|title}} - <span class="place"><a
                                     href="{{work.website}}">{{work.company|title}}</a></span> <span class="year">( {{work.span}} )</span>
+                                <span style="float:right;"><a
+                                    href="{{work.website}}"><img class="img-responsive" src="{{MEDIA_URL}}{{work.icon}}"
+                                                                 alt=""/></a></span>
                             </h3>
+
                             {{work.content|markdown}}
                         </div><!--//item-->
                         {% endfor %}
