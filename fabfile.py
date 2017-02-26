@@ -50,8 +50,8 @@ def logs(container='miniblog-uwsgi'):
 
 
 @task()
-def bash(container='miniblog-uwsgi'):
-    local('docker exec -it %s bash' % container)
+def bash(container='miniblog-uwsgi', command=None):
+    local('docker exec -it %s bash %s' % (container, command))
 
 
 @task()
