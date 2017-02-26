@@ -72,7 +72,7 @@ services:
       - miniblog-nginx
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
-      - /tmp/nginx.tmpl:/etc/docker-gen/templates
+      - ./templates/nginx:/etc/docker-gen/templates
 
 volumes:
   mysql-data:
