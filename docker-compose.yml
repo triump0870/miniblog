@@ -11,14 +11,12 @@ services:
       - .:/app/
     env_file: ./miniblog/settings/local.env
     environment:
-      - MYSQL_PASSWORD=Rohan!12345
-      - DJANGO_SETTINGS_MODULE=miniblog.settings.production
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      - "DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}"
 
   miniblog-nginx:
     image: miniblog-nginx
     container_name: miniblog-nginx
-    ports:
-      - "80:80"
     depends_on:
       - miniblog-uwsgi
     links:
@@ -28,7 +26,8 @@ services:
       - ./media:/app/media
     environment:
       - UWSGI_URI=miniblog-uwsgi:30000
-      - SERVER_NAME=dev.rohanroy.com
+      - "SERVER_NAME=${WEB_HOST}"
+      - "VIRTUAL_HOST=${WEB_HOST}"
 
   miniblog-mysql:
     image: miniblog-mysql
@@ -40,7 +39,7 @@ services:
     depends_on:
       - miniblog-mysql-data
     environment:
-      - MYSQL_ROOT_PASSWORD=Rohan!12345
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
 
   miniblog-mysql-data:
     image: mysql:latest
@@ -53,15 +52,29 @@ services:
   miniblog-phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: miniblog-phpmyadmin
-    ports:
-      - "8080:80"
     links:
       - "miniblog-mysql:mysql"
     environment:
-      - MYSQL_USERNAME=root
-      - MYSQL_ROOT_PASSWORD=Rohan!12345
-      - PMA_HOST=mysql
+      - "MYSQL_USERNAME=${MYSQL_USERNAME}"
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "PMA_HOST=${PMA_HOST}"
+      - "PMA_ABSOLUTE_URI=http://${DB_HOST}"
+      - "VIRTUAL_HOST=${DB_HOST}"
+
+  miniblog-reverse-proxy:
+    image: jwilder/nginx-proxy
+    container_name: miniblog-reverse-proxy
+    ports:
+      - "80:80"
+    volumes_from:
+      - miniblog-nginx
+    links:
+      - miniblog-nginx
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+      - /tmp/nginx.tmpl:/etc/docker-gen/templates
 
 volumes:
   mysql-data:
     external: true
+
