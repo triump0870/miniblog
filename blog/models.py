@@ -261,7 +261,7 @@ class Work(models.Model):
     company = models.CharField(max_length=255)
     website = models.URLField(blank=False, null=False)
     icon = models.ImageField(blank=True, null=True)
-    designation = models.CharField(max_length=30)
+    designation = models.CharField(max_length=100)
     content = MarkdownField()
     start_date = models.DateField(editable=True)
     end_date = models.DateField(editable=True, null=True, blank=True)
