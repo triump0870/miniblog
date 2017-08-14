@@ -24,6 +24,7 @@ services:
     volumes:
       - ./static:/app/static
       - ./media:/app/media
+    env_file: ./miniblog/settings/local.env
     environment:
       - UWSGI_URI=miniblog-uwsgi:30000
       - "SERVER_NAME=${WEB_HOST}"
@@ -38,6 +39,7 @@ services:
       - miniblog-mysql-data
     depends_on:
       - miniblog-mysql-data
+    env_file: ./miniblog/settings/local.env
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
 
