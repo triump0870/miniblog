@@ -1,8 +1,8 @@
-from boto.s3.connection import S3Connection
-from os.path import join
-from os import environ, rename
 import logging
+from os import environ, rename
 from subprocess import call
+
+from boto.s3.connection import S3Connection
 
 
 def restore():
