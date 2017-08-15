@@ -66,10 +66,10 @@ admin.site.register(m.Project, ProjectAdmin)
 
 class WorkAdmin(MarkdownModelAdmin):
     date_hierarchy = "start_date"
-    fields = ('start_date', 'end_date', 'company', 'website', 'icon', 'designation', 'content')
-    list_display = ['company', 'designation', 'span']
-    list_filter = ['company', 'designation']
-    search_fields = ['^company', '^designation']
+    fields = ('start_date', 'end_date', 'company', 'location','website', 'icon', 'designation', 'content')
+    list_display = ['company', 'location', 'designation', 'span']
+    list_filter = ['company', 'designation', 'location']
+    search_fields = ['^company', '^designation', '^location']
 
 
 admin.site.register(m.Work, WorkAdmin)
