@@ -271,7 +271,7 @@ class Work(models.Model):
         ordering = ["-start_date"]
 
     def __str__(self):
-        return self.designation
+        return self.company
 
     def span(self):
         months = lambda a, b: abs((a.year - b.year) * 12 + a.month - b.month) + int(abs(a.day - b.day) > 15)
