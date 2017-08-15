@@ -259,6 +259,7 @@ class UserData(models.Model):
 
 class Work(models.Model):
     company = models.CharField(max_length=255)
+    location = models.CharField(max_length=100)
     website = models.URLField(blank=False, null=False)
     icon = models.ImageField(blank=True, null=True)
     designation = models.CharField(max_length=100)
