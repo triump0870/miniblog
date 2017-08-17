@@ -84,7 +84,7 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             {% for about in about_list %}
             <div class="post-preview">
-                <p>{{about.content}}</p>
+                <p>{{about.content|markdown}}</p>
             </div>
             {% endfor %}
             <hr>
