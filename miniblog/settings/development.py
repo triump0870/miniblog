@@ -16,9 +16,9 @@ DATABASES = {
 }
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if env('DEBUG') == 'True' else False
 TEMPLATES[0]['OPTIONS'].update({'debug': DEBUG})
-TEMPLATES[0].update({"APP_DIRS": DEBUG})
+TEMPLATES[0].update({"APP_DIRS": True if env('APP_DIR') == 'True' else False})
 
 # Turn off debug while imported by Celery with a workaround
 # See http://stackoverflow.com/a/4806384
