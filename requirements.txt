@@ -26,3 +26,4 @@ django-compressor
 pytz
 redis
 Faker
+django-markdownx
