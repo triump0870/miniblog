@@ -1,4 +1,4 @@
-[Miniblog] (http://miniblog.in)
+[Miniblog](http://rohanroy.com)
 ========
 
 Miniblog.in is the best place to build and post your resume online at no cost to you. Not only it's free, but it’s easy to sign up. Once you have posted a resume to our site, you can access it from anywhere! Use our free resume builder to create the perfect resume online in just minutes.
@@ -15,4 +15,4 @@ If you have all of the right qualifications but aren’t sure how to put them to
 
 Website
 =======
-The demo version of this app is accessible [here] (http://rohanroy.com)
+The demo version of this app is accessible [here](http://rohanroy.com)
