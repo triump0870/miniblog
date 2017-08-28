@@ -21,9 +21,12 @@ psycopg2
 mysqlclient
 fabric3
 django-storages-redux
-boto
+boto==2.42.0
 django-compressor
 pytz
-redis
 Faker
-django-markdownx
+celery==4.1.0
+twilio==6.5.2
+redis==2.10.6
+rabbitmq==0.2.0
+raven==6.1.0
