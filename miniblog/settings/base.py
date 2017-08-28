@@ -41,6 +41,7 @@ TEMPLATES = [
 
 # Use 12factor inspired environment variables or from a file
 import environ
+
 env = environ.Env()
 
 # Ideally move env file should be outside the git repo
@@ -138,3 +139,42 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/dev/howto/static-files/
+STATICFILES_DIRS = [join(BASE_DIR, 'assets')]
+
+AWS_STORAGE_BUCKET_NAME = 'miniblog-static'
+AWS_CLOUDFRONT_DOMAIN = 'd1igv859hm3llh.cloudfront.net'
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_S3_HOST = env("AWS_S3_HOST")
+AWS_S3_SECURE_URLS = env('AWS_S3_SECURE_URLS')
+
+MEDIAFILES_LOCATION = 'media'
+MEDIA_ROOT = '/%s/' % MEDIAFILES_LOCATION
+MEDIA_URL = 'https://%s/%s/' % (AWS_CLOUDFRONT_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'miniblog.storage_backend.custom_storages.MediaStorage'
+
+STATICFILES_LOCATION = 'static'
+STATIC_ROOT = '/%s/' % STATICFILES_LOCATION
+STATIC_URL = 'http://%s/%s/' % (AWS_CLOUDFRONT_DOMAIN, STATICFILES_LOCATION)
+STATICFILES_STORAGE = 'miniblog.storage_backend.custom_storages.StaticStorage'
+
+AWS_IS_GZIPPED = True
+COMPRESS_STORAGE = 'miniblog.storage_backend.custom_storages.CacheS3BotoStorage'
+COMPRESS_URL = STATIC_URL
+
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_TO = env('EMAIL_TO')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = int(env('EMAIL_PORT'))
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_FROM = env('EMAIL_FROM')
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+DISQUS_API_KEY = env('DISQUS_API_KEY')
+DISQUS_WEBSITE_SHORTNAME = env('DISQUS_WEBSITE_SHORTNAME')
+RAVEN_CLIENT_ID = env('RAVEN_CLIENT_ID')
+RAVEN_CLIENT_SECRET = env('RAVEN_CLIENT_SECRET')
+APP_ID = env('APP_ID')
