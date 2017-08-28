@@ -21,6 +21,7 @@ def build_images():
     database = get_env_value('DATABASE')
     print("\nDJANGO_SETTINGS_MODULE: ", django_settings_module)
     print("\n==============Building images==============\n")
+    build_django_image()
     build_mysql_image(database_user, database_pass, database)
     build_uwsgi_image(django_secret_key)
     build_nginx_image()
@@ -37,8 +38,15 @@ def get_env_value(key):
 
 @task()
 def up():
+    if 'mysql-data' not in local('docker volume ls -f name=mysql-data'):
+        create_mysql_volume()
     example_file_conversion("miniblog.settings.local.env.example")
     local('docker-compose up -d')
+
+
+def create_mysql_volume():
+    print("\n===============Creating mysql-data volume==============\n")
+    local('docker volume create --name=mysql-data')
 
 
 @task()
@@ -118,6 +126,11 @@ def backup_mysql():
         pass
 
 
+def build_django_image():
+    print("\n==============Building miniblog image==============\n")
+    local("docker build -f dockerify/django/Dockerfile -t miniblog .")
+
+
 def build_uwsgi_image(django_secret_key):
     if django_secret_key is None:
         abort("Please provide the django_secret_key; Usage: fab build_uwsgi_image:"
@@ -177,3 +190,7 @@ def get_debug_value():
         return True
     else:
         return False
+
+
+def build_image2(backend_tag=None):
+    backend_image_exist = local("docker images -q ")
