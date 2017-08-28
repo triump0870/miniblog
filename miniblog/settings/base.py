@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 from os.path import dirname, join, exists
 
 from django.core.urlresolvers import reverse_lazy
+from .celeryconfig import *
 
 # Build paths inside the project like this: join(BASE_DIR, "directory")
 BASE_DIR = dirname(dirname(dirname(__file__)))
@@ -40,7 +41,6 @@ TEMPLATES = [
 
 # Use 12factor inspired environment variables or from a file
 import environ
-
 env = environ.Env()
 
 # Ideally move env file should be outside the git repo
@@ -57,9 +57,9 @@ if exists(env_file):
 SECRET_KEY = env('SECRET_KEY')
 
 ALLOWED_HOSTS = [env('ALLOWED_HOSTS')]
+CELERYD_STATE_DB = join(BASE_DIR, "celery_worker_state")
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django_admin_bootstrapped',
@@ -76,6 +76,8 @@ INSTALLED_APPS = (
     'disqus',
     'storages',
     'compressor',
+    'raven',
+    'celery',
 
     'blog',
 )
