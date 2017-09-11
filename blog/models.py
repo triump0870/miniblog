@@ -258,6 +258,7 @@ class UserData(models.Model):
 
 
 class Work(models.Model):
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
     company = models.CharField(max_length=255)
     location = models.CharField(max_length=100)
     website = models.URLField(blank=False, null=False)
@@ -266,6 +267,7 @@ class Work(models.Model):
     content = MarkdownField()
     start_date = models.DateField(editable=True)
     end_date = models.DateField(editable=True, null=True, blank=True)
+    objects = CustomManager()
 
     class Meta:
         ordering = ["-start_date"]
@@ -319,7 +321,7 @@ def set_instance_cache(sender, instance, **kwargs):
             instance.files_cache = {
                 field_.name: getattr(old_instance, field_.name, None) for field_ in sender._meta.fields if
                 isinstance(field_, FileField)
-                }
+            }
 
 
 @receiver(post_save)
