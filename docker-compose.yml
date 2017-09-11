@@ -3,13 +3,18 @@ services:
   miniblog-uwsgi:
     image: miniblog-uwsgi
     container_name: miniblog-uwsgi
+    links:
+      - miniblog-mysql
+      - rabbit
+      - redis
     depends_on:
       - miniblog-mysql
-    links:
-      - "miniblog-mysql:miniblog-mysql"
+    expose:
+      - 8000
     volumes:
       - .:/app/
-    env_file: ./miniblog/settings/local.env
+    env_file:
+      - ./miniblog/settings/local.env
     environment:
       - "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
       - "DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}"
@@ -19,12 +24,14 @@ services:
     container_name: miniblog-nginx
     depends_on:
       - miniblog-uwsgi
+      - miniblog-mysql
     links:
-      - "miniblog-uwsgi:miniblog-uwsgi"
+      - miniblog-uwsgi
     volumes:
       - ./static:/app/static
       - ./media:/app/media
-    env_file: ./miniblog/settings/local.env
+    env_file:
+      - ./miniblog/settings/local.env
     environment:
       - UWSGI_URI=miniblog-uwsgi:30000
       - "SERVER_NAME=${WEB_HOST}"
@@ -39,7 +46,8 @@ services:
       - miniblog-mysql-data
     depends_on:
       - miniblog-mysql-data
-    env_file: ./miniblog/settings/local.env
+    env_file:
+      - ./miniblog/settings/local.env
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
 
@@ -84,7 +92,7 @@ services:
     depends_on:
       - miniblog-uwsgi
     links:
-      - "miniblog-uwsgi:miniblog-uwsgi"
+      - miniblog-uwsgi
     volumes:
       - ./static:/app/static
       - ./media:/app/media
@@ -92,6 +100,38 @@ services:
       - UWSGI_URI=miniblog-uwsgi:30000
       - "SERVER_NAME=www.${WEB_HOST}"
       - "VIRTUAL_HOST=www.${WEB_HOST}"
+
+  # Redis
+  redis:
+    image: redis:latest
+    container_name: redis
+    hostname: redis
+
+  # RabbitMQ
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:latest
+    container_name: rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=rabbit@0870
+    ports:
+      - "5672:5672"  # we forward this port because it's useful for debugging
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+
+  # Celery worker
+  worker:
+    container_name: celery
+    image: miniblog:latest
+    command: celery -E worker --app=miniblog.settings.celery_app:app -l info
+    volumes:
+      - .:/app
+    links:
+      - miniblog-mysql
+      - rabbit
+      - redis
+    depends_on:
+      - rabbit
 
 volumes:
   mysql-data:
