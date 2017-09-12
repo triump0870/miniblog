@@ -1,9 +1,16 @@
-from os.path import join, dirname, exists, isfile
+import shutil
 import string
+import sys
+from os import makedirs
+from os.path import join, dirname, exists, isfile
 from random import SystemRandom
+
+import boto
 import environ
+from boto.s3.connection import S3Connection
 from fabric.api import local, task, abort, settings
 from fabric.colors import green
+from tqdm import tqdm
 
 
 @task()
@@ -194,3 +201,52 @@ def get_debug_value():
 
 def build_image2(backend_tag=None):
     backend_image_exist = local("docker images -q ")
+
+
+@task
+def local_s3(path=None, bucket_name=None):
+    if path is None:
+        path = dirname(__file__)
+        PATH = join(path, 's3/')
+    else:
+        if 's3' not in path:
+            PATH = join(path, 's3/')
+        elif not path.endswith('/'):
+            PATH = path + '/'
+        else:
+            PATH = path
+
+    print("All the S3 folder and files are going to be downloaded on the %s folder." % repr(PATH))
+    if exists(PATH):
+        res = input("Path exists. Want to delete the path y/n?")
+        if res == 'y' or res == 'Y':
+            shutil.rmtree(PATH)
+        else:
+            sys.exit(0)
+
+    conn = S3Connection(get_env_value('AWS_ACCESS_KEY_ID'), get_env_value('AWS_SECRET_ACCESS_KEY'),
+                        host=get_env_value('AWS_S3_HOST'))
+    if bucket_name is None:
+        bucket = conn.get_bucket(get_env_value('AWS_STORAGE_BUCKET_NAME'))
+    else:
+        try:
+            bucket = conn.get_bucket(bucket_name)
+        except boto.exception.S3ResponseError:
+            print("Bucket %s does not exist" % repr(bucket_name))
+            sys.exit(0)
+
+    # go through the list of files
+    bucket_list = bucket.list()
+    keys = bucket.get_all_keys()
+    pbar = tqdm(total=len(keys))
+    for key in bucket_list:
+        keyString = str(key.key)
+        path = PATH + keyString
+        pbar.update(1)
+        try:
+            key.get_contents_to_filename(path)
+        except OSError:
+            # check if dir exists
+            if not exists(path):
+                makedirs(path)  # Creates dirs recursively
+    pbar.close()
