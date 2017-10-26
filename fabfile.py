@@ -5,12 +5,9 @@ from os import makedirs
 from os.path import join, dirname, exists, isfile
 from random import SystemRandom
 
-import boto
 import environ
-from boto.s3.connection import S3Connection
 from fabric.api import local, task, abort, settings
 from fabric.colors import green
-from tqdm import tqdm
 
 
 @task()
@@ -205,6 +202,10 @@ def build_image2(backend_tag=None):
 
 @task
 def local_s3(path=None, bucket_name=None):
+    import boto
+    from tqdm import tqdm
+    from boto.s3.connection import S3Connection
+
     if path is None:
         path = dirname(__file__)
         PATH = join(path, 's3/')
