@@ -1,8 +1,8 @@
 import shutil
 import string
 import sys
-from os import makedirs
-from os.path import join, dirname, exists, isfile
+from os import makedirs, walk
+from os.path import join, dirname, exists, isfile, getsize, relpath
 from random import SystemRandom
 
 import environ
@@ -251,3 +251,41 @@ def local_s3(path=None, bucket_name=None):
             if not exists(path):
                 makedirs(path)  # Creates dirs recursively
     pbar.close()
+
+
+@task
+def upload_to_s3(bucket_name=None, source_path=None, dest_path=None):
+    import boto3
+    import mimetypes
+
+    # Fill these in - you get them when you sign up for S3
+    AWS_ACCESS_KEY_ID = get_env_value('AWS_S3_USER_KEY')
+    AWS_ACCESS_KEY_SECRET = get_env_value('AWS_S3_USER_SECRET')
+    bucket_name = get_env_value('AWS_STORAGE_BUCKET_NAME') if not bucket_name else bucket_name
+
+    client = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_ACCESS_KEY_SECRET)
+
+    # enumerate local files recursively
+    for root, dirs, files in walk(source_path):
+
+        for filename in files:
+            if filename.startswith('.'):
+                continue
+            mime_type = mimetypes.MimeTypes().guess_type(filename)[0]
+            if mime_type is None:
+                mime_type = 'text/plain'
+                
+            # construct the full local path
+            local_path = join(root, filename)
+
+            # construct the full Dropbox path
+            relative_path = relpath(local_path, source_path)
+            s3_path = join(dest_path, relative_path)
+
+            print('Searching "%s" in "%s"' % (s3_path, bucket_name))
+            try:
+                client.head_object(Bucket=bucket_name, Key=s3_path)
+                print("Path found on S3! Skipping %s..." % s3_path)
+            except:
+                print("Uploading %s..." % s3_path)
+                client.upload_file(local_path, bucket_name, s3_path, ExtraArgs={'ContentType': mime_type})
