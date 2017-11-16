@@ -1,8 +1,10 @@
 from __future__ import absolute_import
 
 import logging
+import os
 
 import celery
+import django
 import raven
 from django.conf import settings
 from kombu import serialization
@@ -10,9 +12,10 @@ from raven.contrib.celery import register_signal, register_logger_signal
 
 logger = logging.getLogger(__name__)
 
-# os.environ.setdefault(
-#     'DJANGO_SETTINGS_MODULE',
-#     'miniblog.settings.production')
+os.environ.setdefault(
+    'DJANGO_SETTINGS_MODULE',
+    'miniblog.settings.development')
+django.setup()
 SENTRY_LINK = "https://" + settings.RAVEN_CLIENT_ID + ":" + \
               settings.RAVEN_CLIENT_SECRET + "@app.getsentry.com/" + settings.APP_ID
 

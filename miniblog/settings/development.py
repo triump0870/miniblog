@@ -5,8 +5,7 @@ from os import makedirs
 from utils.loggers import record_factory
 from .base import *  # NOQA
 
-local = True if env('LOCAL') == 'True' else False
-if not local:
+if 'test' not in sys.argv:
     DATABASES = {
         'default': {
             'ENGINE': env('ENGINE'),

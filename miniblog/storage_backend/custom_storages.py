@@ -11,20 +11,26 @@ class StaticStorage(S3BotoStorage):
     """uploads to 'mybucket/static/', serves from 'cloudfront.net/static/'"""
     location = settings.STATICFILES_LOCATION
 
+    # access_key = settings.AWS_CLOUDFRONT_USER_KEY
+    # secret_key = settings.AWS_CLOUDFRONT_USER_SECRET
+
     def __init__(self, *args, **kwargs):
         kwargs['custom_domain'] = settings.AWS_CLOUDFRONT_DOMAIN
         super(StaticStorage, self).__init__(*args, **kwargs)
-        self.local_storage = get_storage_class('compressor.storage.CompressorFileStorage')
+        # self.local_storage = get_storage_class('compressor.storage.CompressorFileStorage')
 
 
 class MediaStorage(S3BotoStorage):
     """uploads to 'mybucket/media/', serves from 'cloudfront.net/media/'"""
     location = settings.MEDIAFILES_LOCATION
 
+    # access_key = settings.AWS_CLOUDFRONT_USER_KEY
+    # secret_key = settings.AWS_CLOUDFRONT_USER_SECRET
+
     def __init__(self, *args, **kwargs):
         kwargs['custom_domain'] = settings.AWS_CLOUDFRONT_DOMAIN
         super(MediaStorage, self).__init__(*args, **kwargs)
-        self.local_storage = get_storage_class('compressor.storage.CompressorFileStorage')
+        # self.local_storage = get_storage_class('compressor.storage.CompressorFileStorage')
 
 
 class CacheS3BotoStorage(S3BotoStorage):
@@ -36,7 +42,7 @@ class CacheS3BotoStorage(S3BotoStorage):
 
     def __init__(self, *args, **kwargs):
         super(CacheS3BotoStorage, self).__init__(*args, **kwargs)
-        self.local_storage = get_storage_class('compressor.storage.CompressorFileStorage')
+        # self.local_storage = get_storage_class('compressor.storage.CompressorFileStorage')
 
     def save(self, filename, content, max_length=None):
         filename = super(CacheS3BotoStorage, self).save(filename, content)

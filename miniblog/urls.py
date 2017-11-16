@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.conf.urls.static import static
 
 from blog.views import IndexView, AboutView, ContactView, ProjectListView, ProjectDetailView
 
@@ -22,3 +23,6 @@ urlpatterns = [
     url(r"^projects/(?P<slug>[\w-]+)/$", ProjectDetailView.as_view(), name="projectdetail"),
     url(r'contact/thanks/$', TemplateView.as_view(template_name='thanks.html')),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

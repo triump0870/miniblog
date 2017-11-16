@@ -76,7 +76,7 @@ INSTALLED_APPS = (
     'django_markdown',
     'disqus',
     'storages',
-    'compressor',
+    # 'compressor',
     'raven',
     'celery',
 
@@ -127,27 +127,31 @@ LOGIN_URL = reverse_lazy("accounts:login")
 
 THUMBNAIL_EXTENSION = 'png'  # Or any extn for your thumbnails
 
-STATICFILES_FINDER = (
+STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
+    # 'compressor.finders.CompressorFinder',
 )
 
-COMPRESS_ENABLED = True
-COMPRESS_CSS_HASHING_METHOD = 'content'
-COMPRESS_CSS_FILTERS = [
-    'compressor.filters.css_default.CssAbsoluteFilter',
-    'compressor.filters.cssmin.CSSMinFilter',
-]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 STATICFILES_DIRS = [join(BASE_DIR, 'assets')]
 
-AWS_STORAGE_BUCKET_NAME = 'miniblog-static'
-AWS_CLOUDFRONT_DOMAIN = 'd1igv859hm3llh.cloudfront.net'
-AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_CLOUDFRONT_DOMAIN = env('AWS_CLOUDFRONT_DOMAIN')
+AWS_ACCESS_KEY_ID = env("TEST_USER")
+AWS_SECRET_ACCESS_KEY = env("TEST_KEY")
+AWS_CLOUDFRONT_USER_KEY = env('AWS_CLOUDFRONT_USER_KEY')
+AWS_CLOUDFRONT_USER_SECRET = env('AWS_CLOUDFRONT_USER_SECRET')
+AWS_S3_USER_KEY = env('AWS_S3_USER_KEY')
+AWS_S3_USER_SECRET = env('AWS_S3_USER_SECRET')
+
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+
 AWS_S3_HOST = env("AWS_S3_HOST")
 AWS_S3_SECURE_URLS = env('AWS_S3_SECURE_URLS')
 
@@ -158,12 +162,30 @@ DEFAULT_FILE_STORAGE = 'miniblog.storage_backend.custom_storages.MediaStorage'
 
 STATICFILES_LOCATION = 'static'
 STATIC_ROOT = '/%s/' % STATICFILES_LOCATION
-STATIC_URL = 'http://%s/%s/' % (AWS_CLOUDFRONT_DOMAIN, STATICFILES_LOCATION)
+STATIC_URL = 'https://%s.s3.amazonaws.com/%s/' % (AWS_STORAGE_BUCKET_NAME, STATICFILES_LOCATION)
 STATICFILES_STORAGE = 'miniblog.storage_backend.custom_storages.StaticStorage'
 
-AWS_IS_GZIPPED = True
-COMPRESS_STORAGE = 'miniblog.storage_backend.custom_storages.CacheS3BotoStorage'
-COMPRESS_URL = STATIC_URL
+# Django-compress settings
+# AWS_IS_GZIPPED = True
+# GZIP_CONTENT_TYPES = (
+#    'text/css',
+#    'application/javascript',
+#    'application/x-javascript',
+#    'text/javascript',
+#    'application/vnd.ms-fontobject',
+#    'application/font-sfnt',
+#    'application/font-woff',
+# )
+# COMPRESS_ENABLED = True
+# COMPRESS_CSS_FILTERS = [
+#     'compressor.filters.css_default.CssAbsoluteFilter',
+#     'compressor.filters.cssmin.CSSMinFilter',
+# ]
+# COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"]
+# COMPRESS_STORAGE = 'miniblog.storage_backend.custom_storages.CacheS3BotoStorage'
+# COMPRESS_URL = STATIC_URL
+# COMPRESS_ROOT = STATIC_ROOT
+
 
 EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 EMAIL_TO = env('EMAIL_TO')

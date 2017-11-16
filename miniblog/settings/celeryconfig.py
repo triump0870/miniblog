@@ -2,7 +2,6 @@ import os
 
 from kombu import Exchange, Queue
 CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_ENABLE_UTC = True
 SERVER_EMAIL = 'rohan@rohanroy.com'
