@@ -4,10 +4,10 @@ FROM miniblog:latest
 RUN ln -sf /dev/stdout /var/log/uwsgi/djangoapp.log \
 	&& ln -sf /dev/stdout /var/log/uwsgi/emperor.log
 
-VOLUME /shared
-
 # The port number on which the application will run
 EXPOSE 30000
+
+RUN ls -la /app
 
 RUN chmod +x /app/dockerify/uwsgi/entrypoint.sh \
     /app/dockerify/uwsgi/backup.sh /app/dockerify/uwsgi/backup.py \

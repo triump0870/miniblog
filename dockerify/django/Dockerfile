@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
         build-essential \
         vim \
         man \
+        sudo \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 # Add the user
@@ -40,15 +41,13 @@ COPY ./requirements.txt app-requirements/
 RUN pip install --upgrade pip
 RUN pip install -r app-requirements/requirements.txt
 
-# Create the log directory for uwsgi and the shared directory for static files
-RUN mkdir -p /var/log/app_logs
-RUN mkdir /var/log/uwsgi /shared
-
-COPY . ${APP_ROOT}
-RUN echo "alias ll='ls -la'" >> ~/.bashrc
+# Add user to sudo
+RUN chpasswd && usermod -aG sudo ${APP_USER}
+RUN echo "${APP_USER} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${APP_USER} && \
+    chmod 0440 /etc/sudoers.d/${APP_USER}
 
 # Change the permission of the log directories
-RUN chown -R ${APP_USER}:${APP_USER} /var/log/uwsgi /var/log/app_logs ${APP_ROOT}/
+RUN chown -R ${APP_USER}:${APP_USER} /var/log/ ${APP_ROOT}/ /usr/local/bin/ /var/run/
 
 # change the timezone
 ENV TZ=Asia/Kolkata
@@ -57,3 +56,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 
 # Specify the user to execute all commands below
 USER ${APP_USER}
+
+# Create the log directory for uwsgi and the shared directory for static files
+RUN mkdir -p /var/log/app_logs
+RUN mkdir /var/log/uwsgi
+
+COPY --chown=app . ${APP_ROOT}

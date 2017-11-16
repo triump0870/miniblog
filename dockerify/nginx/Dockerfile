@@ -21,8 +21,8 @@ RUN chmod +x /app-nginx/entrypoint.sh
 
 ENV UWSGI_URI miniblog-uwsgi:30000
 
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stdout /var/log/nginx/error.log
+#RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+#    && ln -sf /dev/stdout /var/log/nginx/error.log
 
 RUN echo "alias ll='ls -la'" >> ~/.bashrc
 
@@ -32,4 +32,3 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 
 ENTRYPOINT ["/app-nginx/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
-

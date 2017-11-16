@@ -1,0 +1,7 @@
+__pycache__
+.github
+.git
+.idea
+.bash_history
+docker-compose.yml
+*.pyc
