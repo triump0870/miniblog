@@ -132,6 +132,11 @@ services:
       - redis
     depends_on:
       - rabbit
+      - miniblog-uwsgi
+      - miniblog-mysql
+      - redis
+      - miniblog-nginx
+      - miniblog-nginx-www
 
 volumes:
   mysql-data:
