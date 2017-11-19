@@ -61,21 +61,24 @@ class IndexView(PublishedMixin, ListView):
         try:
             # Add in a QuerySet of all the books
             last = Project.objects.all().count()
-            context['project_list'] = Project.objects.exclude(id=Project.objects.latest('date').id, ).order_by(
-                '-date')
-            context['work_list'] = Work.objects.all()
-            context['latest'] = Project.objects.latest('date')
-            context['about_list'] = About.objects.all()[:3]
-            context['skill_list'] = Skill.objects.all()
-            context['education_list'] = Education.objects.all()
-            context['music_list'] = Music.objects.all()
-            context['userdata'] = UserData.objects.get(pk=1)
-            context['language_list'] = Language.objects.all()
-            context['conference_list'] = Conference.objects.all()
+            data = {
+                'project_list': Project.objects.exclude(id=Project.objects.latest('date').id, ).order_by(
+                    '-date'),
+                'work_list': Work.objects.all(),
+                'latest': Project.objects.latest('date'),
+
+                'about_list': About.objects.all()[:3],
+                'skill_list': Skill.objects.all(),
+                'education_list': Education.objects.all(),
+                'music_list': Music.objects.all(),
+                'userdata': UserData.objects.get(pk=1),
+                'language_list': Language.objects.all(),
+                'conference_list': Conference.objects.all(),
+            }
+            context.update(data)
         except Exception as e:
             logger.error("Error occurred in [{}]: [{}]".format(self.__class__.__name__, e))
             pass
-
         return context
 
 
