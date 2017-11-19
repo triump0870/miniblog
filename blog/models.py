@@ -258,7 +258,7 @@ class UserData(models.Model):
 
 
 class Work(models.Model):
-    # status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
     company = models.CharField(max_length=255)
     location = models.CharField(max_length=100)
     website = models.URLField(blank=False, null=False)
