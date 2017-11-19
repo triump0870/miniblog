@@ -2,6 +2,9 @@
 
 set -e
 
+# Change the owner of the $APP_ROOT directory
+sudo chown -R $APP_USER:$APP_USER $APP_ROOT
+
 if [ "$DEBUG" == "True" ]; then
 	# check if the postgres service is up before starting django migration
     until export MYSQL_PASSWORD=$DATABASE_PASSWORD; mysql -h "miniblog-mysql" -u"$DATABASE_USER" -p"$DATABASE_PASSWORD" -e '\s; show databases'; do
