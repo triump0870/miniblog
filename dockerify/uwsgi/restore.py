@@ -13,9 +13,9 @@ def restore():
     print("Downloading the latest backup file from S3...")
     for sql_file in bucket.list():
         print('.', end="")
-    print("\n%s was downloaded from S3" % sql_file.name)
     try:
         sql_file.get_contents_to_filename(sql_file.name)
+        print("\n%s was downloaded from S3" % sql_file.name)
         rename(sql_file.name, "miniblog.sql")
         call("sh ./dockerify/uwsgi/restore.sh", shell=True)
         print("\nDatabase restoration was successful\n")
