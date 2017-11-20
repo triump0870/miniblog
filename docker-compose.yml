@@ -1,14 +1,14 @@
 version: '2'
 services:
-  miniblog-uwsgi:
-    image: miniblog-uwsgi
-    container_name: miniblog-uwsgi
+  web:
+    image: miniblog
+    container_name: web
     links:
-      - miniblog-mysql
+      - mysql
       - rabbit
       - redis
     depends_on:
-      - miniblog-mysql
+      - mysql
     expose:
       - 8000
     volumes:
@@ -18,52 +18,35 @@ services:
     environment:
       - "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
       - "DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}"
+    command: "gunicorn miniblog.wsgi --access-logfile /var/log/app_logs/gunicorn-access.log --error-logfile /var/log/app_logs/gunicorn-error.log --log-level=DEBUG -k 'eventlet' -w 1 --reload -b 0.0.0.0:30000"
 
-  miniblog-nginx:
-    image: miniblog-nginx
-    container_name: miniblog-nginx
-    depends_on:
-      - miniblog-uwsgi
-      - miniblog-mysql
-    links:
-      - miniblog-uwsgi
-    volumes:
-      - ./static:/app/static
-      - ./media:/app/media
-    env_file:
-      - ./miniblog/settings/local.env
-    environment:
-      - UWSGI_URI=miniblog-uwsgi:30000
-      - "SERVER_NAME=${WEB_HOST}"
-      - "VIRTUAL_HOST=${WEB_HOST}"
-
-  miniblog-mysql:
-    image: miniblog-mysql
-    container_name: miniblog-mysql
+  mysql:
+    image: mysql
+    container_name: mysql
     ports:
       - "3306:3306"
     volumes_from:
-      - miniblog-mysql-data
+      - mysql-data
     depends_on:
-      - miniblog-mysql-data
+      - mysql-data
     env_file:
       - ./miniblog/settings/local.env
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
 
-  miniblog-mysql-data:
+  mysql-data:
     image: mysql:latest
-    container_name: miniblog-mysql-data
+    container_name: mysql-data
     volumes:
       - mysql-data:/var/lib/mysql/data
     entrypoint: /bin/bash
     privileged: true
 
-  miniblog-phpmyadmin:
+  phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: miniblog-phpmyadmin
+    container_name: phpmyadmin
     links:
-      - "miniblog-mysql:mysql"
+      - "mysql:mysql"
     expose:
       - "80"
     environment:
@@ -79,25 +62,42 @@ services:
     ports:
       - "80:80"
     volumes_from:
-      - miniblog-nginx
+      - nginx
     links:
-      - miniblog-nginx
+      - nginx
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - ./templates/nginx:/etc/docker-gen/templates
 
-  miniblog-nginx-www:
-    image: miniblog-nginx
-    container_name: miniblog-nginx2
+  nginx:
+    image: nginx
+    container_name: nginx
     depends_on:
-      - miniblog-uwsgi
+      - web
+      - mysql
     links:
-      - miniblog-uwsgi
+      - web
+    volumes:
+      - ./static:/app/static
+      - ./media:/app/media
+    env_file:
+      - ./miniblog/settings/local.env
+    environment:
+      - UWSGI_URI=web:30000
+      - "SERVER_NAME=${WEB_HOST}"
+      - "VIRTUAL_HOST=${WEB_HOST}"
+  nginx-www:
+    image: nginx
+    container_name: nginx2
+    depends_on:
+      - web
+    links:
+      - web
     volumes:
       - ./static:/app/static
       - ./media:/app/media
     environment:
-      - UWSGI_URI=miniblog-uwsgi:30000
+      - UWSGI_URI=web:30000
       - "SERVER_NAME=www.${WEB_HOST}"
       - "VIRTUAL_HOST=www.${WEB_HOST}"
 
@@ -127,16 +127,16 @@ services:
     volumes:
       - .:/app
     links:
-      - miniblog-mysql
+      - mysql
       - rabbit
       - redis
     depends_on:
       - rabbit
-      - miniblog-uwsgi
-      - miniblog-mysql
+      - web
+      - mysql
       - redis
-      - miniblog-nginx
-      - miniblog-nginx-www
+      - nginx
+      - nginx-www
 
 volumes:
   mysql-data:
