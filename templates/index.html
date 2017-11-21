@@ -26,27 +26,35 @@
 <!-- ******HEADER****** -->
 <header class="header">
     <div class="container">
-        <img class="img-circle centered profile-image img-responsive pull-left" src="{{MEDIA_URL}}{{userdata.avatar}}" alt="Rohan Roy"
-             height="180" width="180" style='border:{{userdata.border_width}}px solid #{{userdata.border_color}}'/>
-        <div class="profile-content pull-left">
-            <h1 class="name">{{userdata.fullname}}</h1>
-            <h2 class="desc">{{userdata.role}}</h2>
-            <ul class="social list-inline">
-                <li><a href="{{userdata.linkedin}}"><i class="fa fa-linkedin"></i></a></li>
-                <li><a href="{{userdata.facebook}}"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="{{userdata.twitter}}"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="{{userdata.googleplus}}"><i class="fa fa-google-plus"></i></a></li>
-                <li><a href="{{userdata.github}}"><i class="fa fa-github-alt"></i></a></li>
-                <li><a href="{{userdata.stack_overflow}}"><i class="fa fa-stack-overflow"></i></a></li>
-                <li class="last-item"><a href="{{userdata.hackernews}}"><i class="fa fa-hacker-news"></i></a></li>
-            </ul>
-        </div><!--//profile-->
-        <span class="row">
-            <a class="btn btn-cta-primary pull-right" href="mailto:{{userdata.email}}?Subject=Hello%20rohan"
-               target="_top"><i class="fa fa-paper-plane"></i> Contact Me</a>
-            <a class="btn btn-cta-primary pull-right" style="margin-right: 5px;" href="{{MEDIA_URL}}{{userdata.resume}}"
-               target="_blank" download="RohanRoy.pdf"><i class="fa fa-download"></i> Resume</a>
-        </span>
+        <div class="row">
+            <div class="col-sm-4">
+                <img class="img-circle  pull-left" src="{{MEDIA_URL}}{{userdata.avatar}}" alt="Rohan Roy"
+                     height="150" width="150" style='border:{{userdata.border_width}}px solid #{{userdata.border_color}}'/>
+            </div>
+            <div class="col-sm-4">
+                <div class="profile-content centered">
+                    <h1 class="name">{{userdata.fullname}}</h1>
+                    <h2 class="desc">{{userdata.role}}</h2>
+                    <ul class="social list-inline">
+                        <li><a href="{{userdata.linkedin}}"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="{{userdata.facebook}}"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="{{userdata.twitter}}"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="{{userdata.googleplus}}"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="{{userdata.github}}"><i class="fa fa-github-alt"></i></a></li>
+                        <li><a href="{{userdata.stack_overflow}}"><i class="fa fa-stack-overflow"></i></a></li>
+                        <li class="last-item"><a href="{{userdata.hackernews}}"><i class="fa fa-hacker-news"></i></a></li>
+                    </ul>
+                </div><!--//profile-->
+            </div>
+            <div class="col-sm-4">
+                <span class="row">
+                    <a class="btn btn-cta-primary pull-right" href="mailto:{{userdata.email}}?Subject=Hello%20rohan"
+                       target="_top"><i class="fa fa-paper-plane"></i> Contact Me</a>
+                    <a class="btn btn-cta-primary pull-right" style="margin-right: 5px;" href="{{MEDIA_URL}}{{userdata.resume}}"
+                       target="_blank" download="RohanRoy.pdf"><i class="fa fa-download"></i> Resume</a>
+                </span>
+            </div>
+        </div>
     </div><!--//container-->
 </header><!--//header-->
 
@@ -265,8 +273,7 @@
                     <div class="content">
                         <ul class="list-unstyled">
                             {% for conf in conference_list %}
-                            <li><i class="fa fa-calendar"></i> <a href="{{ conf.link }}"
-                                                                  target="_blank">{{conf.name}}</a>
+                            <li><i class="fa fa-calendar"></i> <a href="{{ conf.link }}" target="_blank">{{conf.name}}</a>
                                 ({{conf.place|title}})
                             </li>
                             {% endfor %}
@@ -312,9 +319,6 @@
                              data-ad-format="auto"></ins>
                         <script>
                             (adsbygoogle = window.adsbygoogle || []).push({});
-
-
-
                         </script>
                     </div><!--//content-->
                 </div><!--//section-inner-->
