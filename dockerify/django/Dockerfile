@@ -60,5 +60,3 @@ USER ${APP_USER}
 # Create the log directory for uwsgi and the shared directory for static files
 RUN mkdir -p /var/log/app_logs
 RUN mkdir /var/log/uwsgi
-
-COPY --chown=app . ${APP_ROOT}
