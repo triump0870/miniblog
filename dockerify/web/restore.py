@@ -17,8 +17,11 @@ def restore():
         sql_file.get_contents_to_filename(sql_file.name)
         print("\n%s was downloaded from S3" % sql_file.name)
         rename(sql_file.name, "miniblog.sql")
-        call("sh ./dockerify/uwsgi/restore.sh", shell=True)
-        print("\nDatabase restoration was successful\n")
+        result = call("sh ./dockerify/web/restore.sh", shell=True)
+        if result == 0:
+            print("\nDatabase restoration was successful\n")
+        else:
+            print("\nDatabase restoration was unsuccessful\n")
     except Exception as e:
         logging.error(sql_file.name + ":" + "FAILED")
         print("Error occurred: %s" % e)
