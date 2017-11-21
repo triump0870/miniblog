@@ -19,7 +19,7 @@ WORKDIR /app-nginx/
 # Use the configuration script as the entrypoint
 RUN chmod +x /app-nginx/entrypoint.sh
 
-ENV UWSGI_URI miniblog-uwsgi:30000
+ENV UWSGI_URI web:30000
 
 #RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 #    && ln -sf /dev/stdout /var/log/nginx/error.log
