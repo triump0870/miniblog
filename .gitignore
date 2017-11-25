@@ -61,3 +61,11 @@ static
 media
 *.sql
 *.pem
+miniblog_local
+s3
+log/*
+.DS_store
+.bash_profile
+.mysql_history
+.python_history
+.bash_history
