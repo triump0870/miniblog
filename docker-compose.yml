@@ -123,8 +123,9 @@ services:
 
   # Celery worker
   worker:
-    container_name: celery
+    container_name: "${CONTAINER}"
     image: celery:latest
+    command: "celery -A miniblog.settings worker --concurrency=20 --loglevel=info"
     volumes:
       - .:/app
     links:
