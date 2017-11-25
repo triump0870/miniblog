@@ -1,14 +1,16 @@
 version: '2'
 services:
   web:
-    image: miniblog
+    image: web
     container_name: web
     links:
-      - mysql
+      - database
       - rabbit
       - redis
+    ports:
+      - "8000:8000"
     depends_on:
-      - mysql
+      - database
     expose:
       - 8000
     volumes:
@@ -18,11 +20,11 @@ services:
     environment:
       - "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
       - "DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}"
-    command: "gunicorn miniblog.wsgi --access-logfile /var/log/app_logs/gunicorn-access.log --error-logfile /var/log/app_logs/gunicorn-error.log --log-level=DEBUG -k 'eventlet' -w 1 --reload -b 0.0.0.0:30000"
+    command: "gunicorn miniblog.wsgi --log-file=/var/log/app_logs/gunicorn.log --log-level=DEBUG -k 'eventlet' -w 1 --reload -b 0.0.0.0:30000"
 
-  mysql:
+  database:
     image: mysql
-    container_name: mysql
+    container_name: database
     ports:
       - "3306:3306"
     volumes_from:
@@ -46,7 +48,7 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     links:
-      - "mysql:mysql"
+      - database
     expose:
       - "80"
     environment:
@@ -74,7 +76,7 @@ services:
     container_name: nginx
     depends_on:
       - web
-      - mysql
+      - database
     links:
       - web
     volumes:
@@ -122,21 +124,22 @@ services:
   # Celery worker
   worker:
     container_name: celery
-    image: miniblog:latest
-    command: celery -E worker --app=miniblog.settings.celery_app:app -l info
+    image: celery:latest
     volumes:
       - .:/app
     links:
-      - mysql
+      - database
       - rabbit
       - redis
     depends_on:
       - rabbit
       - web
-      - mysql
+      - database
       - redis
       - nginx
       - nginx-www
+    env_file:
+      - ./miniblog/settings/local.env
 
 volumes:
   mysql-data:
