@@ -9,13 +9,14 @@ import raven
 from django.conf import settings
 from kombu import serialization
 from raven.contrib.celery import register_signal, register_logger_signal
+from miniblog.settings.celeryconfig import BROKER_URL, CELERY_RESULT_BACKEND
 
 logger = logging.getLogger(__name__)
 
-os.environ.setdefault(
-    'DJANGO_SETTINGS_MODULE',
-    'miniblog.settings.development')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'miniblog.settings.development')
 django.setup()
+
+# Sentry settings
 SENTRY_LINK = "https://" + settings.RAVEN_CLIENT_ID + ":" + \
               settings.RAVEN_CLIENT_SECRET + "@app.getsentry.com/" + settings.APP_ID
 
@@ -30,10 +31,10 @@ class Celery(celery.Celery):
         # hook into the Celery error handler
         register_signal(client)
 
-
 # set the default Django settings module for the 'celery' program.
 serialization.registry._decoders.pop("application/x-python-serialize")
-app = Celery('miniblog')
+app = Celery('miniblog.settings', broker=BROKER_URL, backend=CELERY_RESULT_BACKEND,
+             include=['miniblog.settings.celery_tasks'])
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
