@@ -14,7 +14,7 @@ from fabric.colors import green
 def build_images():
     if not get_debug_value():
         try:
-            backup_mysql()
+            backup_database()
         except Exception as e:
             print("Error occurred: %s" % e)
             exit(1)
@@ -27,8 +27,9 @@ def build_images():
     print("\n==============Building images==============\n")
     build_django_image()
     build_mysql_image(database_user, database_pass, database)
-    build_uwsgi_image(django_secret_key)
+    build_web_image(django_secret_key)
     build_nginx_image()
+    build_celery_image()
 
 
 def get_env_value(key):
@@ -42,8 +43,9 @@ def get_env_value(key):
 
 @task()
 def up():
-    if 'mysql-data' not in local('docker volume ls -f name=mysql-data'):
+    if 'mysql-data' != local('docker volume ls -f name=mysql-data -q'):
         create_mysql_volume()
+    print("\n===============Volume mysql-data exist, skipping==============\n")
     example_file_conversion("miniblog.settings.local.env.example")
     local('docker-compose up -d')
 
@@ -59,12 +61,12 @@ def status():
 
 
 @task()
-def logs(container='miniblog-uwsgi'):
+def logs(container='web'):
     local('docker logs %s' % container)
 
 
 @task()
-def bash(container='miniblog-uwsgi', command=""):
+def bash(container='web', command=""):
     local('docker exec -it %s bash %s' % (container, command))
 
 
@@ -77,7 +79,7 @@ def down():
 def restart():
     print("\n===============Rebooting the containers==============\n")
     if not get_debug_value():
-        backup_mysql()
+        backup_database()
 
     print("\n===============Shutting down the container===============\n")
     down()
@@ -89,16 +91,17 @@ def restart():
     status()
 
     if not get_debug_value():
-        restore_mysql()
+        restore_database()
 
 
 @task()
-def restore_mysql():
-    print("\n===============Restoring MySQL server===============\n")
+def restore_database():
+    print("\n===============Restoring Database server===============\n")
     try:
-        local('docker exec -it miniblog-uwsgi bash -c "python ./dockerify/uwsgi/restore.py"')
-    except:
-        print("Error occurred: while restoring up mysql")
+        local('docker exec -it web bash -c "python ./dockerify/web/restore.py"')
+    except Exception as ex:
+        print("Error occurred: while restoring up the database")
+        print("Error details: %s" % ex.message)
         pass
 
 
@@ -116,17 +119,18 @@ def clean():
 
 
 @task()
-def reboot(container="miniblog-uwsgi"):
+def reboot(container="web"):
     local('docker restart %s' % container)
 
 
 @task()
-def backup_mysql():
-    print("\n===============Backing up MySQL server to S3===============\n")
+def backup_database():
+    print("\n===============Backing up database server to S3===============\n")
     try:
-        local('docker exec -it miniblog-uwsgi bash ./dockerify/uwsgi/backup.sh')
-    except:
-        print("Error occurred: while backing up mysql")
+        local('docker exec -it web bash ./dockerify/web/backup.sh')
+    except Exception as ex:
+        print("Error occurred: while backing up the database")
+        print("Error details: %s" % ex.message)
         pass
 
 
@@ -135,17 +139,34 @@ def build_django_image():
     local("docker build -f dockerify/django/Dockerfile -t miniblog .")
 
 
-def build_uwsgi_image(django_secret_key):
+def build_web_image(django_secret_key):
     if django_secret_key is None:
-        abort("Please provide the django_secret_key; Usage: fab build_uwsgi_image:"
+        abort("Please provide the django_secret_key; Usage: fab build_web_image:"
               "django_secret_key='^141&epfu9xc1)ou_^qnx$uo4-z*n3a#s=d2lqutulog2o%!yu'"
               "django_settings_module='miniblog.settings.development")
 
-    print("\n==============Building miniblog-uwsgi image==============\n")
+    print("\n==============Building web image==============\n")
 
     local("docker build --build-arg DJANGO_SECRET_KEY={key} "
-          "-f dockerify/uwsgi/Dockerfile "
-          "-t miniblog-uwsgi .".format(key=django_secret_key))
+          "-f dockerify/web/Dockerfile "
+          "-t web .".format(key=django_secret_key))
+
+
+def build_nginx_image():
+    print("\n==============Building nginx image==============\n")
+    local('docker build -f dockerify/nginx/Dockerfile -t nginx .')
+
+
+def build_mysql_image(user, password, database):
+    print("\n==============Building mysql image==============\n")
+    local("docker build --build-arg DATABASE_USER={} --build-arg DATABASE_PASSWORD={} "
+          "--build-arg DATABASE={} -f dockerify/mysql/Dockerfile -t mysql ."
+          .format(user, password, database))
+
+
+def build_celery_image():
+    print("\n==============Building celery image==============\n")
+    local('docker build -f dockerify/celery/Dockerfile -t celery .')
 
 
 def generate_key():
@@ -174,18 +195,6 @@ def example_file_conversion(example_file):
 
     else:
         local('cp %s %s' % (example_file, actual_file))
-
-
-def build_nginx_image():
-    print("\n==============Building miniblog-nginx image==============\n")
-    local('docker build -f dockerify/nginx/Dockerfile -t miniblog-nginx .')
-
-
-def build_mysql_image(user, password, database):
-    print("\n==============Building miniblog-mysql image==============\n")
-    local("docker build --build-arg DATABASE_USER={} --build-arg DATABASE_PASSWORD={} "
-          "--build-arg DATABASE={} -f dockerify/mysql/Dockerfile -t miniblog-mysql ."
-          .format(user, password, database))
 
 
 def get_debug_value():
@@ -274,7 +283,7 @@ def upload_to_s3(bucket_name=None, source_path=None, dest_path=None):
             mime_type = mimetypes.MimeTypes().guess_type(filename)[0]
             if mime_type is None:
                 mime_type = 'text/plain'
-                
+
             # construct the full local path
             local_path = join(root, filename)
 
