@@ -1,8 +1,9 @@
 FROM miniblog:latest
 
-COPY --chown=app ./dockerify/celery/entrypoint.sh ${APP_ROOT}/entrypoint.sh
-RUN chmod +x ${APP_ROOT}/entrypoint.sh
+COPY --chown=app . ${APP_ROOT}
 
-COPY --chown=app ./miniblog ${APP_ROOT}
+RUN ls -la /app/dockerify/celery/
+RUN chmod +x /app/dockerify/celery/entrypoint.sh
 
-ENTRYPOINT ["./entrypoint.sh"]
+RUN ls -la /app/dockerify/celery/
+ENTRYPOINT ["/app/dockerify/celery/entrypoint.sh"]
