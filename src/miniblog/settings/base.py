@@ -79,6 +79,7 @@ INSTALLED_APPS = (
     'accounts',
     'blogs'
     'users',
+    'apis',
 
 )
 
