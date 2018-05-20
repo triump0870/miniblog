@@ -5,3 +5,4 @@ django-crispy-forms>=1.6.1
 django-admin-bootstrapped>=2.5.7
 django-authtools>=1.6.0
 easy-thumbnails>=2.4.1
+MySQL-python==1.2.5
