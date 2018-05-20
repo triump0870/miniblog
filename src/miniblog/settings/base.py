@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'profiles',
     'accounts',
     'blogs'
+    'users',
 
 )
 
