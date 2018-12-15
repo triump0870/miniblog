@@ -1,11 +1,10 @@
 from logging import getLogger
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Field, Div
 from crispy_forms.bootstrap import FormActions
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Div
 from django.conf import settings
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse_lazy
 from django.forms import ModelForm, RegexField
 from django.template import loader
 
@@ -69,3 +68,4 @@ class ContactForm(ModelForm):
             logger.info("An email was sent to [{}]".format(self.cleaned_data["email"]))
         except Exception as e:
             logger.error("Error occurred while sending mail, [{}]".format(e))
+            print("Error in sending the email: [{}]".format(e))
