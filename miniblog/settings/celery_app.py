@@ -31,10 +31,10 @@ class Celery(celery.Celery):
         # hook into the Celery error handler
         register_signal(client)
 
+
 # set the default Django settings module for the 'celery' program.
 serialization.registry._decoders.pop("application/x-python-serialize")
-app = Celery('miniblog.settings', broker=BROKER_URL, backend=CELERY_RESULT_BACKEND,
-             include=['miniblog.settings.celery_tasks'])
+app = Celery('miniblog.settings', broker=BROKER_URL, backend=CELERY_RESULT_BACKEND)
 
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
