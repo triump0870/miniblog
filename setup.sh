@@ -4,7 +4,7 @@ set -e
 
 sudo apt-get update
 sudo apt-get -y upgrade
-sudo apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
+#sudo apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 sudo apt-get install -y gcc mysql-client libmysqlclient-dev build-essential
 sudo apt-get install -y apt-transport-https ca-certificates
 sudo apt-key adv \
