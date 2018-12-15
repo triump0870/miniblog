@@ -12,7 +12,7 @@ ENV APP_ROOT /app
 RUN apt-get update && apt-get install -y \
         gcc \
         mysql-client \
-        libmysqlclient-dev \
+        default-libmysqlclient-dev \
         postgresql-client \
         libpq-dev \
 		sqlite3 \
