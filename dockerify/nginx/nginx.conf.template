@@ -8,6 +8,8 @@ http {
 
     include /etc/nginx/mime.types;
     sendfile on;
+    client_max_body_size 20M;
+    keepalive_timeout  100;
 
     gzip              on;
     gzip_http_version 1.0;
@@ -70,9 +72,9 @@ http {
 
         # Proxying connections to application servers
         location / {
-            # include uwsgi_params;
-            # uwsgi_pass uwsgi_server;
-            proxy_pass http://uwsgi_server;
+            include uwsgi_params;
+            uwsgi_pass uwsgi_server;
+            #proxy_pass http://uwsgi_server;
 
             proxy_redirect     off;
             proxy_set_header   Host $host;
