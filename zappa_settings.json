@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "aws_region": "ap-south-1",
+        "django_settings": "config.settings.local",
+        "profile_name": "miniblog",
+        "project_name": "miniblog",
+        "runtime": "python3.6",
+        "s3_bucket": "miniblog-zappa-dev"
+    }
+}
