@@ -26,9 +26,9 @@ def build_images():
     print("\nDJANGO_SETTINGS_MODULE: ", django_settings_module)
     print("\n==============Building images==============\n")
     build_django_image()
-    build_mysql_image(database_user, database_pass, database)
+    # build_mysql_image(database_user, database_pass, database)
     build_web_image(django_secret_key)
-    build_nginx_image()
+    # build_nginx_image()
     build_celery_image()
 
 
@@ -42,17 +42,17 @@ def get_env_value(key):
 
 
 @task()
-def up():
-    if 'mysql-data' != local('docker volume ls -f name=mysql-data -q'):
+def up(detached=False):
+    if 'mysql_data' != local('docker volume ls -f name=mysql_data -q'):
         create_mysql_volume()
     print("\n===============Volume mysql-data exist, skipping==============\n")
     example_file_conversion("miniblog.settings.local.env.example")
-    local('docker-compose up -d')
+    local('docker-compose up {}'.format('-d' if detached else ''))
 
 
 def create_mysql_volume():
     print("\n===============Creating mysql-data volume==============\n")
-    local('docker volume create --name=mysql-data')
+    local('docker volume create --name=mysql_data')
 
 
 @task()
@@ -276,7 +276,7 @@ def upload_to_s3(bucket_name=None, source_path=None, dest_path=None):
 
     # enumerate local files recursively
     for root, dirs, files in walk(source_path):
-
+        print ("root: ", root, dirs, files)
         for filename in files:
             if filename.startswith('.'):
                 continue
@@ -287,7 +287,7 @@ def upload_to_s3(bucket_name=None, source_path=None, dest_path=None):
             # construct the full local path
             local_path = join(root, filename)
 
-            # construct the full Dropbox path
+            # construct the full S3 path
             relative_path = relpath(local_path, source_path)
             s3_path = join(dest_path, relative_path)
 
