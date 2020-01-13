@@ -133,37 +133,47 @@ STATICFILES_FINDERS = (
     # 'compressor.finders.CompressorFinder',
 )
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 STATICFILES_DIRS = [join(BASE_DIR, 'assets')]
 
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-AWS_CLOUDFRONT_DOMAIN = env('AWS_CLOUDFRONT_DOMAIN')
-AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_CLOUDFRONT_DOMAIN = 'miniblog-static-bucket.s3.ap-south-1.amazonaws.com'  # env('AWS_CLOUDFRONT_DOMAIN')
+# AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+# AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_CLOUDFRONT_USER_KEY = env('AWS_CLOUDFRONT_USER_KEY')
 AWS_CLOUDFRONT_USER_SECRET = env('AWS_CLOUDFRONT_USER_SECRET')
 AWS_S3_USER_KEY = env('AWS_S3_USER_KEY')
 AWS_S3_USER_SECRET = env('AWS_S3_USER_SECRET')
+# AWS_S3_REGION_NAME = 'us-east-1'
+# S3_USE_SIGV4=True
 
 # AWS_S3_OBJECT_PARAMETERS = {
 #     'CacheControl': 'max-age=86400',
 # }
 
-AWS_S3_HOST = env("AWS_S3_HOST")
-AWS_S3_SECURE_URLS = env('AWS_S3_SECURE_URLS')
+# AWS_S3_HOST = env("AWS_S3_HOST")
+# AWS_S3_SECURE_URLS = env('AWS_S3_SECURE_URLS')
+_AWS_EXPIRY = 60 * 60 * 24 * 7
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age={AWS_EXPIRY}'.format(AWS_EXPIRY=_AWS_EXPIRY),
+}
+AWS_S3_SECURE_URLS = False
+AWS_QUERYSTRING_AUTH = False
 
 MEDIAFILES_LOCATION = 'media'
 MEDIA_ROOT = '/%s/' % MEDIAFILES_LOCATION
 MEDIA_URL = 'https://%s/%s/' % (AWS_CLOUDFRONT_DOMAIN, MEDIAFILES_LOCATION)
-DEFAULT_FILE_STORAGE = 'miniblog.storage_backend.custom_storages.MediaStorage'
+DEFAULT_FILE_STORAGE = 'miniblog.storage_backend.custom_storages.PublicMediaStorage'
 
 STATICFILES_LOCATION = 'static'
 STATIC_ROOT = '/%s/' % STATICFILES_LOCATION
 STATIC_URL = 'https://%s.s3.amazonaws.com/%s/' % (AWS_STORAGE_BUCKET_NAME, STATICFILES_LOCATION)
 STATICFILES_STORAGE = 'miniblog.storage_backend.custom_storages.StaticStorage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# AWS_S3_CUSTOM_DOMAIN=AWS_CLOUDFRONT_DOMAIN
 
 # Django-compress settings
 # AWS_IS_GZIPPED = True
