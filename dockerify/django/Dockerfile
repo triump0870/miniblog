@@ -11,7 +11,7 @@ ENV APP_ROOT /app
 # Install all debian packages
 RUN apt-get update && apt-get install -y \
         gcc \
-        mysql-client \
+        default-mysql-client \
         default-libmysqlclient-dev \
         postgresql-client \
         libpq-dev \
