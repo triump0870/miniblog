@@ -26,9 +26,9 @@ def build_images():
     print("\nDJANGO_SETTINGS_MODULE: ", django_settings_module)
     print("\n==============Building images==============\n")
     build_django_image()
-    # build_mysql_image(database_user, database_pass, database)
+    build_mysql_image(database_user, database_pass, database)
     build_web_image(django_secret_key)
-    # build_nginx_image()
+    build_nginx_image()
     build_celery_image()
 
 
