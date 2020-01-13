@@ -1,5 +1,5 @@
 # The base image
-FROM python:3.4
+FROM python:3.6
 MAINTAINER Rohan Roy <rohan@rohanroy.com>
 
 ENV PYTHONUNBUFFERED 1
@@ -12,7 +12,7 @@ ENV APP_ROOT /app
 RUN apt-get update && apt-get install -y \
         gcc \
         mysql-client \
-        libmysqlclient-dev \
+        default-libmysqlclient-dev \
         postgresql-client \
         libpq-dev \
 		sqlite3 \
