@@ -32,21 +32,23 @@ def build_images():
     build_celery_image()
 
 
-def get_env_value(key):
+def get_env_value(key, bool=False):
     env = environ.Env()
     env_file = join(dirname(__file__), "miniblog/settings/local.env")
     if exists(env_file):
         environ.Env.read_env(str(env_file))
-
-    return env('%s' % key)
+    if bool:
+        return env.bool(key)
+    return env(key)
 
 
 @task()
-def up(detached=False):
+def up():
     if 'mysql_data' != local('docker volume ls -f name=mysql_data -q'):
         create_mysql_volume()
     print("\n===============Volume mysql-data exist, skipping==============\n")
     example_file_conversion("miniblog.settings.local.env.example")
+    detached = get_env_value('LOCAL', True)
     local('docker-compose up {}'.format('-d' if detached else ''))
 
 
