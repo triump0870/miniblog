@@ -19,6 +19,6 @@ yes | python manage.py migrate
 # Forward app logs to docker log collector
 touch /var/log/app_logs/django.log /var/log/app_logs/blog.log
 
-tail -n0 -F /var/log/app_logs/django.log -F /var/log/app_logs/blog.log -F /var/log/app_logs/gunicorn.log &
+tail -n0 -F /var/log/app_logs/django.log -F /var/log/app_logs/blog.log &
 
 exec "$@"

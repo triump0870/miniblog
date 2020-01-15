@@ -28,9 +28,7 @@ services:
     environment:
       - "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
       - "DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}"
-    command: "uwsgi --emperor /app/dockerify/web/uwsgi.ini"
-
-    # "gunicorn miniblog.wsgi --log-file=/var/log/app_logs/gunicorn.log --log-level=DEBUG -k 'eventlet' -w 1 --reload -b 0.0.0.0:30000"
+    command: /start
 
   database:
     build:
