@@ -69,3 +69,4 @@ log/*
 .mysql_history
 .python_history
 .bash_history
+.envs

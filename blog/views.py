@@ -64,7 +64,7 @@ class IndexView(PublishedMixin, ListView):
             data = {
                 'project_list': Project.objects.exclude(id=Project.objects.latest('date').id, ).order_by(
                     '-date'),
-                'work_list': Work.objects.all(),
+                'work_list': Work.objects.published(),
                 'latest': Project.objects.latest('date'),
 
                 'about_list': About.objects.all()[:3],

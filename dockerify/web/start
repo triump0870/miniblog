@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -Eeuxo errexit
+set -Eeuxo pipefail
+set -Eeuxo nounset
+
+collectstatic() {
+    echo "Running collectstatic..."
+    python /app/manage.py collectstatic --noinput
+    echo "Successfully ran collectstatic"
+}
+
+runserver()  {
+    echo "Running django server..."
+    if [ "${LOCAL}" == "True" ]; then
+        python /app/manage.py runserver 0.0.0.0:8000
+    else
+        uwsgi --emperor /app/dockerify/web/uwsgi.ini
+    fi
+}
+
+check() {
+    if [ "${SETUP}" == "True" ]; then
+        collectstatic
+    fi
+}
+
+until check; do
+    >&2 echo "Server is running the checks..."
+    sleep 2
+done
+>&2 runserver

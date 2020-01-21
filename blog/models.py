@@ -68,7 +68,7 @@ resume_filename = generatefilename("resume/")
 
 # def about_filename()
 class CustomManager(models.Manager):
-    def get_queryset(self):
+    def published(self):
         return super(CustomManager, self).get_queryset().filter(status='p')
 
 

@@ -32,27 +32,29 @@ def build_images():
     build_celery_image()
 
 
-def get_env_value(key):
+def get_env_value(key, bool=False):
     env = environ.Env()
     env_file = join(dirname(__file__), "miniblog/settings/local.env")
     if exists(env_file):
         environ.Env.read_env(str(env_file))
-
-    return env('%s' % key)
+    if bool:
+        return env.bool(key)
+    return env(key)
 
 
 @task()
 def up():
-    if 'mysql-data' != local('docker volume ls -f name=mysql-data -q'):
+    if 'mysql_data' != local('docker volume ls -f name=mysql_data -q'):
         create_mysql_volume()
     print("\n===============Volume mysql-data exist, skipping==============\n")
     example_file_conversion("miniblog.settings.local.env.example")
-    local('docker-compose up -d')
+    detached = get_env_value('LOCAL', True)
+    local('docker-compose up {}'.format('-d' if detached else ''))
 
 
 def create_mysql_volume():
     print("\n===============Creating mysql-data volume==============\n")
-    local('docker volume create --name=mysql-data')
+    local('docker volume create --name=mysql_data')
 
 
 @task()
@@ -276,7 +278,7 @@ def upload_to_s3(bucket_name=None, source_path=None, dest_path=None):
 
     # enumerate local files recursively
     for root, dirs, files in walk(source_path):
-
+        print ("root: ", root, dirs, files)
         for filename in files:
             if filename.startswith('.'):
                 continue
@@ -287,7 +289,7 @@ def upload_to_s3(bucket_name=None, source_path=None, dest_path=None):
             # construct the full local path
             local_path = join(root, filename)
 
-            # construct the full Dropbox path
+            # construct the full S3 path
             relative_path = relpath(local_path, source_path)
             s3_path = join(dest_path, relative_path)
 

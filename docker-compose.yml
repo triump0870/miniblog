@@ -1,6 +1,14 @@
-version: '2'
+version: '3'
+
+volumes:
+  mysql_data:
+    external: true
+
 services:
   web:
+    build:
+        context: .
+        dockerfile: ./dockerify/web/Dockerfile
     image: web
     container_name: web
     links:
@@ -20,29 +28,30 @@ services:
     environment:
       - "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
       - "DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}"
-    command: "gunicorn miniblog.wsgi --log-file=/var/log/app_logs/gunicorn.log --log-level=DEBUG -k 'eventlet' -w 1 --reload -b 0.0.0.0:30000"
+    command: /start
 
   database:
+    build:
+        context: .
+        dockerfile: ./dockerify/mysql/Dockerfile
     image: mysql
     container_name: database
     ports:
       - "3306:3306"
-    volumes_from:
-      - mysql-data
-    depends_on:
-      - mysql-data
+    volumes:
+      - mysql_data:/var/lib/mysql
     env_file:
       - ./miniblog/settings/local.env
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
 
-  mysql-data:
-    image: mysql:latest
-    container_name: mysql-data
-    volumes:
-      - mysql-data:/var/lib/mysql/data
-    entrypoint: /bin/bash
-    privileged: true
+#  mysql-data:
+#    image: mysql:latest
+#    container_name: mysql-data
+#    volumes:
+#      - mysql-data:/var/lib/mysql/data
+#    entrypoint: /bin/bash
+#    privileged: true
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -63,8 +72,6 @@ services:
     container_name: nginx-proxy
     ports:
       - "80:80"
-    volumes_from:
-      - nginx
     links:
       - nginx
     volumes:
@@ -134,15 +141,10 @@ services:
       - redis
     depends_on:
       - rabbit
-      - web
       - database
       - redis
-      - nginx
-      - nginx-www
     env_file:
       - ./miniblog/settings/local.env
 
-volumes:
-  mysql-data:
-    external: true
+
 
