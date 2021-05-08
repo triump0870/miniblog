@@ -25,7 +25,7 @@ django-markdown==0.8.4
 django-storages==1.6.5
 easy-thumbnails==2.4.2
 enum-compat==0.0.2
-eventlet==0.21.0
+eventlet==0.31.0
 Fabric3==1.13.1.post1
 Faker==0.8.6
 greenlet==0.4.12
